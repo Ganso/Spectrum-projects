@@ -1,5 +1,3 @@
-Check 133B10B6
-Auto 8224
    1 REM Tower Defense ZX Spectrum 48K
    2 REM Variables: a-dato leido, b-bucle ciudadanos, c-ciudadanos, d-bucle ladrillos
    3 REM e-bucle torretas, f-bucle zombies, g-bucle mover zombies, h-bucle comprobar ladrillos
