@@ -1,5 +1,5 @@
 1 DIM m(22,32): DIM c(10,3): DIM z(10,6): DIM l(20,3): DIM t(10,5): LET r=40: LET cx=7: LET cy=10
-2 LET te=0: LET k$="": LET ox=0: LET oy=0: LET o=0: LET nz=0: LET nl=0: LET nt=0: LET tir=0: LET tiz=0: LET tit=0: LET cm=0: LET cc=0: LET z=0
+2 LET te=0: LET k$="": LET ox=0: LET oy=0: LET o=0: LET nz=0: LET nl=0: LET nt=0: LET tir=0: LET tiz=0: LET tit=0: LET cm=0: LET cc=0: LET w=0: LET x=0: LET y=0: LET z=0
 10 BORDER 7: PAPER 0: INK 7: CLS
 15 PAPER 7: INK 0: PRINT AT 10,7;"INICIALIZANDO PARTIDA"
 20 GO SUB 9060: REM Definir UDG
@@ -61,11 +61,12 @@
 7040 GO SUB 7100: GO TO 7050
 7050 NEXT g: RETURN
 7100 REM Zombie encuentra objeto
-7110 LET ob=m(z(g,2),z(g,1)-1): IF ob=0 THEN LET ob=m(z(g,2)+1,z(g,1)-1)
+7110 LET col=7: LET ob=m(z(g,2),z(g,1)-1): IF ob=0 OR ob>80 THEN LET ob=m(z(g,2)+1,z(g,1)-1)
+7115 IF ob=0 OR ob>80 THEN RETURN
 7120 IF ob<=20 THEN LET t=INT((ob+1)/2): LET c(t,3)=c(t,3)-1: LET col=0: GO TO 7150: REM Ciudadano
 7130 IF ob<=40 THEN LET t=ob-20: LET l(t,3)=l(t,3)-1: LET col=4: GO TO 7150: REM Ladrillo
 7140 IF ob<=80 THEN LET t=INT((ob-41)/4)+1: LET t(t,4)=t(t,4)-1: LET col=t(t,3): GO TO 7150: REM Torreta
-7150 FOR z=1 TO 10: BORDER z(g,3): BEEP 0.01,50: BORDER col: BEEP 0.01,60: NEXT z: BORDER 7
+7150 FOR w=1 TO 10: BORDER z(g,3): BEEP 0.01,50: BORDER col: BEEP 0.01,60: NEXT w: BORDER 7
 7160 IF (ob<=20 AND c(t,3)=0) OR (ob>20 AND ob<=40 AND l(t,3)=0) OR (ob>40 AND ob<=80 AND t(t,4)=0) THEN GO SUB 7600
 7170 RETURN
 7200 REM Actualizar puntuacion, recursos y tiempo
@@ -101,7 +102,7 @@
 7630 IF ob>40 AND ob<=80 THEN LET m(t(t,2),t(t,1))=0: LET m(t(t,2)+1,t(t,1))=0: LET m(t(t,2),t(t,1)+1)=0: LET m(t(t,2)+1,t(t,1)+1)=0: LET ox=t(t,1): LET oy=t(t,2): GO SUB 8400: LET oy=oy+1: GO SUB 8400: LET ox=ox+1: GO SUB 8400: LET oy=oy-1: GO SUB 8400: LET t(t,4)=-1: REM Torreta
 7640 BEEP 0.5,0: RETURN
 7700 REM Disparo de torreta
-7705 FOR z=1 TO 2
+7705 FOR w=1 TO 2
 7710 FLASH 1: OVER 1: PAPER 0
 7720 INK t(i,3): PRINT AT t(i,2),t(i,1);"OO";AT t(i,2)+1,t(i,1);"OO"
 7725 IF z(j, 1)<6 THEN PAPER 4
@@ -111,7 +112,7 @@
 7760 INK t(i,3): PRINT AT t(i,2),t(i,1);"OO";AT t(i,2)+1,t(i,1);"OO"
 7765 IF z(j, 1)<6 THEN PAPER 4
 7770 INK z(j,3): PRINT AT z(j,2),z(j,1);"O";AT z(j,2)+1,z(j,1);"O"
-7771 NEXT z
+7771 NEXT w
 7775 OVER 0: PAPER 0
 7780 LET z(j,6)=z(j,6)-1
 7790 IF z(j,6)>0 THEN GO TO 7800
