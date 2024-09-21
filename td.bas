@@ -7,10 +7,8 @@
 1000 REM Inicializar pantalla
 1005 INK 4
 1010 FOR y=0 TO 21
-1020 FOR x=0 TO 6
-1030 IF x<6 THEN PAPER 4: PRINT AT y,x;" "
-1040 IF x=6 THEN PAPER 0: PRINT AT y,x;CHR$ 160
-1050 NEXT x
+1020 PAPER 4: PRINT AT y,0;"      "
+1030 PAPER 0: PRINT AT y,6;CHR$ 160
 1060 NEXT y
 1070 PRINT AT 10,7;"                     "
 1080 RETURN
@@ -21,19 +19,19 @@
 2020 PAPER 4: INK 0: PRINT AT c(b,2),c(b,1);CHR$ 144;AT c(b,2)+1,c(b,1);CHR$ 145
 2030 LET m(c(b,2),c(b,1))=b*2-1: LET m(c(b,2)+1,c(b,1))=b*2: NEXT b: RETURN
 3000 REM Comprobar si podemos colocar objeto
-3010 IF (te=0 AND r<5) OR (te>0 AND r<20) THEN RETURN
+3010 IF (te=0 AND r<2) OR (te>0 AND r<10) THEN RETURN: REM Ladrillo 2, Torreta 10
 3020 GO SUB 8600: IF o=0 THEN GO SUB 3100
 3030 RETURN
 3100 REM Colocar objeto en el mapa
-3110 IF te=0 AND nl<20 THEN LET r=r-5: INK 4: PRINT AT cy,cx;CHR$ 146: LET m(cy,cx)=20+nl+1: LET nl=nl+1: LET l(nl,1)=cx: LET l(nl,2)=cy: LET l(nl,3)=3
+3110 IF te=0 AND nl<20 THEN LET r=r-2: INK 4: PRINT AT cy,cx;CHR$ 146: LET m(cy,cx)=20+nl+1: LET nl=nl+1: LET l(nl,1)=cx: LET l(nl,2)=cy: LET l(nl,3)=3
 3120 IF te>0 AND nt<10 AND oy<20 THEN GO SUB 3200: IF o=0 THEN GO SUB 3300
 3130 GO SUB 7240: BEEP 0.1,50: RETURN
-3200 REM Comprobar si las celdas adyacentes est\#195\rn libres para colocar torreta
+3200 REM Comprobar si las celdas adyacentes estan libres para colocar torreta
 3210 LET o=0: IF cx+1>31 OR cy+1>21 THEN LET o=1: RETURN
 3220 IF m(cy,cx)>0 OR m(cy,cx+1)>0 OR m(cy+1,cx)>0 OR m(cy+1,cx+1)>0 THEN LET o=1
 3230 RETURN
 3300 REM Colocar torreta
-3310 LET r=r-20: INK te: PRINT AT cy,cx;CHR$ 153;CHR$ 155;AT cy+1,cx;CHR$ 154;CHR$ 156
+3310 LET r=r-10: INK te: PRINT AT cy,cx;CHR$ 153;CHR$ 155;AT cy+1,cx;CHR$ 154;CHR$ 156
 3320 LET m(cy,cx)=40+(nt*4)+1: LET m(cy+1,cx)=40+(nt*4)+2: LET m(cy,cx+1)=40+(nt*4)+3: LET m(cy+1,cx+1)=40+(nt*4)+4
 3330 LET nt=nt+1: LET t(nt,1)=cx: LET t(nt,2)=cy: LET t(nt,3)=te: LET t(nt,4)=1: LET t(nt,5)=0
 3340 RETURN
@@ -69,8 +67,10 @@
 7120 IF ob<=20 THEN LET t=INT ((ob+1)/2): LET c(t,3)=c(t,3)-1: LET col=0: GO TO 7150: REM Ciudadano
 7130 IF ob<=40 THEN LET t=ob-20: LET l(t,3)=l(t,3)-1: LET col=4: GO TO 7150: REM Ladrillo
 7140 IF ob<=80 THEN LET t=INT ((ob-41)/4)+1: LET t(t,4)=t(t,4)-1: LET col=t(t,3): GO TO 7150: REM Torreta
-7150 FOR w=1 TO 10: BORDER z(g,3): BEEP 0.01,50: BORDER col: BEEP 0.01,60: NEXT w: BORDER 7: REM Animación de "pelea"
+7150 FLASH 1: OVER 1: INK z(g,3): PRINT AT z(g,2),z(g,1);" ";AT z(g,2)+1,z(g,1);" ": FLASH 0: OVER 0: REM Indica el zombie con un flash
+7155 FOR w=1 TO 10: BORDER z(g,3): BEEP 0.01,50: BORDER col: BEEP 0.01,60: NEXT w: BORDER 7: REM Animacion de "pelea"
 7160 IF (ob<=20 AND c(t,3)=0) OR (ob>20 AND ob<=40 AND l(t,3)=0) OR (ob>40 AND ob<=80 AND t(t,4)=0) THEN GO SUB 7600: REM Elimina objeto si ya no tiene vida
+7145 FLASH 0: OVER 1: INK z(g,3): PRINT AT z(g,2),z(g,1);" ";AT z(g,2)+1,z(g,1);" ": OVER 0: REM Quita el flash
 7170 RETURN
 7200 REM Actualizar puntuacion, recursos y tiempo
 7205 IF INKEY$=" " THEN LET sp=1
@@ -82,9 +82,9 @@
 7300 REM Controles del jugador
 7305 LET k$=INKEY$: IF k$="" AND sp=0 THEN RETURN
 7320 IF k$=" " OR sp=1 THEN IF cm=0 THEN LET cm=1: LET cc=0: LET sp=0: GO SUB 8000: RETURN
-7321 IF k$=" " OR sp=1 THEN IF cm=1 AND cc>5 THEN GO SUB 8050: LET cm=0: LET cc=0: LET sp=0: PAPER 7: PRINT AT 0,19;"             ": PAPER 0: PRINT AT oy,ox;" ": GO SUB 8400: RETURN
+7321 IF k$=" " OR sp=1 THEN IF cm=1 AND cc>5 THEN GO SUB 8050: LET cm=0: LET cc=0: LET sp=0: PAPER 7: PRINT AT 0,19;"             ": PAPER 0: PRINT AT oy,ox;" ": GO SUB 8400: BORDER 7: RETURN
 7330 IF cm=0 THEN RETURN
-7335 PAPER 7: INK 2: PRINT AT 0,19;"("; FLASH 1;"C"; FLASH 0;") ";CHR$ (146);"=5, "+CHR$ (157)+"=20": PAPER 0
+7335 PAPER 7: INK 2: PRINT AT 0,19;"("; FLASH 1;"C"; FLASH 0;") ";CHR$ (146);"=2, "+CHR$ (157)+"=20": PAPER 0
 7350 LET ox=cx: LET oy=cy
 7360 IF k$="q" AND cy>1 THEN LET cy=cy-1
 7370 IF k$="a" AND cy<20 THEN LET cy=cy+1
@@ -92,7 +92,7 @@
 7390 IF k$="p" AND cx<30 THEN LET cx=cx+1
 7400 IF k$>="0" AND k$<="3" THEN LET te=VAL k$: GO SUB 3000
 7410 IF ox<>cx OR oy<>cy THEN GO SUB 8050: GO SUB 8400: GO SUB 8000: LET ox=cx: LET oy=cy: REM Si hemos movido el cursor, redibuja
-7420 RETURN
+7420 GO TO 7300
 7500 REM Torretas disparan
 7510 FOR i=1 TO nt
 7515 IF INKEY$=" " THEN LET sp=1
@@ -107,8 +107,12 @@
 7600 REM Eliminar objeto
 7610 IF ob<=20 THEN LET m(c(t,2),c(t,1))=0: LET m(c(t,2)+1,c(t,1))=0: GO SUB 8400: LET oy=oy+1: GO SUB 8400: LET c(t,3)=-1: REM Ciudadano
 7620 IF ob>20 AND ob<=40 THEN LET m(l(t,2),l(t,1))=0: LET ox=l(t,1): LET oy=l(t,2): GO SUB 8400: LET l(t,3)=-1: REM Ladrillo
-7630 IF ob>40 AND ob<=80 THEN LET m(t(t,2),t(t,1))=0: LET m(t(t,2)+1,t(t,1))=0: LET m(t(t,2),t(t,1)+1)=0: LET m(t(t,2)+1,t(t,1)+1)=0: LET ox=t(t,1): LET oy=t(t,2): GO SUB 8400: LET oy=oy+1: GO SUB 8400: LET ox=ox+1: GO SUB 8400: LET oy=oy-1: GO SUB 8400: LET t(t,4)=-1: REM Torreta
-7640 BEEP 0.5,0: RETURN
+7630 IF ob<=40 OR ob>80 THEN GO TO 7660: REM Procesamos torretas
+7640 LET m(t(t,2),t(t,1))=0: LET m(t(t,2)+1,t(t,1))=0: LET m(t(t,2),t(t,1)+1)=0: LET m(t(t,2)+1,t(t,1)+1)=0: LET ox=t(t,1): LET oy=t(t,2): LET t(t,4)=-1: REM Torreta
+7650 INK 6: PAPER 2: FLASH 1: PRINT AT t(t,2),t(t,1);chr$(161);chr$(162); AT t(t,2)+1,t(t,1);chr$(163);chr$(164)
+7655 FOR x=1 TO 10:BEEP 0.02,INT (RND*20):NEXT X
+7658 INK 7: PAPER 0: FLASH 0:PRINT AT t(t,2),t(t,1);"  "; AT t(t,2)+1,t(t,1);"  "
+7660 BEEP 0.5,0: RETURN
 7700 REM Disparo de torreta
 7705 FOR w=1 TO 2
 7710 FLASH 1: OVER 1: PAPER 0
@@ -144,11 +148,11 @@
 8420 IF ox<6 THEN PAPER 4: GO TO 8430
 8421 PAPER 0: IF ox=6 THEN INK 4: PRINT AT oy,ox;CHR$ 160: RETURN
 8430 IF op=0 THEN PRINT AT oy,ox;" ": RETURN
-8440 IF op<=20 THEN LET ci=INT ((op+1)/2): IF c(ci,3)>0 THEN INK 0: PRINT AT oy,ox;CHR$ (143+op): RETURN
-8450 IF op<=40 THEN LET li=op-20: IF l(li,3)>0 THEN INK 4: PRINT AT oy,ox;CHR$ 146: RETURN
+8440 IF op<=20 THEN LET ci=INT ((op+1)/2): IF c(ci,3)>=0 THEN INK 0: PRINT AT oy,ox;CHR$ (143+op): RETURN
+8450 IF op<=40 THEN LET li=op-20: IF l(li,3)>=0 THEN INK 4: PRINT AT oy,ox;CHR$ 146: RETURN
 8460 IF op<=80 THEN GO TO 8480
-8470 LET zn=INT ((op-81)/2)+1: INK z(zn,3): LET zp=op-80-(zn-1)*2: PRINT AT oy,ox;CHR$ (147+2*z(zn,5)+zp-1): RETURN
-8480 LET tn=INT ((op-41)/4)+1: IF t(tn,4)>0 THEN INK t(tn,3): LET opt=op-40-(tn-1)*4: PRINT AT oy,ox;CHR$ (152+opt)
+8470 LET zn=INT ((op-81)/2)+1: IF z(zn,6)>=0 THEN INK z(zn,3): LET zp=op-80-(zn-1)*2: PRINT AT oy,ox;CHR$ (147+2*z(zn,5)+zp-1): RETURN
+8480 LET tn=INT ((op-41)/4)+1: IF t(tn,4)>=0 THEN INK t(tn,3): LET opt=op-40-(tn-1)*4: PRINT AT oy,ox;CHR$ (152+opt)
 8510 RETURN
 8600 REM Comprobar si la celda esta ocupada en cy, cx
 8610 LET o=m(cy,cx): RETURN
@@ -173,7 +177,7 @@
 9050 REM Ladrillos: l(nl,1)=x, l(nl,2)=y, l(nl,3)=vida
 9051 REM Zombies: z(nz,1)=x, z(nz,2)=y, z(nz,3)=color, z(nz,4)=contador de movimiento, z(nz,5)=animacion, z(nz,6)=vida
 9060 REM UDGs: 144-145 Ciudadano, 146 Ladrillo, 147-152 Zombies (2 chars por animacion), 153-156 Torreta (2x2), 157 Torreta pequena
-9061 RESTORE 9062: FOR F=65368 TO 65503: READ A: POKE F,A: NEXT F
+9061 RESTORE 9062: FOR F=65368 TO 65535: READ A: POKE F,A: NEXT F
 9062 DATA 56,68,68,68,56,124,186,186: REM 144 ciudadano
 9063 DATA 186,186,170,170,170,168,40,108
 9064 DATA 255,129,129,255,255,129,129,255: REM 146 Ladrillo
@@ -191,9 +195,13 @@
 9076 DATA 0,0,0,0,0,0,66,126: REM 158 Espacio
 9077 DATA 129,90,36,90,90,36,90,129: REM 159 Cursor
 9078 DATA 240,248,248,240,240,248,248,240: REM 160 Separador
+9079 DATA 1, 226, 90, 36, 16, 16, 96, 128: REM 161-164 Explosion
+9080 DATA 4, 138, 178, 68, 8, 8, 6, 1
+9081 DATA 64, 48, 8, 16, 16, 39, 72, 48
+9082 DATA 6, 8, 8, 4, 20, 42, 166, 64
 9090 RETURN
 9995 REM El programa utiliza BASIC de ZX Spectrum, con lo cual no puede utilizar las ordenes ELSE, END IF, o el operador MOD
 9996 REM Se debe optimizar al maximo el uso de CPU, reduciendo los ciclos de reloj
 9997 REM El uso de memoria no es problema, asi que se pueden crear variables auxiliares si asi se optimiza el codigo
-9998 REM Es preferible tener menos lineas aunque sean muy largas. Igualmente, es mejor que los REM est\#195\*n siempre acompa\#195\#177ando a otra linea, no solos
+9998 REM Es preferible tener menos lineas aunque sean muy largas. Igualmente, es mejor que los REM esten siempre acompanando a otra linea, no solos
 9999 REM No se pueden crear lineas mas alla de la 9999. Siempre que pida cambios, solo se devuelven los bloques de lineas que han cambiado
