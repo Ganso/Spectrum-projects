@@ -1,9 +1,9 @@
-1 DIM m(22,32): DIM c(10,3): DIM z(10,5): DIM l(20,3): DIM t(10,4): LET r=40: LET cx=7: LET cy=10
+1 DIM m(22,32): DIM c(10,3): DIM z(10,6): DIM l(20,3): DIM t(10,5): LET r=40: LET cx=7: LET cy=10
 2 LET te=0: LET k$="": LET ox=0: LET oy=0: LET o=0: LET nz=0: LET nl=0: LET nt=0: LET tir=0: LET tiz=0: LET tit=0: LET cm=0: LET cc=0: LET z=0
 10 BORDER 7: PAPER 0: INK 7: CLS
 15 PAPER 7: INK 0: PRINT AT 10,7;"INICIALIZANDO PARTIDA"
-20 GO SUB 9050: REM Definir UDG
-25 GO SUB 1000: GO SUB 2000: GO SUB 8700: GO TO 6000
+20 GO SUB 9060: REM Definir UDG
+25 RANDOMIZE: GO SUB 1000: GO SUB 2000: GO SUB 8700: GO TO 6000
 1000 REM Inicializar pantalla
 1010 FOR y=0 TO 21
 1020 FOR x=0 TO 6
@@ -34,11 +34,11 @@
 3300 REM Colocar torreta
 3310 LET r=r-20: INK te: PRINT AT cy,cx;CHR$ 153;CHR$ 155;AT cy+1,cx;CHR$ 154;CHR$ 156
 3320 LET m(cy,cx)=40+(nt*4)+1: LET m(cy+1,cx)=40+(nt*4)+2: LET m(cy,cx+1)=40+(nt*4)+3: LET m(cy+1,cx+1)=40+(nt*4)+4
-3330 LET nt=nt+1: LET t(nt,1)=cx: LET t(nt,2)=cy: LET t(nt,3)=te: LET t(nt,4)=1
+3330 LET nt=nt+1: LET t(nt,1)=cx: LET t(nt,2)=cy: LET t(nt,3)=te: LET t(nt,4)=1: LET t(nt,5)=0
 3340 RETURN
 5000 REM Generar zombie
 5010 IF nz>=10 THEN RETURN
-5020 LET nz=nz+1: LET z(nz,1)=31: LET z(nz,2)=INT (RND*19)+1: LET z(nz,3)=INT (RND*3)+1: LET z(nz,4)=5: LET z(nz,5)=0
+5020 LET nz=nz+1: LET z(nz,1)=31: LET z(nz,2)=INT (RND*19)+1: LET z(nz,3)=INT (RND*3)+1: LET z(nz,4)=5: LET z(nz,5)=0: LET z(nz,6)=3
 5030 IF m(z(nz,2),z(nz,1))>0 OR m(z(nz,2)+1,z(nz,1))>0 THEN LET nz=nz-1: RETURN
 5040 GO SUB 8150: LET m(z(nz,2),z(nz,1))=80+(nz*2)-1: LET m(z(nz,2)+1,z(nz,1))=80+(nz*2)
 5050 BEEP 0.1,20: RETURN
@@ -73,6 +73,7 @@
 7220 IF tiz>=20 THEN LET tiz=0: GO SUB 5000: RETURN : REM cada 20 ticks sale un zombie
 7230 IF tit>=6 THEN LET tit=0: GO SUB 7500: RETURN : REM cada 6 ticks las torretas intentan disparar
 7240 INK 0: PAPER 7: PRINT AT 0,10;r;"   ": PAPER 0: LET tir=tir+1: LET tiz=tiz+1: LET tit=tit+1
+7250 FOR i=1 TO nt: LET t(i,5)=t(i,5)+1: NEXT i: RETURN
 7300 REM Controles del jugador
 7310 LET k$=INKEY$: IF k$="" THEN RETURN
 7320 IF k$=" " THEN IF cm=0 THEN LET cm=1: LET cc=0: GO SUB 8000: RETURN
@@ -87,13 +88,36 @@
 7410 IF ox<>cx OR oy<>cy THEN GO SUB 8050: GO SUB 8400: GO SUB 8000
 7420 RETURN
 7500 REM Torretas disparan
-7510 REM Aqui iria la logica para que las torretas disparen a los zombies
-7520 RETURN
+7510 FOR i=1 TO nt
+7520 IF t(i,5)<5 THEN GO TO 7590
+7530 LET t(i,5)=0: LET tx=t(i,1)+1: LET ty=t(i,2)+1
+7540 FOR j=1 TO nz
+7550 IF z(j,3)=t(i,3) AND z(j,6)>0 THEN GO SUB 7700
+7560 NEXT j
+7590 NEXT i: RETURN
 7600 REM Eliminar objeto
 7610 IF ob<=20 THEN LET m(c(t,2),c(t,1))=0: LET m(c(t,2)+1,c(t,1))=0: GO SUB 8400: LET oy=oy+1: GO SUB 8400: LET c(t,3)=-1: REM Ciudadano
 7620 IF ob>20 AND ob<=40 THEN LET m(l(t,2),l(t,1))=0: GO SUB 8400: LET oy=oy+1: GO SUB 8400: LET l(t,3)=-1: REM Ladrillo
 7630 IF ob>40 AND ob<=80 THEN LET m(t(t,2),t(t,1))=0: LET m(t(t,2)+1,t(t,1))=0: LET m(t(t,2),t(t,1)+1)=0: LET m(t(t,2)+1,t(t,1)+1)=0: LET ox=t(t,1): LET oy=t(t,2): GO SUB 8400: LET oy=oy+1: GO SUB 8400: LET ox=ox+1: GO SUB 8400: LET oy=oy-1: GO SUB 8400: LET t(t,4)=-1: REM Torreta
 7640 BEEP 0.5,0: RETURN
+7700 REM Disparo de torreta
+7705 FOR z=1 TO 2
+7710 FLASH 1: OVER 1: PAPER 0
+7720 INK t(i,3): PRINT AT t(i,2),t(i,1);"OO";AT t(i,2)+1,t(i,1);"OO"
+7725 IF z(j, 1)<6 THEN PAPER 4
+7730 INK z(j,3): PRINT AT z(j,2),z(j,1);"O";AT z(j,2)+1,z(j,1);"O"
+7740 BEEP 0.1,50: BEEP 0.1,40
+7750 FLASH 0: PAPER 0
+7760 INK t(i,3): PRINT AT t(i,2),t(i,1);"OO";AT t(i,2)+1,t(i,1);"OO"
+7765 IF z(j, 1)<6 THEN PAPER 4
+7770 INK z(j,3): PRINT AT z(j,2),z(j,1);"O";AT z(j,2)+1,z(j,1);"O"
+7771 NEXT z
+7775 OVER 0: PAPER 0
+7780 LET z(j,6)=z(j,6)-1
+7790 IF z(j,6)>0 THEN GO TO 7800
+7791 IF z(j, 1)<6 THEN PAPER 4
+7795 PRINT AT z(j,2),z(j,1);" ";AT z(j,2)+1,z(j,1);" ": LET z(j,1)=31: LET z(j,6)=3: GO SUB 8150: REM Zombie eliminado - A la derecha, con 3 de vida
+7800 PAPER 0: RETURN
 8000 REM Dibujar cursor en cy,cx
 8010 IF cx<7 THEN PAPER 4: INK 6: GO TO 8030
 8020 PAPER 0: INK 6
@@ -135,28 +159,32 @@
 9045 REM El color del zombie se almacena en z(nz,3) y puede ser 1, 2 o 3
 9046 REM La animacion del zombie se almacena en z(nz,5), con valores 0, 1 o 2
 9047 REM La vida de los objetos se almacena en: c(b,3) para ciudadanos, l(nl,3) para ladrillos, t(nt,4) para torretas
-9050 REM UDGs: 144-145 Ciudadano, 146 Ladrillo, 147-152 Zombies (2 chars por animacion), 153-156 Torreta (2x2), 157 Torreta pequena
-9051 RESTORE 9052: FOR F=65368 TO 65503: READ A: POKE F,A: NEXT F
-9052 DATA 56,68,68,68,56,124,186,186: REM 144 ciudadano
-9053 DATA 186,186,170,170,170,168,40,108
-9054 DATA 255,129,129,255,255,129,129,255: REM 146 Ladrillo
-9055 DATA 12,18,114,18,12,252,12,12: REM 147 Zombie 1
-9056 DATA 12,12,20,36,68,68,36,116
-9057 DATA 12,18,114,18,12,252,12,12: REM 149 Zombie 2
-9058 DATA 12,12,12,12,12,12,10,63
-9059 DATA 12,18,114,18,12,252,12,12: REM 151 Zombie 3
-9060 DATA 12,12,12,10,10,9,9,54
-9061 DATA 127,128,128,128,143,136,136,136: REM 153 Torreta
-9062 DATA 136,136,136,143,128,128,128,127
-9063 DATA 254,1,1,1,241,17,17,17
-9064 DATA 17,17,17,241,1,1,1,254
-9065 DATA 126,129,129,153,153,129,129,126: REM 157 Torreta pequena
-9066 DATA 0,0,0,0,0,0,66,126: REM 158 Espacio
-9067 DATA 129,90,36,90,90,36,90,129: REM 159 Cursor
-9068 DATA 240,248,248,240,240,248,248,240: REM 160 Separador
-9073 RETURN
+9048 REM Ciudadanos: c(b,1)=x, c(b,2)=y, c(b,3)=vida
+9049 REM Torretas: t(nt,1)=x, t(nt,2)=y, t(nt,3)=color, t(nt,4)=vida, t(nt,5)=contador de disparo
+9050 REM Ladrillos: l(nl,1)=x, l(nl,2)=y, l(nl,3)=vida
+9051 REM Zombies: z(nz,1)=x, z(nz,2)=y, z(nz,3)=color, z(nz,4)=contador de movimiento, z(nz,5)=animacion, z(nz,6)=vida
+9060 REM UDGs: 144-145 Ciudadano, 146 Ladrillo, 147-152 Zombies (2 chars por animacion), 153-156 Torreta (2x2), 157 Torreta pequena
+9061 RESTORE 9062: FOR F=65368 TO 65503: READ A: POKE F,A: NEXT F
+9062 DATA 56,68,68,68,56,124,186,186: REM 144 ciudadano
+9063 DATA 186,186,170,170,170,168,40,108
+9064 DATA 255,129,129,255,255,129,129,255: REM 146 Ladrillo
+9065 DATA 12,18,114,18,12,252,12,12: REM 147 Zombie 1
+9066 DATA 12,12,20,36,68,68,36,116
+9067 DATA 12,18,114,18,12,252,12,12: REM 149 Zombie 2
+9068 DATA 12,12,12,12,12,12,10,63
+9069 DATA 12,18,114,18,12,252,12,12: REM 151 Zombie 3
+9070 DATA 12,12,12,10,10,9,9,54
+9071 DATA 127,128,128,128,143,136,136,136: REM 153 Torreta
+9072 DATA 136,136,136,143,128,128,128,127
+9073 DATA 254,1,1,1,241,17,17,17
+9074 DATA 17,17,17,241,1,1,1,254
+9075 DATA 126,129,129,153,153,129,129,126: REM 157 Torreta pequena
+9076 DATA 0,0,0,0,0,0,66,126: REM 158 Espacio
+9077 DATA 129,90,36,90,90,36,90,129: REM 159 Cursor
+9078 DATA 240,248,248,240,240,248,248,240: REM 160 Separador
+9090 RETURN
 9995 REM El programa utiliza BASIC de ZX Spectrum, con lo cual no puede utilizar las ordenes ELSE, END IF, o el operador MOD
 9996 REM Se debe optimizar al maximo el uso de CPU, reduciendo los ciclos de reloj
 9997 REM El uso de memoria no es problema, asi que se pueden crear variables auxiliares si asi se optimiza el codigo
 9998 REM Es preferible tener menos lineas aunque sean muy largas. Igualmente, es mejor que los REM estén siempre acompañando a otra linea, no solos
-9999 REM No se pueden crear lineas mas alla de la 9999
+9999 REM No se pueden crear lineas mas alla de la 9999. Siempre que pida cambios, solo se devuelven los bloques de lineas que han cambiado
