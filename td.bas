@@ -1,4 +1,3 @@
-
    1 DIM m(22,32): DIM c(10,3): DIM z(10,6): DIM l(20,3): DIM t(10,6): LET r=20: LET cx=7: LET cy=10
    2 LET te=0: LET k$="": LET ox=0: LET oy=0: LET o=0: LET nz=0: LET nl=0: LET nt=0: LET tir=0: LET tiz=0: LET tit=0: LET cm=0: LET cc=0: LET w=0: LET x=0: LET y=0: LET z=0: LET sp=0
   10 BORDER 7: PAPER 0: INK 7: CLS
