@@ -14,7 +14,7 @@
 1080 RETURN
 2000 REM Colocar ciudadanos inicialmente
 2001 FOR b=1 TO 10
-2002 LET c(b,1)=INT (RND*5)+1: LET c(b,2)=INT (RND*20)+1: LET c(b,3)=5
+2002 LET c(b,1)=INT (RND*5)+1: LET c(b,2)=INT (RND*19)+1: LET c(b,3)=5
 2010 IF m(c(b,2),c(b,1))>0 OR m(c(b,2)+1,c(b,1))>0 THEN GO TO 2002
 2020 PAPER 4: INK 0: PRINT AT c(b,2),c(b,1);CHR$ 144;AT c(b,2)+1,c(b,1);CHR$ 145
 2030 LET m(c(b,2),c(b,1))=b*2-1: LET m(c(b,2)+1,c(b,1))=b*2: LET nc=nc+1: NEXT b: RETURN
@@ -23,7 +23,7 @@
 2052 FOR b=1 TO 10
 2053 LET l(b,1)=INT (RND*5)+8: LET l(b,2)=INT (RND*20)+1: LET l(b,3)=3
 2054 IF m(l(b,2),l(b,1))>0 THEN GO TO 2053
-2055 PAPER 0: INK 4: PRINT AT l(b,2),l(b,1);CHR$ 146
+2055 PAPER 0: INK 6: BRIGHT 1: PRINT AT l(b,2),l(b,1);CHR$ 146: BRIGHT 0
 2056 LET m(l(b,2),l(b,1))=20+b: LET nl=nl+1
 2057 NEXT b
 2058 RETURN
@@ -32,7 +32,7 @@
 3020 GO SUB 8600: IF o=0 THEN GO SUB 3100
 3030 RETURN
 3100 REM Colocar objeto en el mapa
-3110 IF te=0 AND nl<20 THEN LET r=r-2: INK 4: PRINT AT cy,cx;CHR$ 146: LET m(cy,cx)=20+nl+1: LET nl=nl+1: LET l(nl,1)=cx: LET l(nl,2)=cy: LET l(nl,3)=3
+3110 IF te=0 AND nl<20 THEN LET r=r-2: INK 6: BRIGHT 1: PRINT AT cy,cx;CHR$ 146: BRIGHT 0: LET m(cy,cx)=20+nl+1: LET nl=nl+1: LET l(nl,1)=cx: LET l(nl,2)=cy: LET l(nl,3)=3
 3120 IF te>0 AND nt<10 AND oy<20 THEN GO SUB 3200: IF o=0 THEN GO SUB 3300
 3130 GO SUB 7240: BEEP 0.1,50: RETURN
 3200 REM Comprobar si las celdas adyacentes estan libres para colocar torreta
@@ -52,7 +52,6 @@
 5050 BEEP 0.1,20: RETURN
 6000 REM Bucle principal del juego
 6010 IF cm=0 THEN GO SUB 7000: GO SUB 7200: GO SUB 7500
-6020 IF cm=1 THEN BORDER INT (RND*6): LET cc=cc+1: IF cc=100 THEN GO SUB 8050: LET cm=0: LET cc=0: BORDER 7: REM ESTO DEBERIA HACERSE EN LA RUTINA DE MOVIMIENTO
 6030 GO SUB 7300
 6040 GO TO 6000
 7000 REM Mover zombies
@@ -98,17 +97,20 @@
 7300 REM Controles del jugador
 7305 LET k$=INKEY$: IF k$="" AND sp=0 THEN RETURN
 7320 IF k$=" " OR sp=1 THEN IF cm=0 THEN LET cm=1: LET cc=0: LET sp=0: GO SUB 8000: RETURN
-7321 IF k$=" " OR sp=1 THEN IF cm=1 AND cc>5 THEN GO SUB 8050: LET cm=0: LET cc=0: LET sp=0: PAPER 7: PRINT AT 0,19;"             ": PAPER 0: PRINT AT oy,ox;" ": GO SUB 8400: BORDER 7: RETURN
 7330 IF cm=0 THEN RETURN
-7335 PAPER 7: INK 2: PRINT AT 0,19;"("; FLASH 1;"C"; FLASH 0;") ";CHR$ (146);"=2, "+CHR$ (157)+"=20": PAPER 0
+7331 REM Modo de construccion
+7332 LET k$=INKEY$
+7334 BORDER INT (RND*6): LET cc=cc+1: IF cc=100 THEN GO SUB 8050: LET cm=0: LET cc=0: BORDER 7: RETURN
+7335 PAPER 7: INK 2: PRINT AT 0,17; FLASH 1;"CONST"; FLASH 0;") ";CHR$ (146);"=2, "+CHR$ (157)+"=20": PAPER 0
 7350 LET ox=cx: LET oy=cy
+7351 IF k$=" " THEN IF cc>5 THEN GO SUB 8050: LET cm=0: LET cc=0: LET sp=0: PAPER 7: PRINT AT 0,19;"             ": PAPER 0: PRINT AT oy,ox;" ": GO SUB 8400: BORDER 7: RETURN: REM Salida del modo de construccion
 7360 IF k$="q" AND cy>1 THEN LET cy=cy-1
 7370 IF k$="a" AND cy<20 THEN LET cy=cy+1
 7380 IF k$="o" AND cx>7 THEN LET cx=cx-1
 7390 IF k$="p" AND cx<30 THEN LET cx=cx+1
 7400 IF k$>="0" AND k$<="3" THEN LET te=VAL k$: GO SUB 3000
 7410 IF ox<>cx OR oy<>cy THEN GO SUB 8050: GO SUB 8400: GO SUB 8000: LET ox=cx: LET oy=cy: REM Si hemos movido el cursor, redibuja
-7420 GO TO 7300
+7420 GO TO 7331
 7500 REM Torretas disparan
 7510 FOR i=1 TO nt
 7515 IF INKEY$=" " THEN LET sp=1
@@ -124,10 +126,10 @@
 7610 IF ob<=20 THEN LET m(c(t,2),c(t,1))=0: LET m(c(t,2)+1,c(t,1))=0: LET ox=c(t,1): LET oy=c(t,2): GO SUB 8400: LET oy=oy+1: GO SUB 8400: LET c(t,3)=0: LET nc=nc-1: GO SUB 9100
 7620 IF ob>20 AND ob<=40 THEN LET m(l(t,2),l(t,1))=0: LET ox=l(t,1): LET oy=l(t,2): GO SUB 8400: LET l(t,3)=0: GO SUB 9200
 7630 IF ob<=40 OR ob>80 THEN GO TO 7660: REM Procesamos torretas
-7640 LET m(t(t,2),t(t,1))=0: LET m(t(t,2)+1,t(t,1))=0: LET m(t(t,2),t(t,1)+1)=0: LET m(t(t,2)+1,t(t,1)+1)=0: LET ox=t(t,1): LET oy=t(t,2): LET t(t,4)=0: GO SUB 9300
+7640 LET m(t(t,2),t(t,1))=0: LET m(t(t,2)+1,t(t,1))=0: LET m(t(t,2),t(t,1)+1)=0: LET m(t(t,2)+1,t(t,1)+1)=0: LET ox=t(t,1): LET oy=t(t,2): LET t(t,4)=0
 7650 INK 6: PAPER 2: FLASH 1: PRINT AT t(t,2),t(t,1);chr$(161);chr$(162); AT t(t,2)+1,t(t,1);chr$(163);chr$(164)
 7655 FOR x=1 TO 10:BEEP 0.02,INT (RND*20):NEXT X
-7658 INK 7: PAPER 0: FLASH 0:PRINT AT t(t,2),t(t,1);"  "; AT t(t,2)+1,t(t,1);"  "
+7658 INK 7: PAPER 0: FLASH 0:PRINT AT t(t,2),t(t,1);"  "; AT t(t,2)+1,t(t,1);"  ": GO SUB 9300
 7660 BEEP 0.5,0: RETURN
 7700 REM Disparo de torreta
 7705 FOR w=1 TO 2
@@ -166,7 +168,7 @@
 8421 PAPER 0: IF ox=6 THEN INK 4: PRINT AT oy,ox;CHR$ 160: RETURN
 8430 IF op=0 THEN PRINT AT oy,ox;" ": RETURN
 8440 IF op<=20 THEN LET ci=INT ((op+1)/2): IF c(ci,3)>0 THEN INK 0: PRINT AT oy,ox;CHR$ (143+op): RETURN
-8450 IF op<=40 THEN LET li=op-20: IF l(li,3)>0 THEN INK 4: PRINT AT oy,ox;CHR$ 146: RETURN
+8450 IF op<=40 THEN LET li=op-20: IF l(li,3)>0 THEN INK 7: BRIGHT 1: PRINT AT oy,ox;CHR$ 146: BRIGHT 0: RETURN
 8460 IF op<=80 THEN GO TO 8480
 8470 LET zn=INT ((op-81)/2)+1: IF z(zn,6)>0 THEN INK z(zn,3): LET zp=op-80-(zn-1)*2: PRINT AT oy,ox;CHR$ (147+2*z(zn,5)+zp-1): RETURN
 8480 LET tn=INT ((op-41)/4)+1: IF t(tn,4)>0 THEN INK t(tn,3): LET opt=op-40-(tn-1)*4: PRINT AT oy,ox;CHR$ (152+opt)
@@ -175,7 +177,7 @@
 8610 LET o=m(cy,cx): RETURN
 8700 REM Dibujar interfaz
 8710 INK 0: PAPER 7: PRINT AT 0,0;"Recursos:                       ";AT 21,0;"Movimiento: "+CHR$ (158)+"QAOP               "
-8720 INK 4: PRINT AT 21,20;"0";CHR$ 146: INK 1: PRINT AT 21,23;"1";CHR$ 157: INK 2: PRINT AT 21,26;"2";CHR$ 157: INK 3: PRINT AT 21,29;"3";CHR$ 157: PAPER 0: RETURN
+8720 INK 6: PRINT AT 21,20;"0";CHR$ 146: INK 1: PRINT AT 21,23;"1";CHR$ 157: INK 2: PRINT AT 21,26;"2";CHR$ 157: INK 3: PRINT AT 21,29;"3";CHR$ 157: PAPER 0: RETURN
 9000 REM Variables: a-dato leido, b-bucle ciudadanos, c-ciudadanos, z-zombies, l-ladrillos, t-torretas
 9010 REM g-bucle mover zombies, k-tecla pulsada, ox,oy-posicion anterior, m-mapa del juego
 9020 REM te-tipo de torreta, r-recursos, tir-tiempo (recursos), tiz-tiempo (zombies), tit-tiempo (torretas), cx,cy-posicion cursor, o-ocupado
@@ -197,7 +199,7 @@
 9061 RESTORE 9062: FOR F=65368 TO 65535: READ A: POKE F,A: NEXT F
 9062 DATA 56,68,68,68,56,124,186,186: REM 144 ciudadano
 9063 DATA 186,186,170,170,170,168,40,108
-9064 DATA 255,129,129,255,255,129,129,255: REM 146 Ladrillo
+9064 DATA 255, 129, 165, 153, 153, 165, 129, 255: REM 146 Ladrillo
 9065 DATA 12,18,114,18,12,252,12,12: REM 147 Zombie 1
 9066 DATA 12,12,20,36,68,68,36,116
 9067 DATA 12,18,114,18,12,252,12,12: REM 149 Zombie 2
