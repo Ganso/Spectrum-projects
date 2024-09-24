@@ -1,66 +1,3 @@
-Check 77AF3DB8
-Auto 8224
-
-# Run-time Variables
-
-Var r: Num = 20
-Var o: Num = 0
-Var z: Num = 0
-Var a: Num = 64
-Var t: Num = 1
-Var cx: Num = 9
-Var cy: Num = 18
-Var tiempo: Num = 114
-Var te: Num = 2
-Var ox: Num = 7
-Var oy: Num = 8
-Var nz: Num = 5
-Var nl: Num = 9
-Var nt: Num = 2
-Var nc: Num = 5
-Var tir: Num = 1
-Var tiz: Num = 1
-Var tit: Num = 1
-Var cm: Num = 0
-Var cc: Num = 0
-Var sp: Num = 0
-Var maxc: Num = 5
-Var maxz: Num = 10
-Var zv: Num = 4
-Var tv: Num = 3
-Var lv: Num = 3
-Var rcl: Num = 2
-Var rct: Num = 10
-Var nivel: Num = 1
-Var maxtiempo: Num = 60
-Var op: Num = 0
-Var zc: Num = 149
-Var tn: Num = 3
-Var opt: Num = 4
-Var tx: Num = 8
-Var ty: Num = 9
-Var li: Num = 13
-Var col: Num = 0
-Var matado: Num = 0
-Var ob: Num = 4
-Var attempts: Num = 0
-Var m: NumArray(22, 32) = 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 29, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5, 0, 0, 0, 0, 49, 51, 0, 0, 21, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 6, 0, 0, 0, 0, 50, 52, 22, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 28, 0, 23, 0, 0, 0, 87, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 88, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 24, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 81, 0, 0, 0, 0, 0, 4, 83, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 82, 0, 0, 0, 0, 0, 0, 84, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 7, 0, 0, 0, 0, 0, 0, 0, 0, 85, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 8, 0, 0, 0, 0, 0, 0, 0, 0, 86, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 26, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 9, 0, 0, 0, 0, 0, 45, 47, 25, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 10, 0, 0, 0, 0, 0, 46, 48, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 27, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 89, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 90, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-Var c: NumArray(10, 3) = 1, 1, 5, 1, 9, 4, 3, 3, 5, 4, 13, 5, 2, 16, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-Var z: NumArray(10, 6) = 27, 9, 3, 0, 1, 3, 2, 10, 1, 0, 0, 4, 13, 13, 3, 0, 0, 1, 15, 5, 2, 0, 1, 1, 31, 19, 3, 8, 0, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-Var l: NumArray(20, 3) = 12, 3, 3, 10, 4, 3, 11, 5, 3, 11, 8, 3, 10, 16, 1, 9, 15, 3, 12, 18, 3, 9, 5, 3, 11, 1, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-Var t: NumArray(10, 6) = 8, 16, 2, 3, 10, 3, 8, 3, 2, 3, 10, 6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-Var w: NumFOR = 3, 2, 1, 7705, 2
-Var x: NumFOR = 11, 10, 1, 7655, 2
-Var y: NumFOR = 8, 7, 1, 1080, 2
-Var f: NumFOR = 65536, 65535, 1, 9061, 3
-Var b: NumFOR = 11, 10, 1, 2052, 2
-Var g: NumFOR = 6, 5, 1, 7010, 2
-Var i: NumFOR = 11, 10, 1, 9350, 2
-Var j: NumFOR = 4, 5, 1, 7540, 2
-Var k$: Str = ""
-
-# End Run-time Variables
-
    1 DIM m(22,32): DIM c(10,3): DIM z(10,6): DIM l(20,3): DIM t(10,6): LET r=20: LET cx=7: LET cy=10: LET tiempo=0
    2 LET te=0: LET k$="": LET ox=0: LET oy=0: LET o=0: LET nz=0: LET nl=0: LET nt=0: LET nc=0: LET tir=0: LET tiz=0: LET tit=0: LET cm=0: LET cc=0: LET w=0: LET x=0: LET y=0: LET z=0: LET sp=0
    3 LET maxc=5: LET maxz=10: LET zv=4: LET tv=3: LET zv=4: LET lv=3: LET rcl=2: LET rct=10: LET nivel=1: LET maxtiempo=60
@@ -172,7 +109,7 @@ Var k$: Str = ""
 7210 IF tir>=2 THEN LET r=r+1: LET tir=0: IF r>100 THEN LET r=100: REM cada 2 ticks suben los recursos
 7220 IF tiz>=20 THEN LET tiz=0: GO SUB 5000: RETURN : REM cada 20 ticks sale un zombie
 7230 IF tit>=6 THEN LET tit=0: GO SUB 7500: RETURN : REM cada 6 ticks las torretas intentan disparar
-7240 INK 0: PAPER 7: PRINT AT 0,9;r;"   ";AT 0,13;"T:";tiempo: PAPER 0: LET tir=tir+1: LET tiz=tiz+1: LET tit=tit+1
+7240 INK 0: PAPER 7: PRINT #0;AT 0,9;r;AT 0,15;"Tiempo:";tiempo: PAPER 0: LET tir=tir+1: LET tiz=tiz+1: LET tit=tit+1
 7250 FOR i=1 TO nt: LET t(i,5)=t(i,5)+1: NEXT i: RETURN
 7300 REM Controles del jugador
 7305 LET k$=INKEY$: IF k$="" AND sp=0 THEN RETURN
@@ -181,10 +118,10 @@ Var k$: Str = ""
 7331 REM Modo de construccion
 7332 LET k$=INKEY$
 7334 BORDER INT (RND*6): LET cc=cc+1: IF cc=100 THEN GO SUB 8050: LET cm=0: LET cc=0: BORDER 7: RETURN
-7335 PAPER 7: INK 2: PRINT AT 0,13; FLASH 1;"CONSTRUC"; FLASH 0; INK 0;" ";CHR$ (146);"=2, "+CHR$ (157)+"=20": PAPER 0
+7335 PRINT #0;AT 0,0;PAPER 2;INK 7;"CONSTRUCION";PAPER 7;INK 0;" - R: ";r;"   ";CHR$ (146);"=2, "+CHR$ (157)+"=20";PAPER 0;INK 7;
 7350 LET ox=cx: LET oy=cy
-7351 IF k$=" " THEN IF cc>5 THEN GO SUB 8050: LET cm=0: LET cc=0: LET sp=0: PAPER 7: PRINT AT 0,16;"                ": PAPER 0: PRINT AT oy,ox;" ": GO SUB 8400: BORDER 7: RETURN : REM Salida del modo de construccion
-7360 IF k$="q" AND cy>1 THEN LET cy=cy-1
+7351 IF k$=" " THEN IF cc>5 THEN GO SUB 8050: LET cm=0: LET cc=0: LET sp=0: PRINT #0;AT 0,0;PAPER 7;INK 0;"Recursos:                       ";PAPER 0;INK 7: PRINT AT oy,ox;" ": GO SUB 8400: BORDER 7: RETURN : REM Salida del modo de construccion
+7360 IF k$="q" AND cy>0 THEN LET cy=cy-1
 7370 IF k$="a" AND cy<20 THEN LET cy=cy+1
 7380 IF k$="o" AND cx>7 THEN LET cx=cx-1
 7390 IF k$="p" AND cx<30 THEN LET cx=cx+1
@@ -256,8 +193,9 @@ Var k$: Str = ""
 8600 REM Comprobar si la celda esta ocupada en cy, cx
 8610 LET o=m(cy,cx): RETURN
 8700 REM Dibujar interfaz
-8710 INK 0: PAPER 7: PRINT AT 0,0;"Recursos:                       ";AT 21,0;"Movimiento: "+CHR$ (158)+"QAOP               "
-8720 INK 0: PRINT AT 21,20;"0"; INK 6; PAPER 0; BRIGHT 1;CHR$ 146: INK 1: PAPER 7: BRIGHT 0: PRINT AT 21,23;"1";CHR$ 157: INK 2: PRINT AT 21,26;"2";CHR$ 157: INK 3: PRINT AT 21,29;"3";CHR$ 157: PAPER 0: RETURN
+8710 INK 0: PAPER 7: PRINT #0;AT 0,0;"Recursos:                       "
+8715 PRINT #0;AT 1,0;"Controles: "+CHR$ (158)+"QAOP     0"; INK 6; PAPER 0; BRIGHT 1;CHR$ 146; INK 1; PAPER 7; BRIGHT 0; " 1";CHR$ 157; INK 2; " 2";CHR$ 157; INK 3; " 3";CHR$ 157
+8717 PAPER 0: RETURN
 9000 REM Variables: a-dato leido, b-bucle ciudadanos, c-ciudadanos, z-zombies, l-ladrillos, t-torretas
 9010 REM g-bucle mover zombies, k-tecla pulsada, ox,oy-posicion anterior, m-mapa del juego
 9020 REM te-tipo de torreta, r-recursos, tir-tiempo (recursos), tiz-tiempo (zombies), tit-tiempo (torretas), cx,cy-posicion cursor, o-ocupado
