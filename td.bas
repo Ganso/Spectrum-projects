@@ -1,6 +1,69 @@
-   1 DIM m(22,32): DIM c(10,3): DIM z(10,6): DIM l(20,3): DIM t(10,6): LET r=20: LET cx=7: LET cy=10
+Check 77AF3DB8
+Auto 8224
+
+# Run-time Variables
+
+Var r: Num = 20
+Var o: Num = 0
+Var z: Num = 0
+Var a: Num = 64
+Var t: Num = 1
+Var cx: Num = 9
+Var cy: Num = 18
+Var tiempo: Num = 114
+Var te: Num = 2
+Var ox: Num = 7
+Var oy: Num = 8
+Var nz: Num = 5
+Var nl: Num = 9
+Var nt: Num = 2
+Var nc: Num = 5
+Var tir: Num = 1
+Var tiz: Num = 1
+Var tit: Num = 1
+Var cm: Num = 0
+Var cc: Num = 0
+Var sp: Num = 0
+Var maxc: Num = 5
+Var maxz: Num = 10
+Var zv: Num = 4
+Var tv: Num = 3
+Var lv: Num = 3
+Var rcl: Num = 2
+Var rct: Num = 10
+Var nivel: Num = 1
+Var maxtiempo: Num = 60
+Var op: Num = 0
+Var zc: Num = 149
+Var tn: Num = 3
+Var opt: Num = 4
+Var tx: Num = 8
+Var ty: Num = 9
+Var li: Num = 13
+Var col: Num = 0
+Var matado: Num = 0
+Var ob: Num = 4
+Var attempts: Num = 0
+Var m: NumArray(22, 32) = 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 29, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5, 0, 0, 0, 0, 49, 51, 0, 0, 21, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 6, 0, 0, 0, 0, 50, 52, 22, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 28, 0, 23, 0, 0, 0, 87, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 88, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 24, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 81, 0, 0, 0, 0, 0, 4, 83, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 82, 0, 0, 0, 0, 0, 0, 84, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 7, 0, 0, 0, 0, 0, 0, 0, 0, 85, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 8, 0, 0, 0, 0, 0, 0, 0, 0, 86, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 26, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 9, 0, 0, 0, 0, 0, 45, 47, 25, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 10, 0, 0, 0, 0, 0, 46, 48, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 27, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 89, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 90, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+Var c: NumArray(10, 3) = 1, 1, 5, 1, 9, 4, 3, 3, 5, 4, 13, 5, 2, 16, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+Var z: NumArray(10, 6) = 27, 9, 3, 0, 1, 3, 2, 10, 1, 0, 0, 4, 13, 13, 3, 0, 0, 1, 15, 5, 2, 0, 1, 1, 31, 19, 3, 8, 0, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+Var l: NumArray(20, 3) = 12, 3, 3, 10, 4, 3, 11, 5, 3, 11, 8, 3, 10, 16, 1, 9, 15, 3, 12, 18, 3, 9, 5, 3, 11, 1, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+Var t: NumArray(10, 6) = 8, 16, 2, 3, 10, 3, 8, 3, 2, 3, 10, 6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+Var w: NumFOR = 3, 2, 1, 7705, 2
+Var x: NumFOR = 11, 10, 1, 7655, 2
+Var y: NumFOR = 8, 7, 1, 1080, 2
+Var f: NumFOR = 65536, 65535, 1, 9061, 3
+Var b: NumFOR = 11, 10, 1, 2052, 2
+Var g: NumFOR = 6, 5, 1, 7010, 2
+Var i: NumFOR = 11, 10, 1, 9350, 2
+Var j: NumFOR = 4, 5, 1, 7540, 2
+Var k$: Str = ""
+
+# End Run-time Variables
+
+   1 DIM m(22,32): DIM c(10,3): DIM z(10,6): DIM l(20,3): DIM t(10,6): LET r=20: LET cx=7: LET cy=10: LET tiempo=0
    2 LET te=0: LET k$="": LET ox=0: LET oy=0: LET o=0: LET nz=0: LET nl=0: LET nt=0: LET nc=0: LET tir=0: LET tiz=0: LET tit=0: LET cm=0: LET cc=0: LET w=0: LET x=0: LET y=0: LET z=0: LET sp=0
-   3 LET maxc=5: LET maxz=10: LET zv=8: LET tv=3: LET zv=4: LET lv=3: LET rcl=2: LET rct=10: LET nivel=1: LET tiempo=60
+   3 LET maxc=5: LET maxz=10: LET zv=4: LET tv=3: LET zv=4: LET lv=3: LET rcl=2: LET rct=10: LET nivel=1: LET maxtiempo=60
   10 BORDER 7: PAPER 0: INK 7: CLS
   15 PAPER 7: INK 0: PRINT AT 10,7;"  INICIALIZANDO  ": GO SUB 1100
   20 GO SUB 9060: REM Definir UDG
@@ -13,9 +76,9 @@
 1060 NEXT y
 1070 PAPER 7: INK 0: FLASH 1: PRINT AT 10,7;"   PULSA UNA TECLA   ": FLASH 0: PAUSE 0
 1075 PAPER 0: INK 7: PRINT AT 10,7;"                     "
-1080 FOR y=2 to 7: PRINT AT y,7;"                       ": NEXT y
+1080 FOR y=2 TO 7: PRINT AT y,7;"                       ": NEXT y
 1090 RETURN
-1100 REM Mostrar información del nivel
+1100 REM Mostrar informaci\#1953n del nivel
 1110 PAPER 1: INK 7
 1120 PRINT AT 2,7;"NIVEL ";nivel;"                "
 1130 PRINT AT 3,7;"CIUDADANOS: ";maxc;"          "
@@ -26,7 +89,7 @@
 1180 PRINT AT 6,7;"PRECIOS: ";
 1190 IF rcl=2 THEN PRINT "BAJOS         "
 1200 IF rcl=4 THEN PRINT "ALTOS         "
-1210 PRINT AT 7,7;"TIEMPO A AGUANTAR: ";tiempo;"  "
+1210 PRINT AT 7,7;"TIEMPO A AGUANTAR: ";maxtiempo;"  "
 1220 PAPER 0: RETURN
 2000 REM Colocar ciudadanos inicialmente
 2001 FOR b=1 TO maxc
@@ -74,7 +137,7 @@
 7010 FOR g=1 TO nz
 7015 IF INKEY$=" " THEN LET sp=1
 7020 IF z(g,4)>0 THEN LET z(g,4)=z(g,4)-1: IF z(g,4)>0 THEN GO TO 7050: REM Decrementa el contador de movimientos. Si no es cero no hace nada.
-7030 IF z(g,1)<=1 THEN GO SUB 7080: GO TO 7050: REM Si está a la izquierda, lo hace invencible y parpadea
+7030 IF z(g,1)<=1 THEN GO SUB 7080: GO TO 7050: REM Si est\#195\r a la izquierda, lo hace invencible y parpadea
 7031 IF m(z(g,2),z(g,1)-1)>0 OR m(z(g,2)+1,z(g,1)-1)>0 THEN GO TO 7040: REM Si hay un objeto a la izquierda, va la deteccion de colisiones
 7032 LET ox=z(g,1): LET oy=z(g,2): LET m(oy,ox)=0: LET m(oy+1,ox)=0: REM Vacia en el mapa la casilla actual
 7033 GO SUB 8400: LET oy=oy+1: GO SUB 8400: REM Repinta las casillas actuales
@@ -91,7 +154,7 @@
 7086 RETURN
 7100 REM Zombie encuentra objeto
 7110 LET col=7: LET matado=0: LET ob=m(z(g,2),z(g,1)-1): IF ob=0 OR ob>80 THEN LET ob=m(z(g,2)+1,z(g,1)-1): REM ob = objeto colisionado
-7115 IF ob=0 OR ob>80 THEN RETURN: REM No colisiona con otros zombies
+7115 IF ob=0 OR ob>80 THEN RETURN : REM No colisiona con otros zombies
 7120 IF ob<=20 THEN LET t=INT ((ob+1)/2): LET c(t,3)=c(t,3)-1: LET col=0: GO TO 7150: REM Ciudadano
 7130 IF ob<=40 THEN LET t=ob-20: LET l(t,3)=l(t,3)-1: LET col=4: GO TO 7150: REM Ladrillo
 7140 IF ob<=80 THEN LET t=INT ((ob-41)/4)+1: LET t(t,4)=t(t,4)-1: LET col=t(t,3): GO TO 7150: REM Torreta
@@ -104,11 +167,12 @@
 7165 FLASH 0: OVER 1: INK z(g,3): PRINT AT z(g,2),z(g,1);" ";AT z(g,2)+1,z(g,1);" ": OVER 0: REM Quita el flash
 7170 RETURN
 7200 REM Actualizar puntuacion, recursos y tiempo
+7201 LET tiempo=tiempo+1
 7205 IF INKEY$=" " THEN LET sp=1
 7210 IF tir>=2 THEN LET r=r+1: LET tir=0: IF r>100 THEN LET r=100: REM cada 2 ticks suben los recursos
 7220 IF tiz>=20 THEN LET tiz=0: GO SUB 5000: RETURN : REM cada 20 ticks sale un zombie
 7230 IF tit>=6 THEN LET tit=0: GO SUB 7500: RETURN : REM cada 6 ticks las torretas intentan disparar
-7240 INK 0: PAPER 7: PRINT AT 0,10;r;"   ": PAPER 0: LET tir=tir+1: LET tiz=tiz+1: LET tit=tit+1
+7240 INK 0: PAPER 7: PRINT AT 0,9;r;"   ";AT 0,13;"T:";tiempo: PAPER 0: LET tir=tir+1: LET tiz=tiz+1: LET tit=tit+1
 7250 FOR i=1 TO nt: LET t(i,5)=t(i,5)+1: NEXT i: RETURN
 7300 REM Controles del jugador
 7305 LET k$=INKEY$: IF k$="" AND sp=0 THEN RETURN
@@ -117,9 +181,9 @@
 7331 REM Modo de construccion
 7332 LET k$=INKEY$
 7334 BORDER INT (RND*6): LET cc=cc+1: IF cc=100 THEN GO SUB 8050: LET cm=0: LET cc=0: BORDER 7: RETURN
-7335 PAPER 7: INK 2: PRINT AT 0,16; FLASH 1;"CONST"; FLASH 0;" ";CHR$ (146);"=2, "+CHR$ (157)+"=20": PAPER 0
+7335 PAPER 7: INK 2: PRINT AT 0,13; FLASH 1;"CONSTRUC"; FLASH 0; INK 0;" ";CHR$ (146);"=2, "+CHR$ (157)+"=20": PAPER 0
 7350 LET ox=cx: LET oy=cy
-7351 IF k$=" " THEN IF cc>5 THEN GO SUB 8050: LET cm=0: LET cc=0: LET sp=0: PAPER 7: PRINT AT 0,16;"                ": PAPER 0: PRINT AT oy,ox;" ": GO SUB 8400: BORDER 7: RETURN: REM Salida del modo de construccion
+7351 IF k$=" " THEN IF cc>5 THEN GO SUB 8050: LET cm=0: LET cc=0: LET sp=0: PAPER 7: PRINT AT 0,16;"                ": PAPER 0: PRINT AT oy,ox;" ": GO SUB 8400: BORDER 7: RETURN : REM Salida del modo de construccion
 7360 IF k$="q" AND cy>1 THEN LET cy=cy-1
 7370 IF k$="a" AND cy<20 THEN LET cy=cy+1
 7380 IF k$="o" AND cx>7 THEN LET cx=cx-1
@@ -143,10 +207,10 @@
 7620 IF ob>20 AND ob<=40 THEN LET m(l(t,2),l(t,1))=0: LET ox=l(t,1): LET oy=l(t,2): GO SUB 8400: LET l(t,3)=0: GO SUB 9200
 7630 IF ob<=40 OR ob>80 THEN GO TO 7660: REM Procesamos torretas
 7640 LET m(t(t,2),t(t,1))=0: LET m(t(t,2)+1,t(t,1))=0: LET m(t(t,2),t(t,1)+1)=0: LET m(t(t,2)+1,t(t,1)+1)=0: LET ox=t(t,1): LET oy=t(t,2): LET t(t,4)=0
-7650 INK 6: PAPER 2: FLASH 1: PRINT AT t(t,2),t(t,1);chr$(161);chr$(162); AT t(t,2)+1,t(t,1);chr$(163);chr$(164)
-7655 FOR x=1 TO 10:BEEP 0.02,INT (RND*20):NEXT X
-7658 INK 7: PAPER 0: FLASH 0:PRINT AT t(t,2),t(t,1);"  "; AT t(t,2)+1,t(t,1);"  ": GO SUB 9300
-7660 BEEP 0.5,0: RETURN
+7650 INK 6: PAPER 2: FLASH 1: PRINT AT t(t,2),t(t,1);CHR$ (161);CHR$ (162);AT t(t,2)+1,t(t,1);CHR$ (163);CHR$ (164)
+7655 FOR x=1 TO 10: BEEP 0.02,INT (RND*20): NEXT X
+7658 INK 7: PAPER 0: FLASH 0: PRINT AT t(t,2),t(t,1);"  ";AT t(t,2)+1,t(t,1);"  ": GO SUB 9300
+7660 BEEP 0.05,0: RETURN
 7700 REM Disparo de torreta
 7705 FOR w=1 TO 2
 7710 FLASH 1: OVER 1: PAPER 0
@@ -184,7 +248,7 @@
 8421 PAPER 0: IF ox=6 THEN INK 4: PRINT AT oy,ox;CHR$ 160: RETURN
 8430 IF op=0 THEN PRINT AT oy,ox;" ": RETURN
 8440 IF op<=20 THEN LET ci=INT ((op+1)/2): IF c(ci,3)>0 THEN INK 0: PRINT AT oy,ox;CHR$ (143+op): RETURN
-8450 IF op<=40 THEN LET li=op-20: IF l(li,3)>0 THEN INK 7: BRIGHT 1: PRINT AT oy,ox;CHR$ 146: BRIGHT 0: RETURN
+8450 IF op<=40 THEN LET li=op-20: IF l(li,3)>0 THEN INK 6: BRIGHT 1: PRINT AT oy,ox;CHR$ 146: BRIGHT 0: RETURN
 8460 IF op<=80 THEN GO TO 8480
 8470 LET zn=INT ((op-81)/2)+1: IF z(zn,6)>0 THEN INK z(zn,3): LET zp=op-80-(zn-1)*2: PRINT AT oy,ox;CHR$ (147+2*z(zn,5)+zp-1): RETURN
 8480 LET tn=INT ((op-41)/4)+1: IF t(tn,4)>0 THEN INK t(tn,3): LET opt=op-40-(tn-1)*4: PRINT AT oy,ox;CHR$ (152+opt)
@@ -193,7 +257,7 @@
 8610 LET o=m(cy,cx): RETURN
 8700 REM Dibujar interfaz
 8710 INK 0: PAPER 7: PRINT AT 0,0;"Recursos:                       ";AT 21,0;"Movimiento: "+CHR$ (158)+"QAOP               "
-8720 INK 0: PRINT AT 21,20;"0";CHR$ 146: INK 1: PRINT AT 21,23;"1";CHR$ 157: INK 2: PRINT AT 21,26;"2";CHR$ 157: INK 3: PRINT AT 21,29;"3";CHR$ 157: PAPER 0: RETURN
+8720 INK 0: PRINT AT 21,20;"0"; INK 6; PAPER 0; BRIGHT 1;CHR$ 146: INK 1: PAPER 7: BRIGHT 0: PRINT AT 21,23;"1";CHR$ 157: INK 2: PRINT AT 21,26;"2";CHR$ 157: INK 3: PRINT AT 21,29;"3";CHR$ 157: PAPER 0: RETURN
 9000 REM Variables: a-dato leido, b-bucle ciudadanos, c-ciudadanos, z-zombies, l-ladrillos, t-torretas
 9010 REM g-bucle mover zombies, k-tecla pulsada, ox,oy-posicion anterior, m-mapa del juego
 9020 REM te-tipo de torreta, r-recursos, tir-tiempo (recursos), tiz-tiempo (zombies), tit-tiempo (torretas), cx,cy-posicion cursor, o-ocupado
@@ -215,7 +279,7 @@
 9061 RESTORE 9062: FOR F=65368 TO 65535: READ A: POKE F,A: NEXT F
 9062 DATA 56,68,68,68,56,124,186,186: REM 144 ciudadano
 9063 DATA 186,186,170,170,170,168,40,108
-9064 DATA 255, 129, 165, 153, 153, 165, 129, 255: REM 146 Ladrillo
+9064 DATA 255,129,165,153,153,165,129,255: REM 146 Ladrillo
 9065 DATA 12,18,114,18,12,252,12,12: REM 147 Zombie 1
 9066 DATA 12,12,20,36,68,68,36,116
 9067 DATA 12,18,114,18,12,252,12,12: REM 149 Zombie 2
@@ -230,10 +294,10 @@
 9076 DATA 0,0,0,0,0,0,66,126: REM 158 Espacio
 9077 DATA 129,90,36,90,90,36,90,129: REM 159 Cursor
 9078 DATA 240,248,248,240,240,248,248,240: REM 160 Separador
-9079 DATA 1, 226, 90, 36, 16, 16, 96, 128: REM 161-164 Explosion
-9080 DATA 4, 138, 178, 68, 8, 8, 6, 1
-9081 DATA 64, 48, 8, 16, 16, 39, 72, 48
-9082 DATA 6, 8, 8, 4, 20, 42, 166, 64
+9079 DATA 1,226,90,36,16,16,96,128: REM 161-164 Explosion
+9080 DATA 4,138,178,68,8,8,6,1
+9081 DATA 64,48,8,16,16,39,72,48
+9082 DATA 6,8,8,4,20,42,166,64
 9090 RETURN
 9100 REM Reindexar ciudadanos
 9110 LET j=1
@@ -241,7 +305,7 @@
 9120 IF c(i,3)>0 THEN LET c(j,1)=c(i,1): LET c(j,2)=c(i,2): LET c(j,3)=c(i,3): LET m(c(j,2),c(j,1))=j*2-1: LET m(c(j,2)+1,c(j,1))=j*2: LET j=j+1
 9125 NEXT i
 9130 FOR i=j TO maxc: LET c(i,1)=0: LET c(i,2)=0: LET c(i,3)=0: NEXT i
-9135 LET nc=j-1: REM Actualiza el número de ciudadanos vivos
+9135 LET nc=j-1: REM Actualiza el n\#195\#186mero de ciudadanos vivos
 9140 RETURN
 9200 REM Reindexar ladrillos
 9210 LET j=1
@@ -249,7 +313,7 @@
 9230 IF l(i,3)>0 THEN LET l(j,1)=l(i,1): LET l(j,2)=l(i,2): LET l(j,3)=l(i,3): LET m(l(j,2),l(j,1))=20+j: LET j=j+1
 9240 NEXT i
 9250 FOR i=j TO 20: LET l(i,1)=0: LET l(i,2)=0: LET l(i,3)=0: NEXT i
-9260 LET nl=j-1: REM Actualiza el número de ladrillos
+9260 LET nl=j-1: REM Actualiza el n\#195\#186mero de ladrillos
 9270 RETURN
 9300 REM Reindexar torretas
 9310 LET j=1
@@ -257,7 +321,7 @@
 9330 IF t(i,4)>0 THEN LET t(j,1)=t(i,1): LET t(j,2)=t(i,2): LET t(j,3)=t(i,3): LET t(j,4)=t(i,4): LET t(j,5)=t(i,5): LET t(j,6)=t(i,6): LET m(t(j,2),t(j,1))=40+(j*4)+1: LET m(t(j,2)+1,t(j,1))=40+(j*4)+2: LET m(t(j,2),t(j,1)+1)=40+(j*4)+3: LET m(t(j,2)+1,t(j,1)+1)=40+(j*4)+4: LET j=j+1
 9340 NEXT i
 9350 FOR i=j TO 10: LET t(i,1)=0: LET t(i,2)=0: LET t(i,3)=0: LET t(i,4)=0: LET t(i,5)=0: LET t(i,6)=0: NEXT i
-9360 LET nt=j-1: REM Actualiza el número de torretas
+9360 LET nt=j-1: REM Actualiza el n\#195\#186mero de torretas
 9370 RETURN
 9400 REM Recolocar zombie
 9410 LET attempts=0
