@@ -1,10 +1,10 @@
-   1 DIM m(22,32): DIM c(10,3): DIM z(10,6): DIM l(20,3): DIM t(10,6): LET r=20: LET cx=7: LET cy=10: LET tiempo=0
+   1 DIM m(23,32): DIM c(10,3): DIM z(10,6): DIM l(20,3): DIM t(10,6): LET r=20: LET cx=7: LET cy=10: LET tiempo=0
    2 LET te=0: LET k$="": LET ox=0: LET oy=0: LET o=0: LET nz=0: LET nl=0: LET nt=0: LET nc=0: LET tir=0: LET tiz=0: LET tit=0: LET cm=0: LET cc=0: LET w=0: LET x=0: LET y=0: LET z=0: LET sp=0
    3 LET maxc=5: LET maxz=10: LET zv=4: LET tv=3: LET zv=4: LET lv=3: LET rcl=2: LET rct=10: LET nivel=1: LET maxtiempo=60
   10 BORDER 7: PAPER 0: INK 7: CLS
   15 PAPER 7: INK 0: PRINT AT 10,7;"  INICIALIZANDO  ": GO SUB 1100
   20 GO SUB 9060: REM Definir UDG
-  25 RANDOMIZE : GO SUB 1000: GO SUB 2000: GO SUB 2050: GO SUB 8700: GO TO 6000
+  25 RANDOMIZE 0: GO SUB 1000: GO SUB 2000: GO SUB 2050: GO SUB 8700: GO TO 6000
 1000 REM Inicializar pantalla
 1005 INK 4
 1010 FOR y=0 TO 21
@@ -15,7 +15,7 @@
 1075 PAPER 0: INK 7: PRINT AT 10,7;"                     "
 1080 FOR y=2 TO 7: PRINT AT y,7;"                       ": NEXT y
 1090 RETURN
-1100 REM Mostrar informaci\#1953n del nivel
+1100 REM Mostrar informacion del nivel
 1110 PAPER 1: INK 7
 1120 PRINT AT 2,7;"NIVEL ";nivel;"                "
 1130 PRINT AT 3,7;"CIUDADANOS: ";maxc;"          "
@@ -31,16 +31,16 @@
 2000 REM Colocar ciudadanos inicialmente
 2001 FOR b=1 TO maxc
 2002 LET c(b,1)=INT (RND*5)+1: LET c(b,2)=INT (RND*19)+1: LET c(b,3)=5
-2010 IF m(c(b,2),c(b,1))>0 OR m(c(b,2)+1,c(b,1))>0 THEN GO TO 2002
+2010 IF m(c(b,2)+1,c(b,1))>0 OR m(c(b,2)+2,c(b,1))>0 THEN GO TO 2002
 2020 PAPER 4: INK 0: PRINT AT c(b,2),c(b,1);CHR$ 144;AT c(b,2)+1,c(b,1);CHR$ 145
-2030 LET m(c(b,2),c(b,1))=b*2-1: LET m(c(b,2)+1,c(b,1))=b*2: LET nc=nc+1: NEXT b: RETURN
+2030 LET m(c(b,2)+1,c(b,1))=b*2-1: LET m(c(b,2)+2,c(b,1))=b*2: LET nc=nc+1: NEXT b: RETURN
 2050 REM Colocar ladrillos inicialmente
 2051 LET nl=0
 2052 FOR b=1 TO 10
 2053 LET l(b,1)=INT (RND*5)+8: LET l(b,2)=INT (RND*20)+1: LET l(b,3)=3
-2054 IF m(l(b,2),l(b,1))>0 THEN GO TO 2053
+2054 IF m(l(b,2)+1,l(b,1))>0 THEN GO TO 2053
 2055 PAPER 0: INK 6: BRIGHT 1: PRINT AT l(b,2),l(b,1);CHR$ 146: BRIGHT 0
-2056 LET m(l(b,2),l(b,1))=20+b: LET nl=nl+1
+2056 LET m(l(b,2)+1,l(b,1))=20+b: LET nl=nl+1
 2057 NEXT b
 2058 RETURN
 3000 REM Comprobar si podemos colocar objeto
@@ -48,23 +48,23 @@
 3020 GO SUB 8600: IF o=0 THEN GO SUB 3100
 3030 RETURN
 3100 REM Colocar objeto en el mapa
-3110 IF te=0 AND nl<20 THEN LET r=r-rcl: INK 6: BRIGHT 1: PRINT AT cy,cx;CHR$ 146: BRIGHT 0: LET m(cy,cx)=20+nl+1: LET nl=nl+1: LET l(nl,1)=cx: LET l(nl,2)=cy: LET l(nl,3)=lv
+3110 IF te=0 AND nl<20 THEN LET r=r-rcl: INK 6: BRIGHT 1: PRINT AT cy,cx;CHR$ 146: BRIGHT 0: LET m(cy+1,cx)=20+nl+1: LET nl=nl+1: LET l(nl,1)=cx: LET l(nl,2)=cy: LET l(nl,3)=lv
 3120 IF te>0 AND nt<10 AND oy<20 THEN GO SUB 3200: IF o=0 THEN GO SUB 3300
 3130 GO SUB 7240: BEEP 0.1,50: RETURN
 3200 REM Comprobar si las celdas adyacentes estan libres para colocar torreta
 3210 LET o=0: IF cx+1>31 OR cy+1>21 THEN LET o=1: RETURN
-3220 IF m(cy,cx)>0 OR m(cy,cx+1)>0 OR m(cy+1,cx)>0 OR m(cy+1,cx+1)>0 THEN LET o=1
+3220 IF m(cy+1,cx)>0 OR m(cy+1,cx+1)>0 OR m(cy+2,cx)>0 OR m(cy+2,cx+1)>0 THEN LET o=1
 3230 RETURN
 3300 REM Colocar torreta
 3310 LET r=r-rct: INK te: PRINT AT cy,cx;CHR$ 153;CHR$ 155;AT cy+1,cx;CHR$ 154;CHR$ 156
-3320 LET m(cy,cx)=40+(nt*4)+1: LET m(cy+1,cx)=40+(nt*4)+2: LET m(cy,cx+1)=40+(nt*4)+3: LET m(cy+1,cx+1)=40+(nt*4)+4
+3320 LET m(cy+1,cx)=40+(nt*4)+1: LET m(cy+2,cx)=40+(nt*4)+2: LET m(cy+1,cx+1)=40+(nt*4)+3: LET m(cy+2,cx+1)=40+(nt*4)+4
 3330 LET nt=nt+1: LET t(nt,1)=cx: LET t(nt,2)=cy: LET t(nt,3)=te: LET t(nt,4)=tv: LET t(nt,5)=0: LET t(nt,6)=8: REM Inicializa torreta con vida tv y 8 usos
 3340 RETURN
 5000 REM Generar zombie
 5010 IF nz>=maxz THEN RETURN
 5020 LET nz=nz+1: LET z(nz,1)=31: LET z(nz,2)=INT (RND*19)+1: LET z(nz,3)=INT (RND*3)+1: LET z(nz,4)=10: LET z(nz,5)=0: LET z(nz,6)=zv: REM Inicializa zombie con vida zv
-5030 IF m(z(nz,2),z(nz,1))>0 OR m(z(nz,2)+1,z(nz,1))>0 THEN LET nz=nz-1: RETURN
-5040 LET g=nz: GO SUB 8150: LET m(z(nz,2),z(nz,1))=80+(nz*2)-1: LET m(z(nz,2)+1,z(nz,1))=80+(nz*2)
+5030 IF m(z(nz,2)+1,z(nz,1))>0 OR m(z(nz,2)+2,z(nz,1))>0 THEN LET nz=nz-1: RETURN
+5040 LET g=nz: GO SUB 8150: LET m(z(nz,2)+1,z(nz,1))=80+(nz*2)-1: LET m(z(nz,2)+2,z(nz,1))=80+(nz*2)
 5050 BEEP 0.1,20: RETURN
 6000 REM Bucle principal del juego
 6010 IF cm=0 THEN GO SUB 7000: GO SUB 7200: GO SUB 7500
@@ -74,13 +74,13 @@
 7010 FOR g=1 TO nz
 7015 IF INKEY$=" " THEN LET sp=1
 7020 IF z(g,4)>0 THEN LET z(g,4)=z(g,4)-1: IF z(g,4)>0 THEN GO TO 7050: REM Decrementa el contador de movimientos. Si no es cero no hace nada.
-7030 IF z(g,1)<=1 THEN GO SUB 7080: GO TO 7050: REM Si est\#195\r a la izquierda, lo hace invencible y parpadea
-7031 IF m(z(g,2),z(g,1)-1)>0 OR m(z(g,2)+1,z(g,1)-1)>0 THEN GO TO 7040: REM Si hay un objeto a la izquierda, va la deteccion de colisiones
-7032 LET ox=z(g,1): LET oy=z(g,2): LET m(oy,ox)=0: LET m(oy+1,ox)=0: REM Vacia en el mapa la casilla actual
+7030 IF z(g,1)<=1 THEN GO SUB 7080: GO TO 7050: REM Si esta la izquierda, lo hace invencible y parpadea
+7031 IF m(z(g,2)+1,z(g,1)-1)>0 OR m(z(g,2)+2,z(g,1)-1)>0 THEN GO TO 7040: REM Si hay un objeto a la izquierda, va la deteccion de colisiones
+7032 LET ox=z(g,1): LET oy=z(g,2): LET m(oy+1,ox)=0: LET m(oy+2,ox)=0: REM Vacia en el mapa la casilla actual
 7033 GO SUB 8400: LET oy=oy+1: GO SUB 8400: REM Repinta las casillas actuales
 7034 LET z(g,1)=z(g,1)-1: REM Decrementa la X
 7035 LET z(g,5)=z(g,5)+1: IF z(g,5)=3 THEN LET z(g,5)=0: REM Cambia el paso de animacion
-7036 GO SUB 8150: LET m(z(g,2),z(g,1))=80+(g*2)-1: LET m(z(g,2)+1,z(g,1))=80+(g*2): BEEP 0.05,10: REM Dibuja de nuevo el zombie y da un pitido
+7036 GO SUB 8150: LET m(z(g,2)+1,z(g,1))=80+(g*2)-1: LET m(z(g,2)+2,z(g,1))=80+(g*2): BEEP 0.05,10: REM Dibuja de nuevo el zombie y da un pitido
 7037 GO TO 7050: REM Salta al NEXT
 7040 GO SUB 7100: GO TO 7050: REM Procesa colisiones
 7050 NEXT g: REM Siguiente zombie
@@ -90,7 +90,7 @@
 7084 FLASH 1: PAPER 4: INK z(g,3): PRINT AT z(g,2),z(g,1);CHR$ (147+z(g,5)*2);AT z(g,2)+1,z(g,1);CHR$ (148+z(g,5)*2): FLASH 0
 7086 RETURN
 7100 REM Zombie encuentra objeto
-7110 LET col=7: LET matado=0: LET ob=m(z(g,2),z(g,1)-1): IF ob=0 OR ob>80 THEN LET ob=m(z(g,2)+1,z(g,1)-1): REM ob = objeto colisionado
+7110 LET col=7: LET matado=0: LET ob=m(z(g,2)+1,z(g,1)-1): IF ob=0 OR ob>80 THEN LET ob=m(z(g,2)+2,z(g,1)-1): REM ob = objeto colisionado
 7115 IF ob=0 OR ob>80 THEN RETURN : REM No colisiona con otros zombies
 7120 IF ob<=20 THEN LET t=INT ((ob+1)/2): LET c(t,3)=c(t,3)-1: LET col=0: GO TO 7150: REM Ciudadano
 7130 IF ob<=40 THEN LET t=ob-20: LET l(t,3)=l(t,3)-1: LET col=4: GO TO 7150: REM Ladrillo
@@ -102,7 +102,7 @@
 7158 IF (ob>40 AND ob<=80) THEN IF t(t,4)<=0 THEN LET matado=1: LET t(t,4)=0: REM Asegura que la vida no sea negativa
 7160 IF matado=1 THEN GO SUB 7600: REM Elimina objeto si ya no tiene vida
 7165 FLASH 0: OVER 1: INK z(g,3): PRINT AT z(g,2),z(g,1);" ";AT z(g,2)+1,z(g,1);" ": OVER 0: REM Quita el flash
-7170 RETURN
+7170 RETURN 
 7200 REM Actualizar puntuacion, recursos y tiempo
 7201 LET tiempo=tiempo+1
 7205 IF INKEY$=" " THEN LET sp=1
@@ -140,10 +140,10 @@
 7590 NEXT i
 7592 RETURN
 7600 REM Eliminar objeto
-7610 IF ob<=20 THEN LET m(c(t,2),c(t,1))=0: LET m(c(t,2)+1,c(t,1))=0: LET ox=c(t,1): LET oy=c(t,2): GO SUB 8400: LET oy=oy+1: GO SUB 8400: LET c(t,3)=0: LET nc=nc-1: GO SUB 9100
-7620 IF ob>20 AND ob<=40 THEN LET m(l(t,2),l(t,1))=0: LET ox=l(t,1): LET oy=l(t,2): GO SUB 8400: LET l(t,3)=0: GO SUB 9200
+7610 IF ob<=20 THEN LET m(c(t,2)+1,c(t,1))=0: LET m(c(t,2)+2,c(t,1))=0: LET ox=c(t,1): LET oy=c(t,2): GO SUB 8400: LET oy=oy+1: GO SUB 8400: LET c(t,3)=0: LET nc=nc-1: GO SUB 9100
+7620 IF ob>20 AND ob<=40 THEN LET m(l(t,2)+1,l(t,1))=0: LET ox=l(t,1): LET oy=l(t,2): GO SUB 8400: LET l(t,3)=0: GO SUB 9200
 7630 IF ob<=40 OR ob>80 THEN GO TO 7660: REM Procesamos torretas
-7640 LET m(t(t,2),t(t,1))=0: LET m(t(t,2)+1,t(t,1))=0: LET m(t(t,2),t(t,1)+1)=0: LET m(t(t,2)+1,t(t,1)+1)=0: LET ox=t(t,1): LET oy=t(t,2): LET t(t,4)=0
+7640 LET m(t(t,2)+1,t(t,1))=0: LET m(t(t,2)+2,t(t,1))=0: LET m(t(t,2)+1,t(t,1)+1)=0: LET m(t(t,2)+2,t(t,1)+1)=0: LET ox=t(t,1): LET oy=t(t,2)
 7650 INK 6: PAPER 2: FLASH 1: PRINT AT t(t,2),t(t,1);CHR$ (161);CHR$ (162);AT t(t,2)+1,t(t,1);CHR$ (163);CHR$ (164)
 7655 FOR x=1 TO 10: BEEP 0.02,INT (RND*20): NEXT X
 7658 INK 7: PAPER 0: FLASH 0: PRINT AT t(t,2),t(t,1);"  ";AT t(t,2)+1,t(t,1);"  ": GO SUB 9300
@@ -180,7 +180,7 @@
 8163 PRINT AT z(g,2),z(g,1);CHR$ zc;AT z(g,2)+1,z(g,1);CHR$ (zc+1): REM Imprime
 8164 RETURN
 8400 REM Comprobar y redibujar objeto en oy, ox
-8410 LET op=m(oy,ox)
+8410 LET op=m(oy+1,ox)
 8420 IF ox<6 THEN PAPER 4: GO TO 8430
 8421 PAPER 0: IF ox=6 THEN INK 4: PRINT AT oy,ox;CHR$ 160: RETURN
 8430 IF op=0 THEN PRINT AT oy,ox;" ": RETURN
@@ -191,7 +191,7 @@
 8480 LET tn=INT ((op-41)/4)+1: IF t(tn,4)>0 THEN INK t(tn,3): LET opt=op-40-(tn-1)*4: PRINT AT oy,ox;CHR$ (152+opt)
 8510 RETURN
 8600 REM Comprobar si la celda esta ocupada en cy, cx
-8610 LET o=m(cy,cx): RETURN
+8610 LET o=m(cy+1,cx): RETURN
 8700 REM Dibujar interfaz
 8710 INK 0: PAPER 7: PRINT #0;AT 0,0;"Recursos:                       "
 8715 PRINT #0;AT 1,0;"Controles: "+CHR$ (158)+"QAOP     0"; INK 6; PAPER 0; BRIGHT 1;CHR$ 146; INK 1; PAPER 7; BRIGHT 0; " 1";CHR$ 157; INK 2; " 2";CHR$ 157; INK 3; " 3";CHR$ 157
@@ -214,7 +214,7 @@
 9050 REM Ladrillos: l(nl,1)=x, l(nl,2)=y, l(nl,3)=vida
 9051 REM Zombies: z(nz,1)=x, z(nz,2)=y, z(nz,3)=color, z(nz,4)=contador de movimiento, z(nz,5)=animacion, z(nz,6)=vida
 9060 REM UDGs: 144-145 Ciudadano, 146 Ladrillo, 147-152 Zombies (2 chars por animacion), 153-156 Torreta (2x2), 157 Torreta pequena
-9061 RESTORE 9062: FOR F=65368 TO 65535: READ A: POKE F,A: NEXT F
+9061 RESTORE 9062: FOR F=65368 TO 65535: READ A: POKE F,A: NEXT F: RETURN
 9062 DATA 56,68,68,68,56,124,186,186: REM 144 ciudadano
 9063 DATA 186,186,170,170,170,168,40,108
 9064 DATA 255,129,165,153,153,165,129,255: REM 146 Ladrillo
@@ -236,37 +236,36 @@
 9080 DATA 4,138,178,68,8,8,6,1
 9081 DATA 64,48,8,16,16,39,72,48
 9082 DATA 6,8,8,4,20,42,166,64
-9090 RETURN
 9100 REM Reindexar ciudadanos
 9110 LET j=1
 9115 FOR i=1 TO maxc
-9120 IF c(i,3)>0 THEN LET c(j,1)=c(i,1): LET c(j,2)=c(i,2): LET c(j,3)=c(i,3): LET m(c(j,2),c(j,1))=j*2-1: LET m(c(j,2)+1,c(j,1))=j*2: LET j=j+1
+9120 IF c(i,3)>0 THEN LET c(j,1)=c(i,1): LET c(j,2)=c(i,2): LET c(j,3)=c(i,3): LET m(c(j,2)+1,c(j,1))=j*2-1: LET m(c(j,2)+2,c(j,1))=j*2: LET j=j+1
 9125 NEXT i
 9130 FOR i=j TO maxc: LET c(i,1)=0: LET c(i,2)=0: LET c(i,3)=0: NEXT i
-9135 LET nc=j-1: REM Actualiza el n\#195\#186mero de ciudadanos vivos
+9135 LET nc=j-1: REM Actualiza el numero de ciudadanos vivos
 9140 RETURN
 9200 REM Reindexar ladrillos
 9210 LET j=1
 9220 FOR i=1 TO nl
-9230 IF l(i,3)>0 THEN LET l(j,1)=l(i,1): LET l(j,2)=l(i,2): LET l(j,3)=l(i,3): LET m(l(j,2),l(j,1))=20+j: LET j=j+1
+9230 IF l(i,3)>0 THEN LET l(j,1)=l(i,1): LET l(j,2)=l(i,2): LET l(j,3)=l(i,3): LET m(l(j,2)+1,l(j,1))=20+j: LET j=j+1
 9240 NEXT i
 9250 FOR i=j TO 20: LET l(i,1)=0: LET l(i,2)=0: LET l(i,3)=0: NEXT i
-9260 LET nl=j-1: REM Actualiza el n\#195\#186mero de ladrillos
+9260 LET nl=j-1: REM Actualiza el numero de ladrillos
 9270 RETURN
 9300 REM Reindexar torretas
 9310 LET j=1
 9320 FOR i=1 TO nt
-9330 IF t(i,4)>0 THEN LET t(j,1)=t(i,1): LET t(j,2)=t(i,2): LET t(j,3)=t(i,3): LET t(j,4)=t(i,4): LET t(j,5)=t(i,5): LET t(j,6)=t(i,6): LET m(t(j,2),t(j,1))=40+(j*4)+1: LET m(t(j,2)+1,t(j,1))=40+(j*4)+2: LET m(t(j,2),t(j,1)+1)=40+(j*4)+3: LET m(t(j,2)+1,t(j,1)+1)=40+(j*4)+4: LET j=j+1
+9330 IF t(i,4)>0 THEN LET t(j,1)=t(i,1): LET t(j,2)=t(i,2): LET t(j,3)=t(i,3): LET t(j,4)=t(i,4): LET t(j,5)=t(i,5): LET t(j,6)=t(i,6): LET m(t(j,2)+1,t(j,1))=40+(j*4)+1: LET m(t(j,2)+2,t(j,1))=40+(j*4)+2: LET m(t(j,2)+1,t(j,1)+1)=40+(j*4)+3: LET m(t(j,2)+2,t(j,1)+1)=40+(j*4)+4: LET j=j+1
 9340 NEXT i
 9350 FOR i=j TO 10: LET t(i,1)=0: LET t(i,2)=0: LET t(i,3)=0: LET t(i,4)=0: LET t(i,5)=0: LET t(i,6)=0: NEXT i
-9360 LET nt=j-1: REM Actualiza el n\#195\#186mero de torretas
+9360 LET nt=j-1: REM Actualiza el numero de torretas
 9370 RETURN
 9400 REM Recolocar zombie
 9410 LET attempts=0
 9420 LET z(j,1)=31: LET z(j,2)=INT (RND*19)+1: LET z(j,3)=INT (RND*3)+1: LET z(j,4)=10: LET z(j,6)=zv
-9430 IF m(z(j,2),z(j,1))>0 OR m(z(j,2)+1,z(j,1))>0 THEN LET attempts=attempts+1: IF attempts<10 THEN GO TO 9420
+9430 IF m(z(j,2)+1,z(j,1))>0 OR m(z(j,2)+2,z(j,1))>0 THEN LET attempts=attempts+1: IF attempts<10 THEN GO TO 9420
 9440 IF attempts>=10 THEN LET z(j,1)=31: LET z(j,2)=0: LET z(j,3)=0: LET z(j,4)=0: LET z(j,6)=0: RETURN
-9450 LET m(z(j,2),z(j,1))=80+(j*2)-1: LET m(z(j,2)+1,z(j,1))=80+(j*2): LET g=j: GO SUB 8150
+9450 LET m(z(j,2)+1,z(j,1))=80+(j*2)-1: LET m(z(j,2)+2,z(j,1))=80+(j*2): LET g=j: GO SUB 8150
 9460 RETURN
 9994 REM
 9995 REM El programa utiliza BASIC de ZX Spectrum, con lo cual no puede utilizar las ordenes ELSE, END IF, o el operador MOD
