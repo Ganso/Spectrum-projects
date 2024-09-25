@@ -1,9 +1,9 @@
-   1 DIM m(23,32): DIM c(10,3): DIM z(10,6): DIM l(20,3): DIM t(10,6): LET r=20: LET cx=7: LET cy=10: LET tiempo=0
+   1 CLEAR 65367: DIM m(23,32): DIM c(10,3): DIM z(10,6): DIM l(20,3): DIM t(10,6): LET r=20: LET cx=7: LET cy=10: LET tiempo=0
    2 LET te=0: LET k$="": LET ox=0: LET oy=0: LET o=0: LET nz=0: LET nl=0: LET nt=0: LET nc=0: LET tir=0: LET tiz=0: LET tit=0: LET cm=0: LET cc=0: LET w=0: LET x=0: LET y=0: LET z=0: LET sp=0
    3 LET maxc=5: LET maxz=10: LET zv=4: LET tv=3: LET zv=4: LET lv=3: LET rcl=2: LET rct=10: LET nivel=1: LET maxtiempo=60
   10 BORDER 7: PAPER 0: INK 7: CLS
   15 PAPER 7: INK 0: PRINT AT 10,7;"  INICIALIZANDO  ": GO SUB 1100
-  20 GO SUB 9060: REM Definir UDG
+  20 GO SUB 9500: GO SUB 9060:  REM Definir UDG
   25 RANDOMIZE 0: GO SUB 1000: GO SUB 2000: GO SUB 2050: GO SUB 8700: GO TO 6000
 1000 REM Inicializar pantalla
 1005 INK 4
@@ -79,7 +79,7 @@
 7032 LET ox=z(g,1): LET oy=z(g,2): LET m(oy+1,ox)=0: LET m(oy+2,ox)=0: REM Vacia en el mapa la casilla actual
 7033 GO SUB 8400: LET oy=oy+1: GO SUB 8400: REM Repinta las casillas actuales
 7034 LET z(g,1)=z(g,1)-1: REM Decrementa la X
-7035 LET z(g,5)=z(g,5)+1: IF z(g,5)=3 THEN LET z(g,5)=0: REM Cambia el paso de animacion
+7035 REM ******+ LET z(g,5)=z(g,5)+1: IF z(g,5)=3 THEN LET z(g,5)=0: REM Cambia el paso de animacion
 7036 GO SUB 8150: LET m(z(g,2)+1,z(g,1))=80+(g*2)-1: LET m(z(g,2)+2,z(g,1))=80+(g*2): BEEP 0.05,10: REM Dibuja de nuevo el zombie y da un pitido
 7037 GO TO 7050: REM Salta al NEXT
 7040 GO SUB 7100: GO TO 7050: REM Procesa colisiones
@@ -102,7 +102,7 @@
 7158 IF (ob>40 AND ob<=80) THEN IF t(t,4)<=0 THEN LET matado=1: LET t(t,4)=0: REM Asegura que la vida no sea negativa
 7160 IF matado=1 THEN GO SUB 7600: REM Elimina objeto si ya no tiene vida
 7165 FLASH 0: OVER 1: INK z(g,3): PRINT AT z(g,2),z(g,1);" ";AT z(g,2)+1,z(g,1);" ": OVER 0: REM Quita el flash
-7170 RETURN 
+7170 RETURN
 7200 REM Actualizar puntuacion, recursos y tiempo
 7201 LET tiempo=tiempo+1
 7205 IF INKEY$=" " THEN LET sp=1
@@ -118,9 +118,9 @@
 7331 REM Modo de construccion
 7332 LET k$=INKEY$
 7334 BORDER INT (RND*6): LET cc=cc+1: IF cc=100 THEN GO SUB 8050: LET cm=0: LET cc=0: BORDER 7: RETURN
-7335 PRINT #0;AT 0,0;PAPER 2;INK 7;"CONSTRUCION";PAPER 7;INK 0;" - R: ";r;"   ";CHR$ (146);"=2, "+CHR$ (157)+"=20";PAPER 0;INK 7;
+7335 PRINT #0;AT 0,0; PAPER 2; INK 7;"CONSTRUCION"; PAPER 7; INK 0;" - R: ";r;"   ";CHR$ (146);"=2, "+CHR$ (157)+"=20"; PAPER 0; INK 7;
 7350 LET ox=cx: LET oy=cy
-7351 IF k$=" " THEN IF cc>5 THEN GO SUB 8050: LET cm=0: LET cc=0: LET sp=0: PRINT #0;AT 0,0;PAPER 7;INK 0;"Recursos:                       ";PAPER 0;INK 7: PRINT AT oy,ox;" ": GO SUB 8400: BORDER 7: RETURN : REM Salida del modo de construccion
+7351 IF k$=" " THEN IF cc>5 THEN GO SUB 8050: LET cm=0: LET cc=0: LET sp=0: PRINT #0;AT 0,0; PAPER 7; INK 0;"Recursos:                       "; PAPER 0; INK 7: PRINT AT oy,ox;" ": GO SUB 8400: BORDER 7: RETURN : REM Salida del modo de construccion
 7360 IF k$="q" AND cy>0 THEN LET cy=cy-1
 7370 IF k$="a" AND cy<20 THEN LET cy=cy+1
 7380 IF k$="o" AND cx>7 THEN LET cx=cx-1
@@ -174,11 +174,13 @@
 8050 REM Borrar cursor
 8060 PRINT AT oy,ox;" ": RETURN
 8150 REM Dibujar zombie numero g
+8155 POKE 23675,8: POKE 23676,254
 8160 IF z(g,1)<6 THEN PAPER 4: GO TO 8162: REM Fondo segun si esta o no a la izquierda
 8161 PAPER 0
-8162 INK z(g,3): LET zc=147+z(g,5)*2: REM Calcula tinta y animacion
-8163 PRINT AT z(g,2),z(g,1);CHR$ zc;AT z(g,2)+1,z(g,1);CHR$ (zc+1): REM Imprime
-8164 RETURN
+8162 INK 4: PRINT AT z(g,2),z(g,1);CHR$ 144
+8163 INK z(g,3): PRINT AT z(g,2)+1,z(g,1);CHR$ 145
+8164 POKE 23675,88: POKE 23676,255
+8165 RETURN
 8400 REM Comprobar y redibujar objeto en oy, ox
 8410 LET op=m(oy+1,ox)
 8420 IF ox<6 THEN PAPER 4: GO TO 8430
@@ -187,14 +189,14 @@
 8440 IF op<=20 THEN LET ci=INT ((op+1)/2): IF c(ci,3)>0 THEN INK 0: PRINT AT oy,ox;CHR$ (143+op): RETURN
 8450 IF op<=40 THEN LET li=op-20: IF l(li,3)>0 THEN INK 6: BRIGHT 1: PRINT AT oy,ox;CHR$ 146: BRIGHT 0: RETURN
 8460 IF op<=80 THEN GO TO 8480
-8470 LET zn=INT ((op-81)/2)+1: IF z(zn,6)>0 THEN INK z(zn,3): LET zp=op-80-(zn-1)*2: PRINT AT oy,ox;CHR$ (147+2*z(zn,5)+zp-1): RETURN
+8470 LET zn=INT ((op-81)/2)+1: IF z(zn,6)>0 THEN INK 4: POKE 23675,8: POKE 23676,254: PRINT AT z(g,2),z(g,1);CHR$ 144: POKE 23675,88: POKE 23676,255: REM ****************
 8480 LET tn=INT ((op-41)/4)+1: IF t(tn,4)>0 THEN INK t(tn,3): LET opt=op-40-(tn-1)*4: PRINT AT oy,ox;CHR$ (152+opt)
 8510 RETURN
 8600 REM Comprobar si la celda esta ocupada en cy, cx
 8610 LET o=m(cy+1,cx): RETURN
 8700 REM Dibujar interfaz
 8710 INK 0: PAPER 7: PRINT #0;AT 0,0;"Recursos:                       "
-8715 PRINT #0;AT 1,0;"Controles: "+CHR$ (158)+"QAOP     0"; INK 6; PAPER 0; BRIGHT 1;CHR$ 146; INK 1; PAPER 7; BRIGHT 0; " 1";CHR$ 157; INK 2; " 2";CHR$ 157; INK 3; " 3";CHR$ 157
+8715 PRINT #0;AT 1,0;"Controles: "+CHR$ (158)+"QAOP     0"; INK 6; PAPER 0; BRIGHT 1;CHR$ 146; INK 1; PAPER 7; BRIGHT 0;" 1";CHR$ 157; INK 2;" 2";CHR$ 157; INK 3;" 3";CHR$ 157
 8717 PAPER 0: RETURN
 9000 REM Variables: a-dato leido, b-bucle ciudadanos, c-ciudadanos, z-zombies, l-ladrillos, t-torretas
 9010 REM g-bucle mover zombies, k-tecla pulsada, ox,oy-posicion anterior, m-mapa del juego
@@ -267,7 +269,34 @@
 9440 IF attempts>=10 THEN LET z(j,1)=31: LET z(j,2)=0: LET z(j,3)=0: LET z(j,4)=0: LET z(j,6)=0: RETURN
 9450 LET m(z(j,2)+1,z(j,1))=80+(j*2)-1: LET m(z(j,2)+2,z(j,1))=80+(j*2): LET g=j: GO SUB 8150
 9460 RETURN
-9994 REM
+9500 RESTORE 9501: FOR F=65032 TO 65199: READ A: POKE F,A: NEXT F
+9501 DATA 28,62,46,126,30,12,252,156
+9502 DATA 28,28,28,44,44,44,44,124
+9503 DATA 1,3,2,7,1,0,15,8
+9504 DATA 192,224,224,224,224,192,192,192
+9505 DATA 1,1,3,7,12,44,56,24
+9506 DATA 192,192,192,96,112,56,24,48
+9507 DATA 56,124,92,252,24,184,88,56
+9508 DATA 24,24,56,56,44,102,99,198
+9509 DATA 0,0,0,12,22,30,12,124
+9510 DATA 12,12,12,12,20,18,18,54
+9511 DATA 0,0,0,1,2,3,1,15
+9512 DATA 1,1,1,3,4,4,2,6
+9513 DATA 0,0,0,128,192,192,128,128
+9514 DATA 128,128,128,128,192,96,48,16
+9515 DATA 0,0,0,24,44,188,88,56
+9516 DATA 24,24,24,24,40,76,38,98
+9517 DATA 60,94,126,126,60,60,28,252
+9518 DATA 3,5,7,7,3,7,15,25
+9519 DATA 192,192,192,224,224,240,216,196
+9520 DATA 60,94,126,126,28,62,254,219
+9521 DATA 0,0,0,0,0,0,0,0
+9522 REM UDG en 65032 - Zombies - Uso: POKE 23675,8: POKE 23676,254
+9523 REM Zombie 1 - Quieto: 144/145 - Andar 146-147/148-149 - Morder 150/151 - Color 4/1
+9524 REM Zombie 2 - Quieto: 152/153 - Andar 154-155/156-157 - Morder 158/159 - Color 4/2
+9525 REM Zombie 3 - Quiero: 160/145 - Andar 161-162/148-149 - Morder 163/151 - Color 4/3
+9530 RETURN
+9994 REM .....................................................
 9995 REM El programa utiliza BASIC de ZX Spectrum, con lo cual no puede utilizar las ordenes ELSE, END IF, o el operador MOD
 9996 REM Se debe optimizar al maximo el uso de CPU, reduciendo los ciclos de reloj
 9997 REM El uso de memoria no es problema, asi que se pueden crear variables auxiliares si asi se optimiza el codigo
