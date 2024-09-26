@@ -1,4 +1,4 @@
-   1 CLEAR 65367: DIM m(23,32): DIM c(10,3): DIM z(10,6): DIM l(20,3): DIM t(10,6): LET r=20: LET cx=7: LET cy=10: LET tiempo=0
+   1 CLEAR 65031: DIM m(23,32): DIM c(10,3): DIM z(10,6): DIM l(20,3): DIM t(10,6): LET r=20: LET cx=7: LET cy=10: LET tiempo=0
    2 LET te=0: LET k$="": LET ox=0: LET oy=0: LET o=0: LET nz=0: LET nl=0: LET nt=0: LET nc=0: LET tir=0: LET tiz=0: LET tit=0: LET cm=0: LET cc=0: LET w=0: LET x=0: LET y=0: LET z=0: LET sp=0
    3 LET maxc=5: LET maxz=10: LET tv=3: LET lv=3: LET rcl=2: LET rct=10: LET nivel=1: LET maxtiempo=60
   10 BORDER 7: PAPER 0: INK 7: CLS
@@ -52,12 +52,12 @@
 3210 LET o=0: IF cx+1>31 OR cy+1>21 THEN LET o=1: RETURN
 3220 IF m(cy+1,cx)>0 OR m(cy+1,cx+1)>0 OR m(cy+2,cx)>0 OR m(cy+2,cx+1)>0 THEN LET o=1
 3230 RETURN
-3300 REM Colocar torreta
+3300 REM Colocar torreta de color te en cx, cy
 3310 LET m(cy+1,cx)=40+(nt*4)+1: LET m(cy+2,cx)=40+(nt*4)+2: LET m(cy+1,cx+1)=40+(nt*4)+3: LET m(cy+2,cx+1)=40+(nt*4)+4
 3320 LET r=r-rct: LET nt=nt+1: LET j=nt: LET t(nt,1)=cx: LET t(nt,2)=cy: LET t(nt,3)=te: LET t(nt,4)=tv: LET t(nt,5)=0: LET t(nt,6)=8: REM Inicializa torreta con vida tv y 8 usos
 3330 POKE 23675,176: POKE 23676,254
-3331 LET i=(t(j,3)-1)*4
-3332 INK j: PRINT AT t(j,2),t(j,1);CHR$ (144+i);CHR$ (145+i);AT t(j,2)+1,t(j,1);CHR$ (146+i);CHR$ (147+i)
+3331 LET desp=(t(j,3)-1)*4
+3332 INK j: PRINT AT t(j,2),t(j,1);CHR$ (144+desp);CHR$ (145+desp);AT t(j,2)+1,t(j,1);CHR$ (146+desp);CHR$ (147+desp)
 3333 POKE 23675,88: POKE 23676,255
 3340 RETURN
 5000 REM Generar zombie
@@ -307,7 +307,7 @@
 9610 DATA 255,1,1,193,33,33,65,129
 9611 DATA 129,128,128,130,129,128,128,255
 9612 DATA 193,33,33,33,193,1,1,255
-9620 REM UDG en 65200 - Torretas - Uso: POKE 23675,176: POKE 23676,254
+9620 REM UDG en 65200 - Torretas - Uso: POKE 23675,176: POKE 23676,254 == POKE 23675,V-256*INT (V/256): POKE 23676,INT (V/256)
 9621 REM Torreta 1 - 144-145/146-147
 9621 REM Torreta 2 - 148-149/150-151
 9621 REM Torreta 3 - 152-153/154-155
