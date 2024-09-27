@@ -20,6 +20,7 @@
 1120 PRINT AT 2,7;"NIVEL ";nivel;"                "
 1130 PRINT AT 3,7;"CIUDADANOS: ";maxc;"          "
 1140 PRINT AT 4,7;"ZOMBIES: ";maxz;"            "
+1150 PRINT AT 5,7;"                       "
 1180 PRINT AT 6,7;"PRECIOS: ";
 1190 IF rcl=2 THEN PRINT "BAJOS         "
 1200 IF rcl=4 THEN PRINT "ALTOS         "
@@ -115,9 +116,9 @@
 7320 IF k$=" " OR sp=1 THEN IF cm=0 THEN LET cm=1: LET cc=0: LET sp=0: GO SUB 8000: RETURN
 7330 IF cm=0 THEN RETURN
 7331 REM Modo de construccion
-7332 LET k$=INKEY$
-7334 BORDER INT (RND*6): LET cc=cc+1: IF cc=100 THEN GO SUB 8050: LET cm=0: LET cc=0: BORDER 7: RETURN
-7335 PRINT #0;AT 0,0; PAPER 2; INK 7;"CONSTRUCION"; PAPER 7; INK 0;" - R: ";r;"   ";CHR$ (146);"=2, "+CHR$ (157)+"=20"; PAPER 0; INK 7;
+7332 BORDER 0
+7333 PRINT #0;AT 0,0; PAPER 2; INK 7;"CONSTRUCION"; PAPER 7; INK 0;" - RECURSOS: ";r;"   "; PAPER 0; INK 7;
+7334 LET k$=INKEY$: LET cc=cc+1: IF cc=100 THEN GO SUB 8050: LET cm=0: LET cc=0: BORDER 7: RETURN
 7350 LET ox=cx: LET oy=cy
 7351 IF k$=" " THEN IF cc>5 THEN GO SUB 8050: LET cm=0: LET cc=0: LET sp=0: PRINT #0;AT 0,0; PAPER 7; INK 0;"Recursos:                       "; PAPER 0; INK 7: PRINT AT oy,ox;" ": GO SUB 8400: BORDER 7: RETURN : REM Salida del modo de construccion
 7360 IF k$="q" AND cy>0 THEN LET cy=cy-1
@@ -126,7 +127,7 @@
 7390 IF k$="p" AND cx<30 THEN LET cx=cx+1
 7400 IF k$>="0" AND k$<="3" THEN LET te=VAL k$: GO SUB 3000
 7410 IF ox<>cx OR oy<>cy THEN GO SUB 8050: GO SUB 8400: GO SUB 8000: LET ox=cx: LET oy=cy: REM Si hemos movido el cursor, redibuja
-7420 GO TO 7331
+7420 GO TO 7334
 7500 REM Torretas disparan
 7510 FOR i=1 TO nt
 7515 IF INKEY$=" " THEN LET sp=1
