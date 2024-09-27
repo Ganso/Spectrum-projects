@@ -1,5 +1,5 @@
    1 CLEAR 65031: DIM m(23,32): DIM c(10,3): DIM z(10,6): DIM l(20,3): DIM t(10,6): LET r=20: LET cx=7: LET cy=10: LET tiempo=0
-   2 LET te=0: LET k$="": LET ox=0: LET oy=0: LET o=0: LET nz=0: LET nl=0: LET nt=0: LET nc=0: LET tir=0: LET tiz=0: LET tit=0: LET cm=0: LET cc=0: LET w=0: LET x=0: LET y=0: LET z=0: LET sp=0: LET seconds=0: LET oldseconds=0
+   2 LET te=0: LET k$="": LET ox=0: LET oy=0: LET o=0: LET nz=0: LET nl=0: LET nt=0: LET nc=0: LET tir=0: LET tiz=0: LET tit=0: LET cm=0: LET cc=0: LET w=0: LET x=0: LET y=0: LET z=0: LET sp=0: LET seconds=0: LET oldseconds=0: DIM q(31)
    3 LET maxc=5: LET maxz=10: LET tv=3: LET lv=3: LET rcl=2: LET rct=10: LET nivel=1: LET maxtiempo=60
   10 BORDER 5: PAPER 0: INK 7: CLS
   15 PAPER 7: INK 0: PRINT AT 10,7;"  INICIALIZANDO  ": GO SUB 1100
@@ -50,12 +50,15 @@
 3120 IF te>0 AND nt<10 AND oy<20 THEN GO SUB 3200: IF o=0 THEN GO SUB 3300
 3130 BEEP 0.1,50: RETURN
 3200 REM Comprobar si las celdas adyacentes estan libres para colocar torreta
-3210 LET o=0: IF cx+1>31 OR cy+1>21 THEN LET o=1: RETURN
+3210 LET o=0
+3214 IF cx+1>31 OR cy+1>21 THEN LET o=1: RETURN: REM No coloca fuera de limites
+3215 IF (cx=5 OR cx=6) THEN LET o=1: RETURN: REM No coloca en separador
 3220 IF m(cy+1,cx)>0 OR m(cy+1,cx+1)>0 OR m(cy+2,cx)>0 OR m(cy+2,cx+1)>0 THEN LET o=1
-3230 RETURN
+3225 RETURN
 3300 REM Colocar torreta de tipo "te" en cx, cy
 3310 LET m(cy+1,cx)=40+(nt*4)+1: LET m(cy+2,cx)=40+(nt*4)+2: LET m(cy+1,cx+1)=40+(nt*4)+3: LET m(cy+2,cx+1)=40+(nt*4)+4
 3320 LET r=r-rct: LET nt=nt+1: LET j=nt: LET t(nt,1)=cx: LET t(nt,2)=cy: LET t(nt,3)=te: LET t(nt,4)=tv: LET t(nt,5)=0: LET t(nt,6)=8: REM Inicializa torreta con vida tv y 8 usos
+3325 PAPER 0: IF cx<6 THEN PAPER 5
 3330 POKE 23675,176: POKE 23676,254
 3331 LET desp=(t(j,3)-1)*4
 3332 INK j+1: PRINT AT t(j,2),t(j,1);CHR$ (144+desp);CHR$ (145+desp);AT t(j,2)+1,t(j,1);CHR$ (146+desp);CHR$ (147+desp)
@@ -84,6 +87,7 @@
 7032 LET ox=z(g,1): LET oy=z(g,2): LET m(oy+1,ox)=0: LET m(oy+2,ox)=0: REM Vacia en el mapa la casilla actual
 7033 GO SUB 8400: LET oy=oy+1: GO SUB 8400: REM Repinta las casillas actuales
 7034 LET z(g,1)=z(g,1)-1:LET z(g,4)=0: REM Decrementa la X y resetea el contador de movimiento
+7035 REM ***************** SI EL ZOMBIE PASA POR EL SEPARADOR, PINTARLO
 7036 GO SUB 8170: GO SUB 8150: PRINT AT z(g,2),z(g,1)+1;" ";AT z(g,2)+1,z(g,1)+1;" ":BEEP 0.1,5: LET m(z(g,2)+1,z(g,1))=80+(g*2)-1: LET m(z(g,2)+2,z(g,1))=80+(g*2): REM Dibuja de nuevo el zombie y da un pitido
 7037 GO TO 7050: REM Salta al NEXT
 7040 GO SUB 7100: GO TO 7050: REM Procesa colisiones
@@ -105,7 +109,7 @@
 7160 IF matado=1 THEN GO SUB 7600: REM Elimina objeto si ya no tiene vida
 7170 RETURN
 7200 REM Actualizar puntuacion, recursos y tiempo
-7201 LET seconds=INT (65536*PEEK 23674+256*PEEK 23673+ PEEK 23672)/50
+7201 LET seconds=INT ((65536*PEEK 23674+256*PEEK 23673+ PEEK 23672)/50)
 7202 IF seconds<>oldseconds THEN LET oldseconds=seconds: LET tiempo=tiempo+1
 7205 IF INKEY$=" " THEN LET sp=1
 7210 IF tir>=2 THEN LET r=r+1: LET tir=0: IF r>100 THEN LET r=100: REM cada 2 ticks suben los recursos
@@ -138,7 +142,14 @@
 7530 LET t(i,5)=0: LET tx=t(i,1)+1: LET ty=t(i,2)+1
 7540 FOR j=1 TO nz
 7541 IF INKEY$=" " THEN LET sp=1
-7550 IF z(j,3)=t(i,3) AND z(j,6)>0 THEN GO SUB 7700: REM Solo dispara a zombies no invencibles
+7550 IF (z(j,2)<>t(i,2)-1 AND z(j,2)<>t(i,2) AND z(j,2)<>t(i,2)+1) OR z(j,1)<=t(i,1) OR z(j,6)<=0 THEN GO TO 7560
+7551 LET linea=z(j,2)+1*(z(j,2)<t(i,2)): FOR w=t(i,1) TO z(j,1)
+7552 LET q(w)=0: IF screen$(linea,w)=" " THEN PRINT INK 6;PAPER 0+5*(w<6);AT linea,w;CHR$ 156:LET q(w)=1
+7553 NEXT w
+7555 GO SUB 7700: REM Dispara al zombie
+7556 FOR w=t(i,1) TO z(j,1)
+7557 IF q(w)=1 THEN PRINT INK 6;PAPER 0+5*(w<6);AT linea,w;" "
+7558 NEXT w
 7560 NEXT j
 7590 NEXT i
 7592 RETURN
@@ -149,19 +160,19 @@
 7640 LET m(t(t,2)+1,t(t,1))=0: LET m(t(t,2)+2,t(t,1))=0: LET m(t(t,2)+1,t(t,1)+1)=0: LET m(t(t,2)+2,t(t,1)+1)=0: LET ox=t(t,1): LET oy=t(t,2)
 7650 INK 6: PAPER 2: FLASH 1: PRINT AT t(t,2),t(t,1);CHR$ (161);CHR$ (162);AT t(t,2)+1,t(t,1);CHR$ (163);CHR$ (164): REM Explosion
 7655 FOR x=1 TO 10: BEEP 0.02,INT (RND*20): NEXT X
-7658 INK 7: PAPER 0: FLASH 0: PRINT AT t(t,2),t(t,1);"  ";AT t(t,2)+1,t(t,1);"  ": LET t(t,4)=0: GO SUB 9300
+7658 INK 7: PAPER 0+(5*(t(t,1)<6)): FLASH 0: PRINT AT t(t,2),t(t,1);"  ";AT t(t,2)+1,t(t,1);"  ": LET t(t,4)=0: GO SUB 9300
 7660 BEEP 0.05,0: RETURN
-7700 REM Disparo de torreta
+7700 REM Disparo de torreta "i" a zombie "j"
 7705 FOR w=1 TO 2
-7710 FLASH 1: OVER 1: PAPER 0
-7720 INK t(i,3)+1: PRINT AT t(i,2),t(i,1);"OO";AT t(i,2)+1,t(i,1);"OO"
-7725 IF z(j,1)<6 THEN PAPER 5
-7730 INK z(j,3): PRINT AT z(j,2),z(j,1);"O";AT z(j,2)+1,z(j,1);"O"
+7710 FLASH 1: OVER 1: PAPER 0+5*(t(i,1)<6)
+7720 INK t(i,3)+1: PRINT AT t(i,2),t(i,1);"  ";AT t(i,2)+1,t(i,1);"  "
+7725 PAPER 0+5*(z(j,1)<6)
+7730 INK z(j,3): PRINT AT z(j,2),z(j,1);" ";AT z(j,2)+1,z(j,1);" "
 7740 BEEP 0.1,50: BEEP 0.1,40
-7750 FLASH 0: PAPER 0
-7760 INK t(i,3)+1: PRINT AT t(i,2),t(i,1);"OO";AT t(i,2)+1,t(i,1);"OO"
-7765 IF z(j,1)<6 THEN PAPER 5
-7770 INK z(j,3): PRINT AT z(j,2),z(j,1);"O";AT z(j,2)+1,z(j,1);"O"
+7750 FLASH 0: PAPER 0+5*(t(i,1)<6)
+7760 INK t(i,3)+1: PRINT AT t(i,2),t(i,1);"  ";AT t(i,2)+1,t(i,1);"  "
+7765 PAPER 0+5*(z(j,1)<6)
+7770 INK z(j,3): PRINT AT z(j,2),z(j,1);" ";AT z(j,2)+1,z(j,1);" "
 7771 NEXT w
 7775 OVER 0: PAPER 0
 7780 LET z(j,6)=z(j,6)-1
