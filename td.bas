@@ -20,6 +20,7 @@
 1120 PRINT AT 2,7;"NIVEL ";nivel;"                "
 1130 PRINT AT 3,7;"CIUDADANOS: ";maxc;"          "
 1140 PRINT AT 4,7;"ZOMBIES: ";maxz;"            "
+1150 PRINT AT 5,7;"                       "
 1180 PRINT AT 6,7;"PRECIOS: ";
 1190 IF rcl=2 THEN PRINT "BAJOS         "
 1200 IF rcl=4 THEN PRINT "ALTOS         "
