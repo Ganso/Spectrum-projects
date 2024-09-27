@@ -1,7 +1,7 @@
    1 CLEAR 65031: DIM m(23,32): DIM c(10,3): DIM z(10,6): DIM l(20,3): DIM t(10,6): LET r=20: LET cx=7: LET cy=10: LET tiempo=0
-   2 LET te=0: LET k$="": LET ox=0: LET oy=0: LET o=0: LET nz=0: LET nl=0: LET nt=0: LET nc=0: LET tir=0: LET tiz=0: LET tit=0: LET cm=0: LET cc=0: LET w=0: LET x=0: LET y=0: LET z=0: LET sp=0
+   2 LET te=0: LET k$="": LET ox=0: LET oy=0: LET o=0: LET nz=0: LET nl=0: LET nt=0: LET nc=0: LET tir=0: LET tiz=0: LET tit=0: LET cm=0: LET cc=0: LET w=0: LET x=0: LET y=0: LET z=0: LET sp=0: LET seconds=0: LET oldseconds=0
    3 LET maxc=5: LET maxz=10: LET tv=3: LET lv=3: LET rcl=2: LET rct=10: LET nivel=1: LET maxtiempo=60
-  10 BORDER 7: PAPER 0: INK 7: CLS
+  10 BORDER 5: PAPER 0: INK 7: CLS
   15 PAPER 7: INK 0: PRINT AT 10,7;"  INICIALIZANDO  ": GO SUB 1100
   20 GO SUB 9500:GO SUB 9600: GO SUB 9060:  REM Definir UDG
   25 RANDOMIZE 0: GO SUB 1000: GO SUB 2000: GO SUB 2050: GO SUB 8700: GO TO 6000
@@ -47,17 +47,17 @@
 3100 REM Colocar objeto en el mapa
 3110 IF te=0 AND nl<20 THEN LET r=r-rcl: INK 6: BRIGHT 1: PRINT AT cy,cx;CHR$ 146: BRIGHT 0: LET m(cy+1,cx)=20+nl+1: LET nl=nl+1: LET l(nl,1)=cx: LET l(nl,2)=cy: LET l(nl,3)=lv
 3120 IF te>0 AND nt<10 AND oy<20 THEN GO SUB 3200: IF o=0 THEN GO SUB 3300
-3130 GO SUB 7240: BEEP 0.1,50: RETURN
+3130 BEEP 0.1,50: RETURN
 3200 REM Comprobar si las celdas adyacentes estan libres para colocar torreta
 3210 LET o=0: IF cx+1>31 OR cy+1>21 THEN LET o=1: RETURN
 3220 IF m(cy+1,cx)>0 OR m(cy+1,cx+1)>0 OR m(cy+2,cx)>0 OR m(cy+2,cx+1)>0 THEN LET o=1
 3230 RETURN
-3300 REM Colocar torreta de color te en cx, cy
+3300 REM Colocar torreta de tipo "te" en cx, cy
 3310 LET m(cy+1,cx)=40+(nt*4)+1: LET m(cy+2,cx)=40+(nt*4)+2: LET m(cy+1,cx+1)=40+(nt*4)+3: LET m(cy+2,cx+1)=40+(nt*4)+4
 3320 LET r=r-rct: LET nt=nt+1: LET j=nt: LET t(nt,1)=cx: LET t(nt,2)=cy: LET t(nt,3)=te: LET t(nt,4)=tv: LET t(nt,5)=0: LET t(nt,6)=8: REM Inicializa torreta con vida tv y 8 usos
 3330 POKE 23675,176: POKE 23676,254
 3331 LET desp=(t(j,3)-1)*4
-3332 INK j: PRINT AT t(j,2),t(j,1);CHR$ (144+desp);CHR$ (145+desp);AT t(j,2)+1,t(j,1);CHR$ (146+desp);CHR$ (147+desp)
+3332 INK j+1: PRINT AT t(j,2),t(j,1);CHR$ (144+desp);CHR$ (145+desp);AT t(j,2)+1,t(j,1);CHR$ (146+desp);CHR$ (147+desp)
 3333 POKE 23675,88: POKE 23676,255
 3340 RETURN
 5000 REM Generar zombie
@@ -93,40 +93,43 @@
 7115 IF ob=0 OR ob>80 THEN RETURN : REM No colisiona con otros zombies
 7120 IF ob<=20 THEN LET t=INT ((ob+1)/2): LET c(t,3)=c(t,3)-1: LET col=0: GO TO 7150: REM Ciudadano
 7130 IF ob<=40 THEN LET t=ob-20: LET l(t,3)=l(t,3)-1: LET col=4: GO TO 7150: REM Ladrillo
-7140 IF ob<=80 THEN LET t=INT ((ob-41)/4)+1: LET t(t,4)=t(t,4)-1: LET col=t(t,3): GO TO 7150: REM Torreta
-7150 FLASH 1: OVER 1: INK z(g,3): PAPER 0: PRINT AT z(g,2),z(g,1);" ";AT z(g,2)+1,z(g,1);" ": FLASH 0: OVER 0: REM Indica el zombie con un flash
-7155 FOR w=1 TO 10: BORDER z(g,3): BEEP 0.01,50: BORDER col: BEEP 0.01,60: NEXT w: BORDER 7: REM Animacion de "pelea"
-7156 IF (ob<=20) THEN IF c(t,3)<=0 THEN LET matado=1: LET c(t,3)=0: REM Asegura que la vida no sea negativa
-7157 IF (ob>20 AND ob<=40) THEN IF l(t,3)<=0 THEN LET matado=1: LET l(t,3)=0: REM Asegura que la vida no sea negativa
-7158 IF (ob>40 AND ob<=80) THEN IF t(t,4)<=0 THEN LET matado=1: LET t(t,4)=0: REM Asegura que la vida no sea negativa
+7140 IF ob<=80 THEN LET t=INT ((ob-41)/4)+1: LET t(t,4)=t(t,4)-1: LET col=t(t,3)+1: GO TO 7150: REM Torreta
+7150 POKE 23675,8: POKE 23676,254: PAPER 0: IF z(g,1)<6 THEN PAPER 5
+7151 FLASH 1: PRINT AT z(g,2),z(g,1);INK 4;CHR$ (150+(8*(z(g,3)=2))+(13*(z(g,3)=3)));INK z(g,3);AT z(g,2)+1,z(g,1);CHR$(151+(8*(z(g,3)=2)))
+7155 FOR w=1 TO 10: BORDER z(g,3): BEEP 0.01,50: BORDER col: BEEP 0.01,60: NEXT w: BORDER 5: REM Animacion de "pelea"
+7156 FLASH 0: GO SUB 8150: REM Quita el flash y repinta el zombie
+7157 IF (ob<=20) THEN IF c(t,3)<=0 THEN LET matado=1: LET c(t,3)=0: REM Asegura que la vida no sea negativa
+7158 IF (ob>20 AND ob<=40) THEN IF l(t,3)<=0 THEN LET matado=1: LET l(t,3)=0: REM Asegura que la vida no sea negativa
+7159 IF (ob>40 AND ob<=80) THEN IF t(t,4)<=0 THEN LET matado=1: LET t(t,4)=0: REM Asegura que la vida no sea negativa
 7160 IF matado=1 THEN GO SUB 7600: REM Elimina objeto si ya no tiene vida
-7165 FLASH 0: OVER 1: INK z(g,3): PRINT AT z(g,2),z(g,1);" ";AT z(g,2)+1,z(g,1);" ": OVER 0: REM Quita el flash
 7170 RETURN
 7200 REM Actualizar puntuacion, recursos y tiempo
-7201 LET tiempo=tiempo+1
+7201 LET seconds=INT (65536*PEEK 23674+256*PEEK 23673+ PEEK 23672)/50
+7202 IF seconds<>oldseconds THEN LET oldseconds=seconds: LET tiempo=tiempo+1
 7205 IF INKEY$=" " THEN LET sp=1
 7210 IF tir>=2 THEN LET r=r+1: LET tir=0: IF r>100 THEN LET r=100: REM cada 2 ticks suben los recursos
 7220 IF tiz>=20 THEN LET tiz=0: GO SUB 5000: RETURN : REM cada 20 ticks sale un zombie
 7230 IF tit>=6 THEN LET tit=0: GO SUB 7500: RETURN : REM cada 6 ticks las torretas intentan disparar
-7240 INK 0: PAPER 7: PRINT #0;AT 0,9;r;AT 0,15;"Tiempo:";tiempo: PAPER 0: LET tir=tir+1: LET tiz=tiz+1: LET tit=tit+1
+7240 INK 0: PAPER 7: PRINT #0;INK 0;PAPER 7;AT 1,0;" Recursos:" ;r;AT 1,18;"Tiempo: ";tiempo;"s": PAPER 0: LET tir=tir+1: LET tiz=tiz+1: LET tit=tit+1
 7250 FOR i=1 TO nt: LET t(i,5)=t(i,5)+1: NEXT i: RETURN
 7300 REM Controles del jugador
 7305 LET k$=INKEY$: IF k$="" AND sp=0 THEN RETURN
-7320 IF k$=" " OR sp=1 THEN IF cm=0 THEN LET cm=1: LET cc=0: LET sp=0: GO SUB 8000: RETURN
-7330 IF cm=0 THEN RETURN
-7331 REM Modo de construccion
-7332 LET k$=INKEY$
-7334 BORDER INT (RND*6): LET cc=cc+1: IF cc=100 THEN GO SUB 8050: LET cm=0: LET cc=0: BORDER 7: RETURN
-7335 PRINT #0;AT 0,0; PAPER 2; INK 7;"CONSTRUCION"; PAPER 7; INK 0;" - R: ";r;"   ";CHR$ (146);"=2, "+CHR$ (157)+"=20"; PAPER 0; INK 7;
+7320 IF k$=" " OR sp=1 THEN IF cm=0 THEN LET cm=1: LET cc=0: LET sp=0: GO SUB 8000
+7331 IF cm=0 THEN RETURN
+7330 REM Modo de construccion
+7331 PRINT #0;AT 0,0; PAPER 2; INK 7;"CONSTRUCION"; PAPER 7; INK 0;" - Recursos: ";r;"   "
+7332 PRINT #0;AT 1,0; PAPER 7; INK 0;"CONTROLES: QAOP"+CHR$(158)+"     0";INK 6;PAPER 0;BRIGHT 1;CHR$ 146; INK 2; PAPER 7; BRIGHT 0;" 1";CHR$ 153; INK 3;" 2";CHR$ 154; INK 4;" 3";CHR$ 155
+7333 LET k$=INKEY$
+7334 BORDER INT (RND*6): LET cc=cc+1: IF cc=100 THEN GO SUB 8050: LET cm=0: LET cc=0: BORDER 5: RETURN
 7350 LET ox=cx: LET oy=cy
-7351 IF k$=" " THEN IF cc>5 THEN GO SUB 8050: LET cm=0: LET cc=0: LET sp=0: PRINT #0;AT 0,0; PAPER 7; INK 0;"Recursos:                       "; PAPER 0; INK 7: PRINT AT oy,ox;" ": GO SUB 8400: BORDER 7: RETURN : REM Salida del modo de construccion
+7351 IF k$=" " THEN IF cc>5 THEN GO SUB 8050: LET cm=0: LET cc=0: LET sp=0: PRINT #0;AT 0,0;PAPER 7;"                                ";AT 1,0; PAPER 7; INK 0;"Recursos:                       "; PAPER 0; INK 7: PRINT AT oy,ox;" ": GO SUB 8400: BORDER 5: RETURN : REM Salida del modo de construccion
 7360 IF k$="q" AND cy>0 THEN LET cy=cy-1
 7370 IF k$="a" AND cy<20 THEN LET cy=cy+1
 7380 IF k$="o" AND cx>1 THEN LET cx=cx-1
 7390 IF k$="p" AND cx<30 THEN LET cx=cx+1
-7400 IF k$>="0" AND k$<="3" THEN LET te=VAL k$: GO SUB 3000
+7400 IF k$>="0" AND k$<="3" THEN LET te=VAL k$: GO SUB 3000: GO TO 7331
 7410 IF ox<>cx OR oy<>cy THEN GO SUB 8050: GO SUB 8400: GO SUB 8000: LET ox=cx: LET oy=cy: REM Si hemos movido el cursor, redibuja
-7420 GO TO 7331
+7420 GO TO 7333
 7500 REM Torretas disparan
 7510 FOR i=1 TO nt
 7515 IF INKEY$=" " THEN LET sp=1
@@ -150,12 +153,12 @@
 7700 REM Disparo de torreta
 7705 FOR w=1 TO 2
 7710 FLASH 1: OVER 1: PAPER 0
-7720 INK t(i,3): PRINT AT t(i,2),t(i,1);"OO";AT t(i,2)+1,t(i,1);"OO"
+7720 INK t(i,3)+1: PRINT AT t(i,2),t(i,1);"OO";AT t(i,2)+1,t(i,1);"OO"
 7725 IF z(j,1)<6 THEN PAPER 5
 7730 INK z(j,3): PRINT AT z(j,2),z(j,1);"O";AT z(j,2)+1,z(j,1);"O"
 7740 BEEP 0.1,50: BEEP 0.1,40
 7750 FLASH 0: PAPER 0
-7760 INK t(i,3): PRINT AT t(i,2),t(i,1);"OO";AT t(i,2)+1,t(i,1);"OO"
+7760 INK t(i,3)+1: PRINT AT t(i,2),t(i,1);"OO";AT t(i,2)+1,t(i,1);"OO"
 7765 IF z(j,1)<6 THEN PAPER 5
 7770 INK z(j,3): PRINT AT z(j,2),z(j,1);"O";AT z(j,2)+1,z(j,1);"O"
 7771 NEXT w
@@ -179,7 +182,7 @@
 8164 INK z(g,3): PRINT AT z(g,2)+1,z(g,1);CHR$ (145+(8*(z(g,3)=2)))
 8165 POKE 23675,88: POKE 23676,255
 8166 RETURN
-8170 REM Dibujar zombia numero g andando
+8170 REM Dibujar zombie numero g andando
 8175 POKE 23675,8: POKE 23676,254
 8180 IF z(g,1)<6 THEN PAPER 5: GO TO 8162: REM Fondo segun si esta o no a la izquierda
 8181 PAPER 0: INK 4
@@ -202,8 +205,7 @@
 8600 REM Comprobar si la celda esta ocupada en cy, cx
 8610 LET o=m(cy+1,cx): RETURN
 8700 REM Dibujar interfaz
-8710 INK 0: PAPER 7: PRINT #0;AT 0,0;"Recursos:                       "
-8715 PRINT #0;AT 1,0;"Controles: "+CHR$ (158)+"QAOP     0"; INK 6; PAPER 0; BRIGHT 1;CHR$ 146; INK 1; PAPER 7; BRIGHT 0;" 1";CHR$ 157; INK 2;" 2";CHR$ 157; INK 3;" 3";CHR$ 157
+8710 PRINT #0;AT 1,0;INK 0;PAPER 7;"                                ";AT 0,0;"                                ";
 8717 PAPER 0: RETURN
 9000 REM Variables: a-dato leido, b-bucle ciudadanos, c-ciudadanos, z-zombies, l-ladrillos, t-torretas
 9010 REM g-bucle mover zombies, k-tecla pulsada, ox,oy-posicion anterior, m-mapa del juego
@@ -222,26 +224,26 @@
 9049 REM Torretas: t(nt,1)=x, t(nt,2)=y, t(nt,3)=color, t(nt,4)=vida, t(nt,5)=contador de disparo
 9050 REM Ladrillos: l(nl,1)=x, l(nl,2)=y, l(nl,3)=vida
 9051 REM Zombies: z(nz,1)=x, z(nz,2)=y, z(nz,3)=color, z(nz,4)=contador de movimiento, z(nz,5)=animacion, z(nz,6)=vida
-9060 REM UDGs: 144-145 Ciudadano, 146 Ladrillo, 147-152 Zombies (2 chars por animacion), 153-156 Torreta (2x2), 157 Torreta pequena
-9061 RESTORE 9062: FOR F=65368 TO 65535: READ A: POKE F,A: NEXT F: RETURN
-9062 DATA 56,68,68,68,56,124,186,186: REM 144 ciudadano
-9063 DATA 186,186,170,170,170,168,40,108
-9064 DATA 255,129,165,153,153,165,129,255: REM 146 Ladrillo
-9065 DATA 12,18,114,18,12,252,12,12: REM 147 Zombie 1
-9066 DATA 12,12,20,36,68,68,36,116
-9067 DATA 12,18,114,18,12,252,12,12: REM 149 Zombie 2
-9068 DATA 12,12,12,12,12,12,10,63
-9069 DATA 12,18,114,18,12,252,12,12: REM 151 Zombie 3
-9070 DATA 12,12,12,10,10,9,9,54
-9071 DATA 127,128,128,128,143,136,136,136: REM 153 Torreta
-9072 DATA 136,136,136,143,128,128,128,127
-9073 DATA 254,1,1,1,241,17,17,17
-9074 DATA 17,17,17,241,1,1,1,254
-9075 DATA 126,129,129,153,153,129,129,126: REM 157 Torreta pequena
-9076 DATA 0,0,0,0,0,0,66,126: REM 158 Espacio
-9077 DATA 129,90,36,90,90,36,90,129: REM 159 Cursor
-9078 DATA 240,248,248,240,240,248,248,240: REM 160 Separador
-9079 DATA 1,226,90,36,16,16,96,128: REM 161-164 Explosion
+9060 RESTORE 9062: FOR F=65368 TO 65535: READ A: POKE F,A: NEXT F: RETURN
+9061 REM 144/145 Ciudadano, 146 Ladrillo, 153-155 Torretas, 156 Disparo simple, 157 Disparo grande, 158 Espacio, 159 Cursor, 160 Separador, 161-164 Explosion
+9062 DATA 112,248,248,144,140,136,112,224
+9063 DATA 240,248,184,216,240,96,120,124
+9064 DATA 255,129,165,153,153,165,129,255
+9065 DATA 0,0,0,0,0,0,0,0
+9066 DATA 0,0,0,0,0,0,0,0
+9067 DATA 0,0,0,0,0,0,0,0
+9068 DATA 0,0,0,0,0,0,0,0
+9069 DATA 0,0,0,0,0,0,0,0
+9070 DATA 0,0,0,0,0,0,0,0
+9071 DATA 126,135,135,135,126,248,188,252
+9072 DATA 24,126,153,153,66,60,94,126
+9073 DATA 127,240,252,248,126,248,188,252
+9074 DATA 0,0,0,85,0,0,0,0
+9075 DATA 0,170,0,85,0,170,0,0
+9076 DATA 0,0,0,0,0,0,66,126
+9077 DATA 129,90,36,90,90,36,90,129
+9078 DATA 240,248,248,240,240,248,248,240
+9079 DATA 1,226,90,36,16,16,96,128
 9080 DATA 4,138,178,68,8,8,6,1
 9081 DATA 64,48,8,16,16,39,72,48
 9082 DATA 6,8,8,4,20,42,166,64
@@ -295,18 +297,18 @@
 9524 REM Zombie 2 - Quieto: 152/153 - Andar 154-156/155-157 - Morder 158/159 - Color 4/2
 9525 REM Zombie 3 - Quiero: 160/145 - Andar 161-162/148-149 - Morder 163/151 - Color 4/3
 9600 RESTORE 9601: FOR F=65200 TO 65295: READ A: POKE F,A: NEXT F:RETURN
-9601 DATA 255,128,128,129,131,133,129,129
-9602 DATA 255,1,1,1,1,1,1,1
-9603 DATA 129,129,129,129,129,128,128,255
-9604 DATA 1,1,1,1,1,1,1,255
-9605 DATA 255,128,128,129,130,128,128,128
-9606 DATA 255,1,1,193,33,33,65,129
-9607 DATA 129,130,132,136,143,128,128,255
-9608 DATA 1,1,1,1,225,1,1,255
-9609 DATA 255,128,128,129,130,128,128,128
-9610 DATA 255,1,1,193,33,33,65,129
-9611 DATA 129,128,128,130,129,128,128,255
-9612 DATA 193,33,33,33,193,1,1,255
+9601 DATA 0,63,64,160,160,176,191,159
+9602 DATA 0,254,7,15,15,15,207,207
+9603 DATA 64,63,47,95,95,95,95,255
+9604 DATA 6,252,192,224,224,224,224,240
+9605 DATA 1,2,62,94,190,191,95,39
+9606 DATA 128,64,124,122,125,253,250,228
+9607 DATA 24,7,11,23,23,23,23,63
+9608 DATA 24,224,240,248,248,248,248,252
+9609 DATA 16,63,56,63,48,63,56,48
+9610 DATA 0,254,5,255,40,248,20,20
+9611 DATA 63,62,127,223,191,191,191,255
+9612 DATA 248,0,192,224,224,224,224,240
 9620 REM UDG en 65200 - Torretas - Uso: POKE 23675,176: POKE 23676,254 == POKE 23675,V-256*INT (V/256): POKE 23676,INT (V/256)
 9621 REM Torreta 1 - 144-145/146-147
 9621 REM Torreta 2 - 148-149/150-151
