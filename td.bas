@@ -46,7 +46,7 @@
 3000 REM Comprobar si podemos colocar objeto
 3010 IF (not te AND r<rcl) THEN BEEP 0.5,10: RETURN: REM No hay recursos para un ladrillo
 3020 IF te THEN IF r<h(te) THEN BEEP 0.5,10: RETURN: REM No hay recursos para una torreta
-3020 GO SUB 8600: IF not o THEN GO SUB 3100: RETURN: REM Posible en principio
+3025 LET o=m(cy+1,cx): IF not o THEN GO SUB 3100: RETURN: REM Posible en principio
 3030 BEEP 0.5,10:RETURN: REM Casilla ocupada
 3100 REM Colocar objeto en el mapa
 3110 IF not te AND nl<20 THEN LET r=r-rcl: INK 6: BRIGHT 1: PRINT AT cy,cx;CHR$ 146: BRIGHT 0: LET m(cy+1,cx)=20+nl+1: LET nl=nl+1: LET l(nl,1)=cx: LET l(nl,2)=cy: LET l(nl,3)=lv
@@ -219,8 +219,6 @@
 8460 IF op<=80 THEN GO TO 8480
 8470 LET g=INT ((op-81)/2)+1: GO SUB 8150: RETURN
 8480 LET j=INT ((op-41)/4)+1: IF t(j,4)>0 THEN GO SUB 3330: RETURN
-8600 REM Comprobar si la celda esta ocupada en cy, cx
-8610 LET o=m(cy+1,cx): RETURN
 8700 REM Dibujar interfaz
 8710 PRINT #0;AT 1,0;INK 0;PAPER 7;"                                ";AT 0,0;"                                ";
 8717 PAPER 0: RETURN
