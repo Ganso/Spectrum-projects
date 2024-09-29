@@ -77,7 +77,7 @@
 3225 RETURN
 3300 REM Colocar torreta de tipo "te" en cx, cy
 3310 LET m(cy+1,cx)=40+(nt*4)+1: LET m(cy+2,cx)=40+(nt*4)+2: LET m(cy+1,cx+1)=40+(nt*4)+3: LET m(cy+2,cx+1)=40+(nt*4)+4
-3320 LET r=r-h(te): LET nt=nt+1: LET v=nt: LET t(nt,1)=cx: LET t(nt,2)=cy: LET t(nt,3)=te: LET t(nt,4)=tv: LET t(nt,5)=0: LET t(nt,6)=2+(2*(te<>2)): REM Inicializa torreta con vida tv y 4 usos (2 para las tipo 2)
+3320 LET r=r-h(te): LET nt=nt+1: LET v=nt: LET t(nt,1)=cx: LET t(nt,2)=cy: LET t(nt,3)=te: LET t(nt,4)=tv: LET t(nt,5)=0: LET t(nt,6)=2+(1*(te<>2)): REM Inicializa torreta con vida tv y 3 usos (2 para las tipo 2)
 3330 POKE 23675,176: POKE 23676,254: REM Subsubrutina de pintar torrea
 3331 LET desp=(t(v,3)-1)*4
 3332 INK t(v,3)+1: PAPER 0+(5*(cx<6)): PRINT AT t(v,2),t(v,1);CHR$ (144+desp);CHR$ (145+desp);AT t(v,2)+1,t(v,1);CHR$ (146+desp);CHR$ (147+desp)
