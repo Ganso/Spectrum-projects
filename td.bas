@@ -1,7 +1,7 @@
    1 CLEAR 65031: DIM m(23,32): DIM c(10,3): DIM z(10,5): DIM l(20,3): DIM t(10,6): LET r=20: LET cx=7: LET cy=10: LET tiempo=0
    2 LET te=0: LET k$="": LET ox=0: LET oy=0: LET o=0: LET nz=0: LET nl=0: LET nt=0: LET nc=0: LET tir=0: LET tiz=0: LET cm=0: LET cc=0: LET w=0: LET x=0: LET y=0: LET sp=0: LET dp=0: LET seconds=0: LET oldseconds=0: DIM q(31)
    3 LET maxc=5: LET maxz=10: LET tv=3: LET lv=3: LET rcl=2: DIM h(3): LET nivel=1: LET maxtiempo=200
-   4 LET h(1)=10: LET h(2)=20: LET h(3)=50
+   4 LET h(1)=10: LET h(2)=30: LET h(3)=50
   10 BORDER 1: PAPER 0: INK 7: CLS
   15 PAPER 7: INK 0: PRINT AT 10,7;FLASH 1;INK 6;PAPER 2;" ";FLASH 0;INK 0;PAPER 7;"INICIALIZANDO...";INK 2;PAPER 6;FLASH 1;" ";FLASH 0
   20 GO SUB 9500: GO SUB 9600: GO SUB 9060: REM Definir UDG
@@ -21,24 +21,26 @@
 1124 PRINT AT 4,0;INK 6;"   ESPACIO";INK 7;": Modo construccion"
 1126 PRINT AT 5,0;INK 6;"         D";INK 7;": disparar torretas"
 1127 PRINT AT 6,0;"  (explotan tras  varios usos)"
-1128 PRINT AT 8,0;INK 3;"TIPOS DE TORRETAS:              "
+1128 PRINT AT 8,0;INK 3;BRIGHT 1;"CONSTRUCCIONES:"
 1129 PRINT AT 9,0; "XX Disparo simple               "
 1130 PRINT AT 10,0;"XX ";INK 6;h(1);INK 7;" recursos            "
 1132 PRINT AT 11,0;"             Radio 2 casillas XX"
 1134 PRINT AT 12,0;"                  ";INK 6;h(2);INK 7;" recursos XX"
 1136 PRINT AT 13,0;"XX Mata de un disparo"
-1138 PRINT AT 14,0;"XX ";INK 6;h(3);INK 7;" recursos            "
+1137 PRINT AT 14,0;"XX ";INK 6;h(3);INK 7;" recursos            "
+1138 PRINT AT 15,13;"Ralentiza zombies ";BRIGHT 1;INK 6;CHR$(146)
+1139 PRINT AT 16,20;INK 6;rcl;INK 7;" recursos ";BRIGHT 1;INK 6;CHR$(146)
 1140 POKE 23675,176: POKE 23676,254
 1141 PRINT AT 9,0;INK 2;CHR$(144);CHR$(145);AT 10,0;CHR$(146);CHR$(147):
 1142 PRINT AT 11,30;INK 3;CHR$(148);CHR$(149);AT 12,30;CHR$(150);CHR$(151):
 1143 PRINT AT 13,0;INK 4;CHR$(152);CHR$(153);AT 14,0;CHR$(154);CHR$(155):
 1149 POKE 23675,88: POKE 23676,255
-1150 PRINT AT 16,0;INK 3;"TIPOS DE ZOMBIES:              "
-1152 PRINT AT 17,0;"X Lento    X Rapido  X Muy lento"
-1154 PRINT AT 18,0;"X Normal   X Debil   X Tanque   "
+1150 PRINT AT 17,0;INK 3;BRIGHT 1;"ZOMBIES:"
+1152 PRINT AT 18,0;"X Lento    X Rapido  X Muy lento"
+1154 PRINT AT 19,0;"X Normal   X Debil   X Tanque   "
 1160 POKE 23675,8: POKE 23676,254
-1161 PRINT AT 17,0;INK 4;CHR$(144);AT 17,11;CHR$(152);AT 17,21;CHR$(160)
-1162 PRINT AT 18,0;INK 1;CHR$(145);INK 2;AT 18,11;CHR$(153);AT 18,21;INK 3;CHR$(145)
+1161 PRINT AT 18,0;INK 4;CHR$(144);AT 18,11;CHR$(152);AT 18,21;CHR$(160)
+1162 PRINT AT 19,0;INK 1;CHR$(145);INK 2;AT 19,11;CHR$(153);AT 19,21;INK 3;CHR$(145)
 1169 POKE 23675,88: POKE 23676,255
 1170 PRINT AT 20,0;PAPER 7;INK 0;"     TIEMPO A AGUANTAR: ";INK 1;maxtiempo;"s    "
 1180 PRINT AT 21,0;PAPER 7;INK 0;FLASH 1;"        PULSA UNA TECLA         "
