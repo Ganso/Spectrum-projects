@@ -8,12 +8,12 @@
   22 GO SUB 1100: REM Intro del nivel
   23 LET tiempo=0: LET nz=0: LET nt=0: LET nl=0: LET nc=0: LET r=20: REM Reiniciar contadores principales
   25 RANDOMIZE 0: GO SUB 1000: GO SUB 2000: GO SUB 2050: GO SUB 8700: GO TO 6000
-  25 RANDOMIZE 0: GO SUB 1000: GO SUB 2000: GO SUB 2050: GO SUB 8700: GO TO 6000
 1000 REM Inicializar pantalla
 1005 CLS : INK 5
 1010 FOR y=0 TO 21
 1020 PAPER 5: PRINT AT y,0; INK 1;CHR$ 160; INK 5;"     "; PAPER 0;CHR$ 160
 1060 NEXT y
+1065 FOR x=1 TO 23: FOR y=1 TO 32: LET m(x,y)=0: NEXT y: NEXT x: REM Reiniciar mapa
 1070 RETURN
 1100 REM Mostrar informacion del nivel
 1110 INK 7: PAPER 0: CLS
@@ -22,7 +22,7 @@
 1113 IF nivel>3 THEN LET h(1)=11+nivel:LET h(2)=16+nivel: LET h(3)=25+nivel*2: LET rcl=nivel
 1120 PRINT AT 0,0; PAPER 7; INK 0; FLASH 1;"             NIVEL ";nivel;"            "
 1121 IF NIVEL=1 THEN PRINT AT 1,0; BRIGHT 1;" Evita que los  zombies lleguen ";AT 2,0;" a la izquierda  de la pantalla "
-1122 IF NIVEL=2 THEN PRINT AT 1,0; BRIGHT 1;"Aparece un nuevo  tipo de zombie";AT 2,0;" Cada vez hay  menos ciudadanos "
+1122 IF NIVEL=2 THEN PRINT AT 1,0; BRIGHT 1;"Aparece un nuevo  tipo de zombie";AT 2,0;"  Cada vez hay  menos defensas  "
 1123 IF NIVEL=3 THEN PRINT AT 1,0; BRIGHT 1;"   Aparecen todos los zombies   ";AT 2,0;"En cada nivel  aumenta el tiempo"
 1124 IF NIVEL>3 THEN PRINT AT 1,0; BRIGHT 1;"      A partir de este nivel    ";AT 2,0;"Suben los costes  de los objetos"
 1125 PRINT AT 4,0; INK 6;"   ESPACIO"; INK 7;": Modo construccion"
@@ -48,7 +48,7 @@
 1160 POKE 23675,8: POKE 23676,254
 1161 PRINT AT 18,0; INK 4;CHR$ (144);AT 18,11;CHR$ (152);AT 18,21;CHR$ (160)
 1162 PRINT AT 19,0; INK 1;CHR$ (145); INK 2;AT 19,11;CHR$ (153);AT 19,21; INK 3;CHR$ (145)
-1163 IF nivel=1 THEN PRINT AT 18,13; INK 2;"Futuros  ";AT 19,13;"Niveles  "
+1163 IF nivel=1 THEN PRINT AT 18,13; INK 2;"Futuros ";AT 19,13;"Niveles "
 1164 IF nivel<3 THEN PRINT AT 18,23; INK 2;"Futuros  ";AT 19,23;"Niveles  "
 1169 POKE 23675,88: POKE 23676,255
 1170 PRINT AT 20,0; PAPER 7; INK 0;"     TIEMPO A AGUANTAR: "; INK 1;maxtiempo;"s   ";AT 20,28;"    "
@@ -64,7 +64,7 @@
 2030 LET m(c(b,2)+1,c(b,1))=b*2-1: LET m(c(b,2)+2,c(b,1))=b*2: LET nc=nc+1: NEXT b: RETURN
 2050 REM Colocar ladrillos inicialmente
 2051 LET nl=0
-2052 FOR b=1 TO 10
+2052 FOR b=1 TO maxc: REM Coloca inicialmente tantos ladrillos como ciudadanos
 2053 LET l(b,1)=INT (RND*3)+8: LET l(b,2)=INT (RND*20)+1: LET l(b,3)=3
 2054 IF m(l(b,2)+1,l(b,1))>0 THEN GO TO 2053
 2055 PAPER 0: INK 6: BRIGHT 1: PRINT AT l(b,2),l(b,1);CHR$ 146: BRIGHT 0
@@ -397,7 +397,7 @@
 9800 REM Rutina de ENHORABUENA y pasar al siguiente nivel
 9810 PAPER 0: INK 7: CLS
 9820 PRINT AT 10,9;PAPER 1;"  ENHORABUENA  "
-9830 PRINT AT 12,2;"Pasamos al  siguiente nivel"
+9830 PRINT AT 12,3;"Pasamos al siguiente nivel"
 9840 PAUSE 250: REM Esperar 5 segundos (50 frames * 5)
 9850 LET nivel=nivel+1
 9860 GO TO 22: REM Volver a la pantalla de información del nivel
