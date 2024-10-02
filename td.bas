@@ -1,7 +1,7 @@
    1 CLEAR 65031: DIM m(23,32): DIM c(10,3): DIM z(10,5): DIM l(20,3): DIM t(10,6): LET r=20: LET cx=7: LET cy=10: LET tiempo=0
    2 LET te=0: LET k$="": LET ox=0: LET oy=0: LET o=0: LET nz=0: LET nl=0: LET nt=0: LET nc=0: LET tir=0: LET tiz=0: LET cm=0: LET cc=0: LET w=0: LET x=0: LET y=0: LET sp=0: LET dp=0: LET seconds=0: LET oldseconds=0: DIM q(31)
    3 LET maxc=5: LET maxz=10: LET tv=3: LET lv=3: LET rcl=2: DIM h(3): LET nivel=1: LET maxtiempo=200
-   4 LET h(1)=10: LET h(2)=25: LET h(3)=50
+   4 LET h(1)=10: LET h(2)=15: LET h(3)=30
   10 BORDER 1: PAPER 0: INK 7: CLS
   15 PAPER 7: INK 0: PRINT AT 10,7; FLASH 1; INK 6; PAPER 2;" "; FLASH 0; INK 0; PAPER 7;"INICIALIZANDO..."; INK 2; PAPER 6; FLASH 1;" "; FLASH 0
   20 GO SUB 9500: GO SUB 9600: GO SUB 9060: REM Definir UDG
@@ -19,7 +19,7 @@
 1110 INK 7: PAPER 0: CLS
 1111 LET maxtiempo=50: IF nivel<>1 THEN LET maxtiempo=100*(nivel-1)
 1112 LET maxc=10-nivel: IF maxc<=0 THEN LET maxc=1
-1113 IF nivel>3 THEN LET h(1)=11+nivel:LET h(2)=22+nivel: LET h(3)=45+nivel*2: LET rcl=nivel
+1113 IF nivel>3 THEN LET h(1)=11+nivel:LET h(2)=16+nivel: LET h(3)=25+nivel*2: LET rcl=nivel
 1120 PRINT AT 0,0; PAPER 7; INK 0; FLASH 1;"             NIVEL ";nivel;"            "
 1121 IF NIVEL=1 THEN PRINT AT 1,0; BRIGHT 1;" Evita que los  zombies lleguen ";AT 2,0;" a la izquierda  de la pantalla "
 1122 IF NIVEL=2 THEN PRINT AT 1,0; BRIGHT 1;"Aparece un nuevo  tipo de zombie";AT 2,0;" Cada vez hay  menos ciudadanos "
@@ -96,7 +96,9 @@
 3340 RETURN
 5000 REM Generar zombie
 5010 IF nz>=maxz THEN RETURN
-5020 LET nz=nz+1: LET z(nz,1)=31: LET z(nz,2)=INT (RND*19)+1: LET z(nz,3)=INT (RND*3)+1: LET z(nz,4)=0: LET z(nz,5)=1+(1*(z(nz,3)=1))+(2*(z(nz,3)=3)): REM Vida zombies: 2 para T1, 1 para T2, 4 para T3
+5011 LET nz=nz+1
+5015 LET z(nz,3)=1 + (nivel > 1) * (RND > 0.5) + (nivel > 2) * (RND < 0.25): REM Nv1:1(siempre), Nv2:1-2(al 50%), Nv3+:1(37.5%)2(50%)3(12.5%)
+5020 LET z(nz,1)=31: LET z(nz,2)=INT (RND*19)+1: LET z(nz,4)=0: LET z(nz,5)=1+(1*(z(nz,3)=1))+(2*(z(nz,3)=3)): REM Vida zombies: 2 para T1, 1 para T2, 4 para T3
 5030 IF m(z(nz,2)+1,z(nz,1))>0 OR m(z(nz,2)+2,z(nz,1))>0 THEN LET nz=nz-1: RETURN
 5040 LET g=nz: GO SUB 8150: LET m(z(nz,2)+1,z(nz,1))=80+(nz*2)-1: LET m(z(nz,2)+2,z(nz,1))=80+(nz*2)
 5050 BEEP 0.05,20: RETURN
@@ -226,7 +228,7 @@
 7770 PRINT AT z(j,2),z(j,1); INK 4;" ";AT z(j,2)+1,z(j,1); INK z(j,3);" "
 7771 NEXT w
 7775 OVER 0: PAPER 0
-7780 IF t(i,3)<>1 THEN LET z(j,5)=0: GO TO 7785: REM Las torretas tipo 2 y 3 mata siempre
+7780 IF t(i,3)=3 THEN LET z(j,5)=0: GO TO 7785: REM La torreta tipo 3 mata siempre
 7781 LET z(j,5)=z(j,5)-1
 7785 LET t(i,6)=t(i,6)-1
 7786 IF t(i,6)<=0 THEN LET t(i,6)=0: REM Si va a hacer varios disparos en un turno, deja que los haga todos aunque explote antes
@@ -395,7 +397,7 @@
 9800 REM Rutina de ENHORABUENA y pasar al siguiente nivel
 9810 PAPER 0: INK 7: CLS
 9820 PRINT AT 10,9;PAPER 1;"  ENHORABUENA  "
-9830 PRINT AT 12,4;"Pasamos al siguiente nivel"
+9830 PRINT AT 12,2;"Pasamos al  siguiente nivel"
 9840 PAUSE 250: REM Esperar 5 segundos (50 frames * 5)
 9850 LET nivel=nivel+1
 9860 GO TO 22: REM Volver a la pantalla de información del nivel
