@@ -1,11 +1,13 @@
    1 CLEAR 65031: DIM m(23,32): DIM c(10,3): DIM z(10,5): DIM l(20,3): DIM t(10,6): LET r=20: LET cx=7: LET cy=10: LET tiempo=0
    2 LET te=0: LET k$="": LET ox=0: LET oy=0: LET o=0: LET nz=0: LET nl=0: LET nt=0: LET nc=0: LET tir=0: LET tiz=0: LET cm=0: LET cc=0: LET w=0: LET x=0: LET y=0: LET sp=0: LET dp=0: LET seconds=0: LET oldseconds=0: DIM q(31)
-   3 LET maxc=5: LET maxz=10: LET tv=3: LET lv=3: LET rcl=2: DIM h(3): LET nivel=3: LET maxtiempo=200
+   3 LET maxc=5: LET maxz=10: LET tv=3: LET lv=3: LET rcl=2: DIM h(3): LET nivel=1: LET maxtiempo=200
    4 LET h(1)=10: LET h(2)=25: LET h(3)=50
   10 BORDER 1: PAPER 0: INK 7: CLS
   15 PAPER 7: INK 0: PRINT AT 10,7; FLASH 1; INK 6; PAPER 2;" "; FLASH 0; INK 0; PAPER 7;"INICIALIZANDO..."; INK 2; PAPER 6; FLASH 1;" "; FLASH 0
   20 GO SUB 9500: GO SUB 9600: GO SUB 9060: REM Definir UDG
   22 GO SUB 1100: REM Intro del nivel
+  23 LET tiempo=0: LET nz=0: LET nt=0: LET nl=0: LET nc=0: LET r=20: REM Reiniciar contadores principales
+  25 RANDOMIZE 0: GO SUB 1000: GO SUB 2000: GO SUB 2050: GO SUB 8700: GO TO 6000
   25 RANDOMIZE 0: GO SUB 1000: GO SUB 2000: GO SUB 2050: GO SUB 8700: GO TO 6000
 1000 REM Inicializar pantalla
 1005 CLS : INK 5
@@ -89,7 +91,7 @@
 3320 LET r=r-h(te): LET nt=nt+1: LET v=nt: LET t(nt,1)=cx: LET t(nt,2)=cy: LET t(nt,3)=te: LET t(nt,4)=tv: LET t(nt,5)=0: LET t(nt,6)=2+(1*(te<>2)): REM Inicializa torreta con vida tv y 3 usos (2 para las tipo 2)
 3330 POKE 23675,176: POKE 23676,254: REM Subsubrutina de pintar torrea
 3331 LET desp=(t(v,3)-1)*4
-3332 INK t(v,3)+1: PAPER 0+(5*(cx<6)): PRINT AT t(v,2),t(v,1);CHR$ (144+desp);CHR$ (145+desp);AT t(v,2)+1,t(v,1);CHR$ (146+desp);CHR$ (147+desp)
+3332 INK t(v,3)+1: PAPER 0+(5*(t(v,1)<6)): PRINT AT t(v,2),t(v,1);CHR$ (144+desp);CHR$ (145+desp);AT t(v,2)+1,t(v,1);CHR$ (146+desp);CHR$ (147+desp)
 3333 POKE 23675,88: POKE 23676,255
 3340 RETURN
 5000 REM Generar zombie
@@ -100,20 +102,21 @@
 5050 BEEP 0.05,20: RETURN
 6000 REM Bucle principal del juego
 6010 IF NOT cm THEN GO SUB 7000: GO SUB 7200: GO SUB 7300
+6020 IF tiempo>=maxtiempo THEN GO SUB 9800: REM Comprobar si se ha alcanzado el tiempo máximo
 6040 GO TO 6000
 7000 REM Mover zombies
 7010 FOR g=1 TO nz
-7011 IF INKEY$=" " THEN LET sp=1: IF INKEY$="d" THEN LET dp=1
+7011 GO SUB 7440
 7012 IF z(g,1)=1 THEN GO TO 7050: REM Si ya esta a la izquierda no hace nada
 7013 IF m(z(g,2)+1,z(g,1)-1)>0 OR m(z(g,2)+2,z(g,1)-1)>0 THEN GO TO 7040: REM Si hay un objeto a la izquierda, va la deteccion de colisiones en vez de intentar mover
 7020 IF z(g,3)=2 THEN GO TO 7030: REM Los zombies rapidos mueven cada turno
 7021 LET z(g,4)=z(g,4)+2
 7022 IF z(g,3)<>3 THEN LET z(g,4)=z(g,4)+2: REM Suma 2 a los lentos, 4 a los normales
 7023 IF z(g,4)<8 THEN GO TO 7050: REM Si no toca turno, pasa al siguiente
-7030 IF z(g,1)=1 THEN LET z(g,5)=-1: GO TO 7050: REM Si esta la izquierda, lo hace invencible
 7032 LET ox=z(g,1): LET oy=z(g,2): LET m(oy+1,ox)=0: LET m(oy+2,ox)=0: REM Vacia en el mapa la casilla actual
 7033 GO SUB 8400: LET oy=oy+1: GO SUB 8400: REM Repinta las casillas actuales
 7034 LET z(g,1)=z(g,1)-1: LET z(g,4)=0: REM Decrementa la X y resetea el contador de movimiento
+7035 IF z(g,1)=1 THEN GO SUB 9700: RETURN : REM Si ha llegado a la izquierda, game over
 7036 GO SUB 8170: GO SUB 8150: PRINT AT z(g,2),z(g,1)+1;" ";AT z(g,2)+1,z(g,1)+1;" ": BEEP 0.01,5: LET m(z(g,2)+1,z(g,1))=80+(g*2)-1: LET m(z(g,2)+2,z(g,1))=80+(g*2): REM Dibuja de nuevo el zombie y da un pitido
 7037 IF z(g,1)=5 THEN GO SUB 8400: LET oy=oy-1: GO SUB 8400: REM Si hemos pasado por el separador, lo repintamos
 7038 GO TO 7050: REM Salta al NEXT
@@ -138,14 +141,14 @@
 7200 REM Actualizar puntuacion, recursos y tiempo
 7201 LET seconds=INT ((65536*PEEK 23674+256*PEEK 23673+PEEK 23672)/50)
 7202 IF seconds<>oldseconds THEN LET oldseconds=seconds: LET tiempo=tiempo+1
-7205 IF INKEY$=" " THEN LET sp=1: IF INKEY$="d" THEN LET dp=1
+7205 GO SUB 7440
 7210 IF tir>=2 THEN LET r=r+(1*r<100): REM cada 2 ticks suben los recursos, hasta 100
 7220 IF tiz>=5 THEN LET tiz=0: GO SUB 5000: RETURN : REM cada 5 ticks sale un zombie
 7240 LET tir=tir+1: LET tiz=tiz+1
 7245 GO SUB 7453: REM Actualiza el marcador
 7300 LET k$=INKEY$
 7320 IF k$=" " OR sp THEN IF cm=0 THEN LET cm=1: LET cc=0: LET sp=0: GO SUB 7330: REM Si estamos pulsando espacio o lo habiamos pulsdo antes, entramos a modo construccion
-7325 IF k$="d" OR dp THEN LET dp=0: GO SUB 7500: REM Disparar torretas
+7325 IF k$="d" OR dp THEN LET dp=0: GO SUB 7450: GO SUB 7500: REM Disparar torretas
 7329 RETURN
 7330 REM Modo de construccion
 7331 PRINT #0;AT 0,0; PAPER 2; INK 7;"CONSTRUCION"; PAPER 7; INK 0;"         Rec:         "; INK 1;AT 0,24;r;"  ";
@@ -162,19 +165,24 @@
 7400 IF k$>="0" AND k$<="3" THEN LET te=VAL k$: GO SUB 3000: GO TO 7331
 7410 IF ox<>cx OR oy<>cy THEN GO SUB 8050: GO SUB 8400: GO SUB 8000: LET ox=cx: LET oy=cy: REM Si hemos movido el cursor, redibuja
 7420 GO TO 7334
+7440 REM Comprueba teclas durante fases secundarias del juego
+7441 LET k$=INKEY$
+7442 IF k$=" " THEN LET sp=1: GO TO 7450
+7443 IF k$="d" THEN LET dp=1: GO TO 7450
+7444 RETURN
 7450 REM Pinta el marcador en modo principal
-7451 PRINT #0;AT 0,0; PAPER 2; INK 7;" CONTROLES "; PAPER 7; INK 1;CHR$ 158; INK 0;"Construir - "; INK 1;"D"; INK 0;"isparar"
+7451 PRINT #0;AT 0,0; PAPER 2; INK 7;" CONTROLES "; PAPER 7; INK 1;FLASH sp;CHR$ 158;FLASH 0; INK 0;"Construir - "; INK 1;FLASH dp;"D";FLASH 0; INK 0;"isparar"
 7452 PRINT #0; INK 0; PAPER 7;AT 1,0;"Recursos:         Tiempo:       ": PAPER 0:
 7453 PRINT #0; INK 1; PAPER 7;AT 1,9;r;"  ";AT 1,25;tiempo
 7455 RETURN
 7500 REM Torretas disparan
 7505 LET disparos=0
 7510 FOR i=1 TO nt
-7515 IF t(v,4)<=0 THEN GO TO 7590
+7515 IF t(i,4)<=0 THEN GO TO 7590
 7530 LET t(i,5)=0: LET tx=t(i,1)+1: LET ty=t(i,2)+1
 7535 LET v=i: IF t(v,4)>0 THEN BRIGHT 1: GO SUB 3330: BRIGHT 0
 7540 FOR j=1 TO nz
-7541 IF INKEY$=" " THEN LET sp=1: IF INKEY$="d" THEN LET dp=1
+7541 GO SUB 7440
 7550 IF z(j,5)<=0 THEN GO TO 7580: REM Zombie ya muerto
 7551 LET dx=z(j,1)-t(i,1): LET dy=z(j,2)-t(i,2)
 7552 IF t(i,3)=2 THEN GO TO 7570: REM Torreta tipo 2, tratamiento especial
@@ -184,13 +192,14 @@
 7556 LET q(w)=0: IF  SCREEN$ (lineay,w)=" " THEN PRINT INK 6; PAPER 0+5*(w<6);AT lineay,w;CHR$ (156+1*(t(i,3)=3)): LET q(w)=1: REM pinta disparo
 7557 NEXT w
 7558 LET disparos=disparos+1: GO SUB 7700: REM Quita vida al zombie
-7559 FOR w=tx TO lineax
-7560 IF q(w)=1 THEN PRINT INK 6; PAPER 0+5*(w<6);AT lineay,w;" ": REM despinta disparo
-7561 NEXT w
-7562 GO TO 7580
+7560 FOR w=tx TO lineax
+7561 IF q(w)=1 THEN PRINT INK 6; PAPER 0+5*(w<6);AT lineay,w;" ": REM despinta disparo
+7562 NEXT w
+7563 GO TO 7580
 7570 IF ABS (dx)>3 OR ABS (dy)>3 THEN GO TO 7580: REM Fuera de rango
 7572 LET disparos=disparos+1: GO SUB 7700: REM Quita vida al zombie
-7580 NEXT j
+7582 NEXT j
+7583 IF t(i,6)<=0 THEN LET t=i: GO SUB 7640: REM Si ya no le quedan disparos, explota
 7585 IF t(v,4)>0 THEN BRIGHT 0: GO SUB 3330
 7590 NEXT i
 7591 IF disparos=0 THEN BEEP 0.5,10
@@ -198,7 +207,7 @@
 7600 REM Eliminar objeto
 7610 IF ob<=20 THEN LET m(c(t,2)+1,c(t,1))=0: LET m(c(t,2)+2,c(t,1))=0: LET ox=c(t,1): LET oy=c(t,2): GO SUB 8400: LET oy=oy+1: GO SUB 8400: LET c(t,3)=0: LET nc=nc-1: GO SUB 9100: REM Eliminar ciudadano
 7620 IF ob>20 AND ob<=40 THEN LET m(l(t,2)+1,l(t,1))=0: LET ox=l(t,1): LET oy=l(t,2): GO SUB 8400: LET l(t,3)=0: GO SUB 9200: REM Eliminar ladrillo
-7630 IF ob<=40 OR ob>80 THEN GO TO 7660: REM Si no es torreta\#014\#000\#000\#000\#000\#000, termina
+7630 IF ob<=40 OR ob>80 THEN GO TO 7660: REM Si no es torreta, termina
 7640 LET m(t(t,2)+1,t(t,1))=0: LET m(t(t,2)+2,t(t,1))=0: LET m(t(t,2)+1,t(t,1)+1)=0: LET m(t(t,2)+2,t(t,1)+1)=0: LET ox=t(t,1): LET oy=t(t,2)
 7650 INK 6: PAPER 2: FLASH 1: PRINT AT t(t,2),t(t,1);CHR$ (161);CHR$ (162);AT t(t,2)+1,t(t,1);CHR$ (163);CHR$ (164): REM Explosion
 7655 FOR x=1 TO 10: BEEP 0.02,INT (RND*20): NEXT X
@@ -220,7 +229,7 @@
 7780 IF t(i,3)<>1 THEN LET z(j,5)=0: GO TO 7785: REM Las torretas tipo 2 y 3 mata siempre
 7781 LET z(j,5)=z(j,5)-1
 7785 LET t(i,6)=t(i,6)-1
-7786 IF t(i,6)<=0 THEN LET t=i: GO SUB 7640: REM Las torretas explotan despues de t(i,6) disparos
+7786 IF t(i,6)<=0 THEN LET t(i,6)=0: REM Si va a hacer varios disparos en un turno, deja que los haga todos aunque explote antes
 7790 IF z(j,5)>0 THEN GO TO 7800
 7791 IF z(j,1)<6 THEN PAPER 5
 7795 PRINT AT z(j,2),z(j,1);" ";AT z(j,2)+1,z(j,1);" ": LET m(z(j,2)+1,z(j,1))=0: LET m(z(j,2)+2,z(j,1))=0: GO SUB 9400: REM Matar zombie y reindexar
@@ -375,6 +384,22 @@
 9621 REM Torreta 1 - 144-145/146-147
 9622 REM Torreta 1 - 148-149/150-151
 9623 REM Torreta 3 - 152-153/154-155
+9700 REM Rutina de GAME OVER
+9710 PAPER 0: INK 7: CLS
+9720 PRINT AT 10,10;PAPER 2;" GAME OVER "
+9730 PRINT AT 12,7;"Nivel alcanzado: ";nivel
+9740 PRINT AT 14,1;"Pulsa una tecla para continuar"
+9750 PAUSE 0
+9760 LET nivel=1: GO TO 22
+9770 RETURN
+9800 REM Rutina de ENHORABUENA y pasar al siguiente nivel
+9810 PAPER 0: INK 7: CLS
+9820 PRINT AT 10,9;PAPER 1;"  ENHORABUENA  "
+9830 PRINT AT 12,4;"Pasamos al siguiente nivel"
+9840 PAUSE 250: REM Esperar 5 segundos (50 frames * 5)
+9850 LET nivel=nivel+1
+9860 GO TO 22: REM Volver a la pantalla de información del nivel
+9870 RETURN
 9994 REM .....................................................
 9995 REM El programa utiliza BASIC de ZX Spectrum, con lo cual no puede utilizar las ordenes ELSE, END IF, o el operador MOD
 9996 REM Se debe optimizar al maximo el uso de CPU, reduciendo los ciclos de reloj
