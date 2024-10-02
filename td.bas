@@ -1,49 +1,56 @@
    1 CLEAR 65031: DIM m(23,32): DIM c(10,3): DIM z(10,5): DIM l(20,3): DIM t(10,6): LET r=20: LET cx=7: LET cy=10: LET tiempo=0
    2 LET te=0: LET k$="": LET ox=0: LET oy=0: LET o=0: LET nz=0: LET nl=0: LET nt=0: LET nc=0: LET tir=0: LET tiz=0: LET cm=0: LET cc=0: LET w=0: LET x=0: LET y=0: LET sp=0: LET dp=0: LET seconds=0: LET oldseconds=0: DIM q(31)
-   3 LET maxc=5: LET maxz=10: LET tv=3: LET lv=3: LET rcl=2: DIM h(3): LET nivel=1: LET maxtiempo=200
+   3 LET maxc=5: LET maxz=10: LET tv=3: LET lv=3: LET rcl=2: DIM h(3): LET nivel=3: LET maxtiempo=200
    4 LET h(1)=10: LET h(2)=25: LET h(3)=50
   10 BORDER 1: PAPER 0: INK 7: CLS
-  15 PAPER 7: INK 0: PRINT AT 10,7;FLASH 1;INK 6;PAPER 2;" ";FLASH 0;INK 0;PAPER 7;"INICIALIZANDO...";INK 2;PAPER 6;FLASH 1;" ";FLASH 0
+  15 PAPER 7: INK 0: PRINT AT 10,7; FLASH 1; INK 6; PAPER 2;" "; FLASH 0; INK 0; PAPER 7;"INICIALIZANDO..."; INK 2; PAPER 6; FLASH 1;" "; FLASH 0
   20 GO SUB 9500: GO SUB 9600: GO SUB 9060: REM Definir UDG
   22 GO SUB 1100: REM Intro del nivel
   25 RANDOMIZE 0: GO SUB 1000: GO SUB 2000: GO SUB 2050: GO SUB 8700: GO TO 6000
 1000 REM Inicializar pantalla
-1005 CLS: INK 5
+1005 CLS : INK 5
 1010 FOR y=0 TO 21
-1020 PAPER 5: PRINT AT y,0;INK 1;CHR$ 160;INK 5;"     ";PAPER 0;CHR$ 160
+1020 PAPER 5: PRINT AT y,0; INK 1;CHR$ 160; INK 5;"     "; PAPER 0;CHR$ 160
 1060 NEXT y
 1070 RETURN
 1100 REM Mostrar informacion del nivel
 1110 INK 7: PAPER 0: CLS
-1120 PRINT AT 0,0;PAPER 7;INK 0;FLASH 1;"             NIVEL ";nivel;"            "
-1122 PRINT AT 1,0;BRIGHT 1; " Evita que los  zombies lleguen   "
-1123 PRINT AT 2,0;BRIGHT 1; " a la izquierda  de la pantalla  "
-1124 PRINT AT 4,0;INK 6;"   ESPACIO";INK 7;": Modo construccion"
-1126 PRINT AT 5,0;INK 6;"         D";INK 7;": disparar torretas"
+1111 LET maxtiempo=50: IF nivel<>1 THEN LET maxtiempo=100*(nivel-1)
+1112 LET maxc=10-nivel: IF maxc<=0 THEN LET maxc=1
+1113 IF nivel>3 THEN LET h(1)=11+nivel:LET h(2)=22+nivel: LET h(3)=45+nivel*2: LET rcl=nivel
+1120 PRINT AT 0,0; PAPER 7; INK 0; FLASH 1;"             NIVEL ";nivel;"            "
+1121 IF NIVEL=1 THEN PRINT AT 1,0; BRIGHT 1;" Evita que los  zombies lleguen ";AT 2,0;" a la izquierda  de la pantalla "
+1122 IF NIVEL=2 THEN PRINT AT 1,0; BRIGHT 1;"Aparece un nuevo  tipo de zombie";AT 2,0;" Cada vez hay  menos ciudadanos "
+1123 IF NIVEL=3 THEN PRINT AT 1,0; BRIGHT 1;"   Aparecen todos los zombies   ";AT 2,0;"En cada nivel  aumenta el tiempo"
+1124 IF NIVEL>3 THEN PRINT AT 1,0; BRIGHT 1;"      A partir de este nivel    ";AT 2,0;"Suben los costes  de los objetos"
+1125 PRINT AT 4,0; INK 6;"   ESPACIO"; INK 7;": Modo construccion"
+1126 PRINT AT 5,0; INK 6;"         D"; INK 7;": disparar torretas"
 1127 PRINT AT 6,0;"  (explotan tras  varios usos)"
-1128 PRINT AT 8,0;INK 3;BRIGHT 1;"CONSTRUCCIONES:"
-1129 PRINT AT 9,0; "XX Disparo simple               "
-1130 PRINT AT 10,0;"XX ";INK 6;h(1);INK 7;" recursos            "
-1132 PRINT AT 11,0;"             Radio 2 casillas XX"
-1134 PRINT AT 12,0;"                  ";INK 6;h(2);INK 7;" recursos XX"
-1136 PRINT AT 13,0;"XX Mata de un disparo"
-1137 PRINT AT 14,0;"XX ";INK 6;h(3);INK 7;" recursos            "
-1138 PRINT AT 15,13;"Ralentiza zombies ";BRIGHT 1;INK 6;CHR$(146)
-1139 PRINT AT 16,20;INK 6;rcl;INK 7;" recursos ";BRIGHT 1;INK 6;CHR$(146)
+1128 PRINT AT 8,0; INK 3; BRIGHT 1;"CONSTRUCCIONES:"
+1129 PRINT AT 9,0;"   Disparo simple               "
+1130 PRINT AT 10,0;"   "; INK 6;h(1); INK 7;" recursos            "
+1132 PRINT AT 11,0;"             Radio 2 casillas   "
+1134 PRINT AT 12,0;"                  "; INK 6;h(2); INK 7;" recursos   "
+1136 PRINT AT 13,0;"   Mata de un disparo"
+1137 PRINT AT 14,0;"   "; INK 6;h(3); INK 7;" recursos            "
+1138 PRINT AT 15,13;"Ralentiza zombies "; BRIGHT 1; INK 6;CHR$ (146)
+1139 PRINT AT 16,20; INK 6;rcl; INK 7;" recursos "; BRIGHT 1; INK 6;CHR$ (146)
 1140 POKE 23675,176: POKE 23676,254
-1141 PRINT AT 9,0;INK 2;CHR$(144);CHR$(145);AT 10,0;CHR$(146);CHR$(147):
-1142 PRINT AT 11,30;INK 3;CHR$(148);CHR$(149);AT 12,30;CHR$(150);CHR$(151):
-1143 PRINT AT 13,0;INK 4;CHR$(152);CHR$(153);AT 14,0;CHR$(154);CHR$(155):
+1141 PRINT AT 9,0; INK 2;CHR$ (144);CHR$ (145);AT 10,0;CHR$ (146);CHR$ (147):
+1142 PRINT AT 11,30; INK 3;CHR$ (148);CHR$ (149);AT 12,30;CHR$ (150);CHR$ (151):
+1143 PRINT AT 13,0; INK 4;CHR$ (152);CHR$ (153);AT 14,0;CHR$ (154);CHR$ (155):
 1149 POKE 23675,88: POKE 23676,255
-1150 PRINT AT 17,0;INK 3;BRIGHT 1;"ZOMBIES:"
-1152 PRINT AT 18,0;"X Lento    X Rapido  X Muy lento"
-1154 PRINT AT 19,0;"X Normal   X Debil   X Tanque   "
+1150 PRINT AT 17,0; INK 3; BRIGHT 1;"ZOMBIES:"
+1152 PRINT AT 18,0;"  Lento      Rapido    Muy lento"
+1154 PRINT AT 19,0;"  Normal     Debil     Tanque   "
 1160 POKE 23675,8: POKE 23676,254
-1161 PRINT AT 18,0;INK 4;CHR$(144);AT 18,11;CHR$(152);AT 18,21;CHR$(160)
-1162 PRINT AT 19,0;INK 1;CHR$(145);INK 2;AT 19,11;CHR$(153);AT 19,21;INK 3;CHR$(145)
+1161 PRINT AT 18,0; INK 4;CHR$ (144);AT 18,11;CHR$ (152);AT 18,21;CHR$ (160)
+1162 PRINT AT 19,0; INK 1;CHR$ (145); INK 2;AT 19,11;CHR$ (153);AT 19,21; INK 3;CHR$ (145)
+1163 IF nivel=1 THEN PRINT AT 18,13; INK 2;"Futuros  ";AT 19,13;"Niveles  "
+1164 IF nivel<3 THEN PRINT AT 18,23; INK 2;"Futuros  ";AT 19,23;"Niveles  "
 1169 POKE 23675,88: POKE 23676,255
-1170 PRINT AT 20,0;PAPER 7;INK 0;"     TIEMPO A AGUANTAR: ";INK 1;maxtiempo;"s    "
-1180 PRINT AT 21,0;PAPER 7;INK 0;FLASH 1;"        PULSA UNA TECLA         "
+1170 PRINT AT 20,0; PAPER 7; INK 0;"     TIEMPO A AGUANTAR: "; INK 1;maxtiempo;"s   ";AT 20,28;"    "
+1180 PRINT AT 21,0; PAPER 7; INK 0; FLASH 1;"        PULSA UNA TECLA         "
 1215 PAUSE 0
 1220 IF INKEY$="" THEN GO TO 1220
 1299 RETURN
@@ -141,8 +148,8 @@
 7325 IF k$="d" OR dp THEN LET dp=0: GO SUB 7500: REM Disparar torretas
 7329 RETURN
 7330 REM Modo de construccion
-7331 PRINT #0;AT 0,0; PAPER 2; INK 7;"CONSTRUCION"; PAPER 7; INK 0;"         Rec:         ";INK 1;AT 0,24;r;"  ";
-7332 PRINT #0;AT 1,0; PAPER 7; INK 0;"CONTROLES:";INK 1;"QAOP0123"+CHR$ (158);INK 0;" 0"; INK 6; PAPER 0; BRIGHT 1;CHR$ 146; INK 2; PAPER 7; BRIGHT 0;" 1";CHR$ 153; INK 3;" 2";CHR$ 154; INK 4;" 3";CHR$ 155
+7331 PRINT #0;AT 0,0; PAPER 2; INK 7;"CONSTRUCION"; PAPER 7; INK 0;"         Rec:         "; INK 1;AT 0,24;r;"  ";
+7332 PRINT #0;AT 1,0; PAPER 7; INK 0;"CONTROLES:"; INK 1;"QAOP0123"+CHR$ (158); INK 0;" 0"; INK 6; PAPER 0; BRIGHT 1;CHR$ 146; INK 2; PAPER 7; BRIGHT 0;" 1";CHR$ 153; INK 3;" 2";CHR$ 154; INK 4;" 3";CHR$ 155
 7333 GO SUB 8000
 7334 LET k$=INKEY$
 7335 BORDER INT (RND*6): LET cc=cc+1: IF cc=100 THEN GO SUB 8050: LET cm=0: LET cc=0: BORDER 1: RETURN
@@ -156,8 +163,8 @@
 7410 IF ox<>cx OR oy<>cy THEN GO SUB 8050: GO SUB 8400: GO SUB 8000: LET ox=cx: LET oy=cy: REM Si hemos movido el cursor, redibuja
 7420 GO TO 7334
 7450 REM Pinta el marcador en modo principal
-7451 PRINT #0;AT 0,0; PAPER 2; INK 7;" CONTROLES "; PAPER 7; INK 1;chr$ 158;INK 0;"Construir - ";INK 1;"D";INK 0;"isparar"
-7452 PRINT #0; INK 0; PAPER 7;AT 1,0;"Recursos:         Tiempo:       ": PAPER 0: 
+7451 PRINT #0;AT 0,0; PAPER 2; INK 7;" CONTROLES "; PAPER 7; INK 1;CHR$ 158; INK 0;"Construir - "; INK 1;"D"; INK 0;"isparar"
+7452 PRINT #0; INK 0; PAPER 7;AT 1,0;"Recursos:         Tiempo:       ": PAPER 0:
 7453 PRINT #0; INK 1; PAPER 7;AT 1,9;r;"  ";AT 1,25;tiempo
 7455 RETURN
 7500 REM Torretas disparan
@@ -176,13 +183,13 @@
 7555 FOR w=tx TO lineax
 7556 LET q(w)=0: IF  SCREEN$ (lineay,w)=" " THEN PRINT INK 6; PAPER 0+5*(w<6);AT lineay,w;CHR$ (156+1*(t(i,3)=3)): LET q(w)=1: REM pinta disparo
 7557 NEXT w
-7558 LET disparos=disparos+1:GO SUB 7700: REM Quita vida al zombie
+7558 LET disparos=disparos+1: GO SUB 7700: REM Quita vida al zombie
 7559 FOR w=tx TO lineax
 7560 IF q(w)=1 THEN PRINT INK 6; PAPER 0+5*(w<6);AT lineay,w;" ": REM despinta disparo
 7561 NEXT w
 7562 GO TO 7580
 7570 IF ABS (dx)>3 OR ABS (dy)>3 THEN GO TO 7580: REM Fuera de rango
-7572 LET disparos=disparos+1:GO SUB 7700: REM Quita vida al zombie
+7572 LET disparos=disparos+1: GO SUB 7700: REM Quita vida al zombie
 7580 NEXT j
 7585 IF t(v,4)>0 THEN BRIGHT 0: GO SUB 3330
 7590 NEXT i
@@ -191,7 +198,7 @@
 7600 REM Eliminar objeto
 7610 IF ob<=20 THEN LET m(c(t,2)+1,c(t,1))=0: LET m(c(t,2)+2,c(t,1))=0: LET ox=c(t,1): LET oy=c(t,2): GO SUB 8400: LET oy=oy+1: GO SUB 8400: LET c(t,3)=0: LET nc=nc-1: GO SUB 9100: REM Eliminar ciudadano
 7620 IF ob>20 AND ob<=40 THEN LET m(l(t,2)+1,l(t,1))=0: LET ox=l(t,1): LET oy=l(t,2): GO SUB 8400: LET l(t,3)=0: GO SUB 9200: REM Eliminar ladrillo
-7630 IF ob<=40 OR ob>80 THEN GO TO 7660: REM Si no es torreta, termina
+7630 IF ob<=40 OR ob>80 THEN GO TO 7660: REM Si no es torreta\#014\#000\#000\#000\#000\#000, termina
 7640 LET m(t(t,2)+1,t(t,1))=0: LET m(t(t,2)+2,t(t,1))=0: LET m(t(t,2)+1,t(t,1)+1)=0: LET m(t(t,2)+2,t(t,1)+1)=0: LET ox=t(t,1): LET oy=t(t,2)
 7650 INK 6: PAPER 2: FLASH 1: PRINT AT t(t,2),t(t,1);CHR$ (161);CHR$ (162);AT t(t,2)+1,t(t,1);CHR$ (163);CHR$ (164): REM Explosion
 7655 FOR x=1 TO 10: BEEP 0.02,INT (RND*20): NEXT X
