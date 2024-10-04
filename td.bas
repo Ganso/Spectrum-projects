@@ -1,6 +1,6 @@
    1 CLEAR 65031: DIM m(23,32): DIM c(10,3): DIM z(10,5): DIM l(20,3): DIM t(10,6): LET r=20: LET cx=7: LET cy=10: LET tiempo=0
    2 LET te=0: LET k$="": LET ox=0: LET oy=0: LET o=0: LET nz=0: LET nl=0: LET nt=0: LET nc=0: LET tir=0: LET tiz=0: LET cm=0: LET cc=0: LET w=0: LET x=0: LET y=0: LET sp=0: LET dp=0: LET seconds=0: LET oldseconds=0: DIM q(31)
-   3 LET maxc=5: LET maxz=10: LET tv=3: LET lv=3: LET rcl=2: DIM h(3): LET nivel=1: LET maxtiempo=200
+   3 LET maxc=5: LET maxz=10: LET tv=3: LET lv=3: LET rcl=2: DIM h(3): LET nivel=5: LET maxtiempo=200
    4 LET h(1)=10: LET h(2)=15: LET h(3)=25
   10 BORDER 1: PAPER 0: INK 7: CLS
   15 PAPER 7: INK 0: PRINT AT 10,7; FLASH 1; INK 6; PAPER 2;" "; FLASH 0; INK 0; PAPER 7;"INICIALIZANDO..."; INK 2; PAPER 6; FLASH 1;" "; FLASH 0
@@ -23,13 +23,14 @@
 1121 IF NIVEL=1 THEN PRINT AT 1,0; BRIGHT 1;" Evita que los  zombies lleguen ";AT 2,0;" a la izquierda  de la pantalla "
 1122 IF NIVEL=2 THEN PRINT AT 1,0; BRIGHT 1;"Aparece un nuevo  tipo de zombie";AT 2,0;"  Cada vez hay  menos defensas  "
 1123 IF NIVEL=3 THEN PRINT AT 1,0; BRIGHT 1;"   Aparecen todos los zombies   ";AT 2,0;"En cada nivel  aumenta el tiempo"
-1124 IF NIVEL>3 THEN PRINT AT 1,0; BRIGHT 1;"      A partir de este nivel    ";AT 2,0;"Suben los costes  de los objetos"
-1125 PRINT AT 4,0; INK 6;"   ESPACIO"; INK 7;": Modo construccion"
-1126 PRINT AT 5,0; INK 6;"         D"; INK 7;": disparar torretas"
-1127 PRINT AT 6,0;"  (explotan tras  varios usos)"
-1128 PRINT AT 8,0; INK 3; BRIGHT 1;"CONSTRUCCIONES:"
-1129 PRINT AT 9,0;"   Disparo simple               "
-1130 PRINT AT 10,0;"   "; INK 6;h(1); INK 7;" recursos            "
+1124 IF NIVEL=4 THEN PRINT AT 1,0; BRIGHT 1;"      A partir de este nivel    ";AT 2,0;"Suben los costes  de los objetos"
+1125 IF NIVEL>4 THEN PRINT AT 1,0; BRIGHT 1;"           ENHORABUENA          ";AT 2,0;"POCOS JUGADORES LLEGAN TAN LEJOS"
+1126 PRINT AT 4,0; INK 6;"   ESPACIO"; INK 7;": Modo construccion"
+1127 PRINT AT 5,0; INK 6;"         D"; INK 7;": disparar torretas"
+1128 PRINT AT 6,0;"  (explotan tras  varios usos)"
+1129 PRINT AT 8,0; INK 3; BRIGHT 1;"CONSTRUCCIONES:"
+1130 PRINT AT 9,0;"   Disparo simple               "
+1131 PRINT AT 10,0;"   "; INK 6;h(1); INK 7;" recursos            "
 1132 PRINT AT 11,0;"             Radio 2 casillas   "
 1134 PRINT AT 12,0;"                  "; INK 6;h(2); INK 7;" recursos   "
 1136 PRINT AT 13,0;"   Mata de un disparo"
