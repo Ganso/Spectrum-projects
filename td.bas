@@ -1,72 +1,3 @@
-Check D24E356D
-Auto 8224
-
-# Run-time Variables
-
-Var r: Num = 16
-Var o: Num = 0
-Var a: Num = 64
-Var z: Num = 1
-Var v: Num = 2
-Var i: Num = 3
-Var j: Num = 5
-Var t: Num = 3
-Var cx: Num = 8
-Var cy: Num = 6
-Var tiempo: Num = 0
-Var te: Num = 1
-Var ox: Num = 31
-Var oy: Num = 18
-Var nz: Num = 7
-Var nl: Num = 9
-Var nt: Num = 2
-Var nc: Num = 8
-Var tir: Num = 62
-Var tiz: Num = 2
-Var cm: Num = 0
-Var cc: Num = 0
-Var sp: Num = 0
-Var dp: Num = 0
-Var seconds: Num = 266
-Var oldseconds: Num = 266
-Var maxc: Num = 8
-Var maxz: Num = 10
-Var tv: Num = 3
-Var lv: Num = 3
-Var rcl: Num = 2
-Var nivel: Num = 1
-Var maxtiempo: Num = 50
-Var op: Num = 0
-Var desp: Num = 0
-Var disparos: Num = 0
-Var tx: Num = 8
-Var ty: Num = 18
-Var dx: Num = 19
-Var dy: Num = -3
-Var lineax: Num = 21
-Var lineay: Num = 6
-Var ci: Num = 3
-Var li: Num = 10
-Var ob: Num = 30
-Var col: Num = 4
-Var matado: Num = 0
-Var m: NumArray(23, 32) = 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 25, 28, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 83, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 24, 0, 0, 0, 30, 0, 0, 0, 0, 0, 84, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 91, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 89, 0, 0, 92, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 90, 0, 0, 0, 0, 0, 0, 0, 0, 0, 11, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 12, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 81, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 3, 0, 9, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 82, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 4, 0, 10, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 87, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 88, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 15, 0, 0, 0, 0, 0, 0, 0, 26, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 16, 0, 0, 0, 13, 0, 45, 47, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 93, 0, 0, 0, 0, 0, 0, 14, 0, 46, 48, 23, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 94, 0, 0, 0, 0, 0, 0, 0, 0, 49, 51, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 50, 52, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-Var c: NumArray(10, 3) = 1, 13, 5, 3, 13, 5, 5, 3, 5, 3, 1, 5, 5, 13, 5, 3, 11, 5, 5, 17, 5, 1, 16, 5, 0, 0, 0, 0, 0, 0
-Var z: NumArray(10, 5) = 23, 12, 1, 0, 1, 20, 6, 1, 0, 2, 16, 1, 1, 0, 1, 18, 14, 1, 0, 2, 25, 9, 1, 0, 2, 28, 8, 1, 4, 2, 30, 17, 1, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-Var l: NumArray(20, 3) = 9, 2, 3, 9, 1, 3, 9, 18, 3, 10, 7, 3, 9, 5, 3, 9, 16, 3, 10, 1, 3, 10, 5, 3, 14, 7, 3, 14, 7, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-Var t: NumArray(10, 6) = 7, 19, 1, 3, 0, 1, 7, 17, 1, 3, 0, 2, 8, 6, 1, 0, 0, 0, 1, 2, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-Var q: NumArray(31) = 0, 0, 0, 1, 1, 0, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0
-Var h: NumArray(3) = 10, 15, 25
-Var w: NumFOR = 22, 21, 1, 7560, 2
-Var x: NumFOR = 4, 23, 1, 9840, 2
-Var y: NumFOR = 14, 32, 1, 9840, 3
-Var f: NumFOR = 65536, 65535, 1, 9060, 3
-Var b: NumFOR = 9, 8, 1, 2052, 2
-Var g: NumFOR = 8, 7, 1, 7010, 2
-Var k$: Str = " "
-
-# End Run-time Variables
-
    1 CLEAR 65031: DIM m(23,32): DIM c(10,3): DIM z(10,5): DIM l(20,3): DIM t(10,6): LET r=20: LET cx=7: LET cy=10: LET tiempo=0
    2 LET te=0: LET k$="": LET ox=0: LET oy=0: LET o=0: LET nz=0: LET nl=0: LET nt=0: LET nc=0: LET tir=0: LET tiz=0: LET cm=0: LET cc=0: LET w=0: LET x=0: LET y=0: LET sp=0: LET dp=0: LET seconds=0: LET oldseconds=0: DIM q(31)
    3 LET maxc=5: LET maxz=10: LET tv=3: LET lv=3: LET rcl=2: DIM h(3): LET nivel=1: LET maxtiempo=200
@@ -85,7 +16,7 @@ Var k$: Str = " "
 1070 RETURN
 1100 REM Mostrar informacion del nivel
 1110 INK 7: PAPER 0: CLS
-1111 LET maxtiempo=50: IF nivel<>1 THEN LET maxtiempo=100*(nivel-1)
+1111 DIM m(23,32): LET maxtiempo=50: IF nivel<>1 THEN LET maxtiempo=100*(nivel-1)
 1112 LET maxc=10-nivel*2: IF maxc<=0 THEN LET maxc=1
 1113 IF nivel>3 THEN LET h(1)=11+nivel: LET h(2)=16+nivel: LET h(3)=25+nivel*2: LET rcl=nivel
 1120 PRINT AT 0,0; PAPER 7; INK 0; FLASH 1;"             NIVEL ";nivel;"            "
@@ -173,7 +104,7 @@ Var k$: Str = " "
 5050 BEEP 0.05,20: RETURN
 6000 REM Bucle principal del juego
 6010 IF NOT cm THEN GO SUB 7000: GO SUB 7200: GO SUB 7300
-6020 IF tiempo<=0 THEN GO SUB 9800: REM Comprobar si se ha alcanzado el tiempo maximo
+6020 IF tiempo<=0 THEN GO TO 9800: REM Comprobar si se ha alcanzado el tiempo maximo
 6040 GO TO 6000
 7000 REM Mover zombies
 7010 FOR g=1 TO nz: LET z=z(g,3): IF z(g,1)=1 THEN GO TO 7045
@@ -293,8 +224,9 @@ Var k$: Str = " "
 7785 LET t(i,6)=t(i,6)-1
 7786 IF t(i,6)<=0 THEN LET t(i,6)=0
 7790 IF z(j,5)>0 THEN GO TO 7800
-7791 IF z(j,1)<6 THEN PAPER 5
-7795 PRINT AT z(j,2),z(j,1);" ";AT z(j,2)+1,z(j,1);" ": LET m(z(j,2)+1,z(j,1))=0: LET m(z(j,2)+2,z(j,1))=0: GO SUB 9400: REM Matar zombie y reindexar
+7791 LET m(z(j,2)+1,z(j,1))=0: LET m(z(j,2)+2,z(j,1))=0: REM Vacia mapa
+7792 LET ox=z(j,1): LET oy=z(j,2): GO SUB 8400: LET oy=oy+1: GO SUB 8400: Rem redibuja
+7793 GO SUB 9400: REM Elimina zombie
 7800 PAPER 0: RETURN
 8000 REM Dibujar cursor en cy,cx
 8020 PAPER 0: INK 7
@@ -319,7 +251,7 @@ Var k$: Str = " "
 8185 BEEP 0.01,10
 8187 POKE 23675,88: POKE 23676,255
 8188 RETURN
-8400 REM Comprobar y redibujar objeto en oy, ox
+8400 REM Redibujar objeto en oy, ox
 8410 LET op=m(oy+1,ox)
 8420 IF ox<6 THEN PAPER 5: GO TO 8430
 8421 PAPER 0: IF ox=6 THEN INK 5: PRINT AT oy,ox;CHR$ 160: RETURN
@@ -455,12 +387,12 @@ Var k$: Str = " "
 9800 REM Rutina de ENHORABUENA y pasar al siguiente nivel
 9810 PAPER 0: INK 7: CLS
 9820 PRINT AT 10,9; PAPER 1;"  ENHORABUENA  "
-9830 PRINT AT 12,3;"Pasamos al siguiente nivel"
-9835 PRINT AT 14,3;"    Espera un momento    "
-9840 FOR x=1 TO 23: FOR y=1 TO 32: LET m(x,y)=0: NEXT y: NEXT x: REM Reiniciar mapa mientras el usuario espera
-9850 LET nivel=nivel+1
-9860 GO TO 22: REM Volver a la pantalla de informacion del nivel
-9870 RETURN
+9830 LET nivel=nivel+1
+9840 PRINT AT 12,7;"PASAMOS AL  NIVEL ";nivel
+9850 PRINT AT 21,0; PAPER 7; INK 0; FLASH 1;"        PULSA UNA TECLA         "
+9860 PAUSE 0
+9870 IF INKEY$="" THEN GO TO 9870
+9880 GO TO 22: REM Volver a la pantalla de informacion del nivel
 9994 REM .....................................................
 9995 REM El programa utiliza BASIC de ZX Spectrum, con lo cual no puede utilizar las ordenes ELSE, END IF, o el operador MOD
 9996 REM Se debe optimizar al maximo el uso de CPU, reduciendo los ciclos de reloj
