@@ -1,3 +1,72 @@
+Check D24E356D
+Auto 8224
+
+# Run-time Variables
+
+Var r: Num = 16
+Var o: Num = 0
+Var a: Num = 64
+Var z: Num = 1
+Var v: Num = 2
+Var i: Num = 3
+Var j: Num = 5
+Var t: Num = 3
+Var cx: Num = 8
+Var cy: Num = 6
+Var tiempo: Num = 0
+Var te: Num = 1
+Var ox: Num = 31
+Var oy: Num = 18
+Var nz: Num = 7
+Var nl: Num = 9
+Var nt: Num = 2
+Var nc: Num = 8
+Var tir: Num = 62
+Var tiz: Num = 2
+Var cm: Num = 0
+Var cc: Num = 0
+Var sp: Num = 0
+Var dp: Num = 0
+Var seconds: Num = 266
+Var oldseconds: Num = 266
+Var maxc: Num = 8
+Var maxz: Num = 10
+Var tv: Num = 3
+Var lv: Num = 3
+Var rcl: Num = 2
+Var nivel: Num = 1
+Var maxtiempo: Num = 50
+Var op: Num = 0
+Var desp: Num = 0
+Var disparos: Num = 0
+Var tx: Num = 8
+Var ty: Num = 18
+Var dx: Num = 19
+Var dy: Num = -3
+Var lineax: Num = 21
+Var lineay: Num = 6
+Var ci: Num = 3
+Var li: Num = 10
+Var ob: Num = 30
+Var col: Num = 4
+Var matado: Num = 0
+Var m: NumArray(23, 32) = 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 25, 28, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 83, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 24, 0, 0, 0, 30, 0, 0, 0, 0, 0, 84, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 91, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 89, 0, 0, 92, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 90, 0, 0, 0, 0, 0, 0, 0, 0, 0, 11, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 12, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 81, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 3, 0, 9, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 82, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 4, 0, 10, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 87, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 88, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 15, 0, 0, 0, 0, 0, 0, 0, 26, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 16, 0, 0, 0, 13, 0, 45, 47, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 93, 0, 0, 0, 0, 0, 0, 14, 0, 46, 48, 23, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 94, 0, 0, 0, 0, 0, 0, 0, 0, 49, 51, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 50, 52, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+Var c: NumArray(10, 3) = 1, 13, 5, 3, 13, 5, 5, 3, 5, 3, 1, 5, 5, 13, 5, 3, 11, 5, 5, 17, 5, 1, 16, 5, 0, 0, 0, 0, 0, 0
+Var z: NumArray(10, 5) = 23, 12, 1, 0, 1, 20, 6, 1, 0, 2, 16, 1, 1, 0, 1, 18, 14, 1, 0, 2, 25, 9, 1, 0, 2, 28, 8, 1, 4, 2, 30, 17, 1, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+Var l: NumArray(20, 3) = 9, 2, 3, 9, 1, 3, 9, 18, 3, 10, 7, 3, 9, 5, 3, 9, 16, 3, 10, 1, 3, 10, 5, 3, 14, 7, 3, 14, 7, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+Var t: NumArray(10, 6) = 7, 19, 1, 3, 0, 1, 7, 17, 1, 3, 0, 2, 8, 6, 1, 0, 0, 0, 1, 2, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+Var q: NumArray(31) = 0, 0, 0, 1, 1, 0, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0
+Var h: NumArray(3) = 10, 15, 25
+Var w: NumFOR = 22, 21, 1, 7560, 2
+Var x: NumFOR = 4, 23, 1, 9840, 2
+Var y: NumFOR = 14, 32, 1, 9840, 3
+Var f: NumFOR = 65536, 65535, 1, 9060, 3
+Var b: NumFOR = 9, 8, 1, 2052, 2
+Var g: NumFOR = 8, 7, 1, 7010, 2
+Var k$: Str = " "
+
+# End Run-time Variables
+
    1 CLEAR 65031: DIM m(23,32): DIM c(10,3): DIM z(10,5): DIM l(20,3): DIM t(10,6): LET r=20: LET cx=7: LET cy=10: LET tiempo=0
    2 LET te=0: LET k$="": LET ox=0: LET oy=0: LET o=0: LET nz=0: LET nl=0: LET nt=0: LET nc=0: LET tir=0: LET tiz=0: LET cm=0: LET cc=0: LET w=0: LET x=0: LET y=0: LET sp=0: LET dp=0: LET seconds=0: LET oldseconds=0: DIM q(31)
    3 LET maxc=5: LET maxz=10: LET tv=3: LET lv=3: LET rcl=2: DIM h(3): LET nivel=1: LET maxtiempo=200
@@ -170,7 +239,7 @@
 7455 RETURN
 7500 REM Torretas disparan
 7505 LET disparos=0
-7510 FOR i=1 TO nt
+7510 LET i=1
 7515 IF t(i,4)<=0 THEN GO TO 7590
 7530 LET t(i,5)=0: LET tx=t(i,1)+1: LET ty=t(i,2)+1
 7535 LET v=i: IF t(v,4)>0 THEN BRIGHT 1: GO SUB 3330: BRIGHT 0
@@ -192,9 +261,9 @@
 7570 IF ABS (dx)>3 OR ABS (dy)>3 THEN GO TO 7580: REM Fuera de rango
 7572 LET disparos=disparos+1: GO SUB 7700: GO TO 7540: REM Quita vida al zombie y vuelve a empezar a buscar zombies desde cero
 7582 LET j=j+1: IF j<=nz THEN GO TO 7541
-7583 IF t(i,6)<=0 THEN LET t=i: GO SUB 7640: REM Si ya no le quedan disparos, explota
+7583 IF t(i,6)<=0 THEN LET t=i: GO SUB 7640: LET i=0: GO TO 7590: REM Si ya no le quedan disparos, explota y vuelve a empezar las torretas desde cero
 7585 IF t(v,4)>0 THEN BRIGHT 0: GO SUB 3330
-7590 NEXT i
+7590 LET i=i+1: IF i<=nt THEN GO TO 7515
 7591 IF disparos=0 THEN RETURN
 7592 GO TO 7500: REM Sigue disparando hasta que no se pueda mas
 7600 REM Zombie g ha chocado con objeto ob
