@@ -9,6 +9,23 @@
   23 LET tiempo=maxtiempo: LET nz=0: LET nt=0: LET nl=0: LET nc=0: LET r=20: REM Reiniciar contadores principales
   24 POKE 23560,0
   25 RANDOMIZE 0: GO SUB 1000: GO SUB 2000: GO SUB 2050: GO SUB 8700: GO TO 6000
+  50 REM Redibujar objeto en oy, ox
+  52 LET op=m(oy+1,ox): IF ox<6 THEN PAPER 5: GO TO 54
+  53 PAPER 0: IF ox=6 THEN INK 5: PRINT AT oy,ox;CHR$ 160: RETURN
+  54 IF NOT op THEN PRINT AT oy,ox;" ": RETURN
+  55 IF op<=20 THEN LET ci=INT ((op+1)/2): IF c(ci,3)>0 THEN INK 0: PRINT AT oy,ox;CHR$ (144+1*(c(ci,2)<>oy)): RETURN
+  56 IF op<=40 THEN LET li=op-20: IF l(li,3)>0 THEN INK 6: BRIGHT 1: PRINT AT oy,ox;CHR$ 146: BRIGHT 0: RETURN
+  57 IF op>80 THEN LET g=INT ((op-81)/2)+1: GO SUB 100: RETURN
+  58 LET v=INT ((op-41)/4)+1: IF t(v,4)>0 THEN GO SUB 3330
+  59 RETURN
+100 REM Dibujar zombie numero g
+105 POKE 23675,8: POKE 23676,254
+110 IF z(g,1)<6 THEN PAPER 5: GO TO 120
+115 PAPER 0
+120 INK 4: PRINT AT z(g,2),z(g,1);CHR$ (144+(8*(z(g,3)=2))+(16*(z(g,3)=3)))
+125 INK z(g,3): PRINT AT z(g,2)+1,z(g,1);CHR$ (145+(8*(z(g,3)=2)))
+130 POKE 23675,88: POKE 23676,255
+150 RETURN
 1000 REM Inicializar pantalla
 1005 CLS : INK 5
 1010 FOR y=0 TO 21
@@ -106,7 +123,7 @@
 5020 LET z(nz,1)=31: LET z(nz,4)=0: LET z(nz,5)=1+(1*(z(nz,3)=1))+(2*(z(nz,3)=3)): REM Vida zombies: 2 para T1, 1 para T2, 4 para T3
 5030 LET z(nz,2)=INT (RND*19)+1
 5031 IF m(z(nz,2)+1,z(nz,1))>0 OR m(z(nz,2)+2,z(nz,1))>0 THEN GO TO 5030
-5040 LET g=nz: GO SUB 8150: LET m(z(nz,2)+1,z(nz,1))=80+(nz*2)-1: LET m(z(nz,2)+2,z(nz,1))=80+(nz*2)
+5040 LET g=nz: GO SUB 100: LET m(z(nz,2)+1,z(nz,1))=80+(nz*2)-1: LET m(z(nz,2)+2,z(nz,1))=80+(nz*2)
 5050 BEEP 0.05,20: RETURN
 6000 REM Bucle principal del juego
 6010 IF NOT cm THEN GO SUB 7000: GO SUB 7200: GO SUB 7300
@@ -118,11 +135,11 @@
 7010 LET z=z(g,3): IF z(g,1)=1 THEN GO TO 7045: REM Saltar si el zombie estar en la columna 1
 7011 IF m(z(g,2)+1,z(g,1)-1)>0 OR m(z(g,2)+2,z(g,1)-1)>0 THEN GO TO 7040: REM Ir a chocar con objeto si hay algo delante
 7020 LET z(g,4)=z(g,4)+2+(2*(z<>3)): IF z(g,4)<8 AND z<>2 THEN GO TO 7045: REM Saltar si no es momento de moverse
-7030 LET ox=z(g,1): LET oy=z(g,2): LET m(oy+1,ox)=0: LET m(oy+2,ox)=0: GO SUB 8400: LET oy=oy+1: GO SUB 8400: REM Borrar zombie de la posicion anterior
+7030 LET ox=z(g,1): LET oy=z(g,2): LET m(oy+1,ox)=0: LET m(oy+2,ox)=0: GO SUB 50: LET oy=oy+1: GO SUB 50: REM Borrar zombie de la posicion anterior
 7031 LET z(g,1)=z(g,1)-1: LET z(g,4)=0: IF z(g,1)=1 THEN GO SUB 9700: RETURN : REM Game over si el zombie llega a la columna 1
-7032 GO SUB 8170: GO SUB 8150: PRINT AT z(g,2),z(g,1)+1;" ";AT z(g,2)+1,z(g,1)+1;" ": BEEP 0.01,5: REM Dibujar zombie andando y borrar rastro
+7032 GO SUB 8170: GO SUB 100: PRINT AT z(g,2),z(g,1)+1;" ";AT z(g,2)+1,z(g,1)+1;" ": BEEP 0.01,5: REM Dibujar zombie andando y borrar rastro
 7033 LET m(z(g,2)+1,z(g,1))=80+(g*2)-1: LET m(z(g,2)+2,z(g,1))=80+(g*2)
-7034 IF z(g,1)=5 THEN GO SUB 8400: LET oy=oy-1: GO SUB 8400: REM Redibujar si el zombie cruza la linea de separacion
+7034 IF z(g,1)=5 THEN GO SUB 50: LET oy=oy-1: GO SUB 50: REM Redibujar si el zombie cruza la linea de separacion
 7035 GO TO 7045: REM Continuar con el siguiente zombie
 7040 GO SUB 7100: REM Procesar colision con objeto
 7045 GO SUB 7440: IF sp=1 OR dp=1 THEN RETURN : REM Salir si se presiona espacio o D
@@ -136,7 +153,7 @@
 7150 POKE 23675,8: POKE 23676,254: PAPER 0+(5*(z(g,1)<6)): FLASH 1
 7151 PRINT AT z(g,2),z(g,1); INK 4;CHR$ (150+(8*(z=2))+(13*(z=3))); INK z;AT z(g,2)+1,z(g,1);CHR$ (151+(8*(z=2)))
 7155 FOR w=1 TO 10: BORDER z: BEEP 0.01,50: BORDER col: BEEP 0.01,60: NEXT w: BORDER 1
-7156 FLASH 0: GO SUB 8150
+7156 FLASH 0: GO SUB 100
 7157 IF ob<=20 THEN IF c(t,3)<=0 THEN LET matado=1: LET c(t,3)=0: LET z(g,5)=z(g,5)-1: REM Mata ciudadano, pero zombie pierde 1 vida
 7158 IF ob>20 AND ob<=40 THEN IF l(t,3)<=0 THEN LET matado=1: LET l(t,3)=0
 7159 IF ob>40 AND ob<=80 THEN IF t(t,4)<=0 THEN LET matado=1: LET t(t,4)=0
@@ -160,13 +177,13 @@
 7334 POKE 23560,0
 7335 BORDER INT (RND*6): LET cc=cc+1: IF cc=500 THEN GO SUB 8050: LET cm=0: LET cc=0: BORDER 1: RETURN
 7350 LET ox=cx: LET oy=cy
-7351 IF IN 32766=190 THEN POKE 23560,0: IF cc>5 THEN GO SUB 8050: LET cm=0: LET cc=0: LET sp=0: PRINT AT oy,ox;" ": GO SUB 7450: GO SUB 8400: BORDER 1: RETURN : REM Salida del modo de construccion
+7351 IF IN 32766=190 THEN POKE 23560,0: IF cc>5 THEN GO SUB 8050: LET cm=0: LET cc=0: LET sp=0: PRINT AT oy,ox;" ": GO SUB 7450: GO SUB 50: BORDER 1: RETURN : REM Salida del modo de construccion
 7360 IF IN 64510=190 AND cy>0 THEN LET cy=cy-1
 7370 IF IN 65022=190 AND cy<20 THEN LET cy=cy+1
 7380 IF IN 57342=189 AND cx>1 THEN LET cx=cx-1
 7390 IF IN 57342=190 AND cx<30 THEN LET cx=cx+1
 7400 IF (IN 63486<>191 OR IN 61438<>191) THEN LET k$=INKEY$: IF k$>="0" AND k$<="3" THEN LET te=VAL k$: GO SUB 3000: GO TO 7331
-7410 IF ox<>cx OR oy<>cy THEN GO SUB 8050: GO SUB 8400: GO SUB 8000: LET ox=cx: LET oy=cy: REM Si hemos movido el cursor, redibuja
+7410 IF ox<>cx OR oy<>cy THEN GO SUB 8050: GO SUB 50: GO SUB 8000: LET ox=cx: LET oy=cy: REM Si hemos movido el cursor, redibuja
 7420 GO TO 7334
 7440 REM Comprueba teclas durante fases secundarias del juego
 7442 IF PEEK 23560=32 THEN POKE 23560,0: LET sp=1: GO TO 7450
@@ -207,8 +224,8 @@
 7591 IF disparos=0 THEN RETURN
 7592 GO TO 7500: REM Sigue disparando hasta que no se pueda mas
 7600 REM Zombie g ha chocado con objeto ob
-7610 IF ob<=20 THEN LET m(c(t,2)+1,c(t,1))=0: LET m(c(t,2)+2,c(t,1))=0: LET ox=c(t,1): LET oy=c(t,2): GO SUB 8400: LET oy=oy+1: GO SUB 8400: LET c(t,3)=0: LET nc=nc-1: GO SUB 9100: REM Eliminar ciudadano, y quitar 1 de vida a zombie
-7620 IF ob>20 AND ob<=40 THEN LET m(l(t,2)+1,l(t,1))=0: LET ox=l(t,1): LET oy=l(t,2): GO SUB 8400: LET l(t,3)=0: GO SUB 9200: REM Eliminar ladrillo
+7610 IF ob<=20 THEN LET m(c(t,2)+1,c(t,1))=0: LET m(c(t,2)+2,c(t,1))=0: LET ox=c(t,1): LET oy=c(t,2): GO SUB 50: LET oy=oy+1: GO SUB 50: LET c(t,3)=0: LET nc=nc-1: GO SUB 9100: REM Eliminar ciudadano, y quitar 1 de vida a zombie
+7620 IF ob>20 AND ob<=40 THEN LET m(l(t,2)+1,l(t,1))=0: LET ox=l(t,1): LET oy=l(t,2): GO SUB 50: LET l(t,3)=0: GO SUB 9200: REM Eliminar ladrillo
 7630 IF ob<=40 OR ob>80 THEN GO TO 7660: REM Si no es torreta, termina
 7640 LET m(t(t,2)+1,t(t,1))=0: LET m(t(t,2)+2,t(t,1))=0: LET m(t(t,2)+1,t(t,1)+1)=0: LET m(t(t,2)+2,t(t,1)+1)=0: LET ox=t(t,1): LET oy=t(t,2)
 7650 INK 6: PAPER 2: FLASH 1: PRINT AT t(t,2),t(t,1);CHR$ (161);CHR$ (162);AT t(t,2)+1,t(t,1);CHR$ (163);CHR$ (164): REM Explosion
@@ -234,7 +251,7 @@
 7786 IF t(i,6)<=0 THEN LET t(i,6)=0
 7790 IF z(j,5)>0 THEN GO TO 7800
 7791 LET m(z(j,2)+1,z(j,1))=0: LET m(z(j,2)+2,z(j,1))=0: REM Vacia mapa
-7792 LET ox=z(j,1): LET oy=z(j,2): GO SUB 8400: LET oy=oy+1: GO SUB 8400: REM redibuja
+7792 LET ox=z(j,1): LET oy=z(j,2): GO SUB 50: LET oy=oy+1: GO SUB 50: REM redibuja
 7793 GO SUB 9400: REM Elimina zombie
 7800 PAPER 0: RETURN
 8000 REM Dibujar cursor en cy,cx
@@ -242,14 +259,6 @@
 8030 FLASH 1: PRINT AT cy,cx;CHR$ (159): FLASH 0: RETURN
 8050 REM Borrar cursor
 8060 PRINT AT oy,ox;" ": RETURN
-8150 REM Dibujar zombie numero g
-8155 POKE 23675,8: POKE 23676,254
-8160 IF z(g,1)<6 THEN PAPER 5: GO TO 8162
-8161 PAPER 0
-8163 INK 4: PRINT AT z(g,2),z(g,1);CHR$ (144+(8*(z(g,3)=2))+(16*(z(g,3)=3)))
-8164 INK z(g,3): PRINT AT z(g,2)+1,z(g,1);CHR$ (145+(8*(z(g,3)=2)))
-8165 POKE 23675,88: POKE 23676,255
-8166 RETURN
 8170 REM Dibujar zombie numero g andando
 8175 POKE 23675,8: POKE 23676,254
 8180 IF z(g,1)<6 THEN PAPER 5: GO TO 8182
@@ -260,16 +269,6 @@
 8185 BEEP 0.01,10
 8187 POKE 23675,88: POKE 23676,255
 8188 RETURN
-8400 REM Redibujar objeto en oy, ox
-8410 LET op=m(oy+1,ox)
-8420 IF ox<6 THEN PAPER 5: GO TO 8430
-8421 PAPER 0: IF ox=6 THEN INK 5: PRINT AT oy,ox;CHR$ 160: RETURN
-8430 IF NOT op THEN PRINT AT oy,ox;" ": RETURN
-8440 IF op<=20 THEN LET ci=INT ((op+1)/2): IF c(ci,3)>0 THEN INK 0: PRINT AT oy,ox;CHR$ (144+1*(c(ci,2)<>oy)): RETURN
-8450 IF op<=40 THEN LET li=op-20: IF l(li,3)>0 THEN INK 6: BRIGHT 1: PRINT AT oy,ox;CHR$ 146: BRIGHT 0: RETURN
-8460 IF op<=80 THEN GO TO 8480
-8470 LET g=INT ((op-81)/2)+1: GO SUB 8150: RETURN
-8480 LET v=INT ((op-41)/4)+1: IF t(v,4)>0 THEN GO SUB 3330: RETURN
 8700 REM Dibujar interfaz
 8710 PRINT #0;AT 1,0; INK 0; PAPER 7;"                                ";AT 0,0;"                                ";
 8715 GO SUB 7450
