@@ -4,9 +4,10 @@
    4 LET h(1)=10: LET h(2)=15: LET h(3)=25
   10 BORDER 1: PAPER 0: INK 7: CLS
   15 PAPER 7: INK 0: PRINT AT 10,7; FLASH 1; INK 6; PAPER 2;" "; FLASH 0; INK 0; PAPER 7;"INICIALIZANDO..."; INK 2; PAPER 6; FLASH 1;" "; FLASH 0
-  20 GO SUB 9500: GO SUB 9600: GO SUB 9060: REM Definir UDG
+  20 GO SUB 9000: REM Generar UDG con barra de progreso
   22 GO SUB 1100: REM Intro del nivel
   23 LET tiempo=maxtiempo: LET nz=0: LET nt=0: LET nl=0: LET nc=0: LET r=20: REM Reiniciar contadores principales
+  24 POKE 23560,0
   25 RANDOMIZE 0: GO SUB 1000: GO SUB 2000: GO SUB 2050: GO SUB 8700: GO TO 6000
 1000 REM Inicializar pantalla
 1005 CLS : INK 5
@@ -16,9 +17,13 @@
 1070 RETURN
 1100 REM Mostrar informacion del nivel
 1110 INK 7: PAPER 0: CLS
-1111 DIM m(23,32): LET maxtiempo=50: IF nivel<>1 THEN LET maxtiempo=100*(nivel-1)
-1112 LET maxc=10-nivel*2: IF maxc<=0 THEN LET maxc=1
+1111 DIM m(23,32): LET maxtiempo=50*nivel
+1112 LET maxc=10-nivel: IF maxc<=0 THEN LET maxc=1
 1113 IF nivel>3 THEN LET h(1)=11+nivel: LET h(2)=16+nivel: LET h(3)=25+nivel*2: LET rcl=nivel
+1114 IF h(1)>99 THEN LET h(1)=99
+1115 IF h(2)>99 THEN LET h(2)=99
+1116 IF h(3)>99 THEN LET h(3)=99
+1117 IF rcl>9 THEN LET rcl=9
 1120 PRINT AT 0,0; PAPER 7; INK 0; FLASH 1;"             NIVEL ";nivel;"            "
 1121 IF NIVEL=1 THEN PRINT AT 1,0; BRIGHT 1;" Evita que los  zombies lleguen ";AT 2,0;" a la izquierda  de la pantalla "
 1122 IF NIVEL=2 THEN PRINT AT 1,0; BRIGHT 1;"Aparece un nuevo  tipo de zombie";AT 2,0;"  Cada vez hay  menos defensas  "
@@ -54,7 +59,7 @@
 1170 PRINT AT 20,0; PAPER 7; INK 0;"     TIEMPO A AGUANTAR: "; INK 1;maxtiempo;"s   ";AT 20,28;"    "
 1180 PRINT AT 21,0; PAPER 7; INK 0; FLASH 1;"        PULSA UNA TECLA         "
 1215 PAUSE 0
-1220 IF INKEY$="" THEN GO TO 1220
+1220 IF INKEY$=" " THEN GO TO 1220
 1299 RETURN
 2000 REM Colocar ciudadanos inicialmente
 2001 FOR b=1 TO maxc
@@ -108,18 +113,21 @@
 6020 IF tiempo<=0 THEN GO TO 9800: REM Comprobar si se ha alcanzado el tiempo maximo
 6040 GO TO 6000
 7000 REM Mover zombies
-7010 FOR g=1 TO nz: LET z=z(g,3): IF z(g,1)=1 THEN GO TO 7045
-7011 IF m(z(g,2)+1,z(g,1)-1)>0 OR m(z(g,2)+2,z(g,1)-1)>0 THEN GO TO 7040
-7020 LET z(g,4)=z(g,4)+2+(2*(z<>3)): IF z(g,4)<8 AND z<>2 THEN GO TO 7045
-7030 LET ox=z(g,1): LET oy=z(g,2): LET m(oy+1,ox)=0: LET m(oy+2,ox)=0: GO SUB 8400: LET oy=oy+1: GO SUB 8400
-7031 LET z(g,1)=z(g,1)-1: LET z(g,4)=0: IF z(g,1)=1 THEN GO SUB 9700: RETURN
-7032 GO SUB 8170: GO SUB 8150: PRINT AT z(g,2),z(g,1)+1;" ";AT z(g,2)+1,z(g,1)+1;" ": BEEP 0.01,5
+7001 IF nz=0 THEN RETURN
+7005 LET g=1
+7010 LET z=z(g,3): IF z(g,1)=1 THEN GO TO 7045: REM Saltar si el zombie estar en la columna 1
+7011 IF m(z(g,2)+1,z(g,1)-1)>0 OR m(z(g,2)+2,z(g,1)-1)>0 THEN GO TO 7040: REM Ir a chocar con objeto si hay algo delante
+7020 LET z(g,4)=z(g,4)+2+(2*(z<>3)): IF z(g,4)<8 AND z<>2 THEN GO TO 7045: REM Saltar si no es momento de moverse
+7030 LET ox=z(g,1): LET oy=z(g,2): LET m(oy+1,ox)=0: LET m(oy+2,ox)=0: GO SUB 8400: LET oy=oy+1: GO SUB 8400: REM Borrar zombie de la posicion anterior
+7031 LET z(g,1)=z(g,1)-1: LET z(g,4)=0: IF z(g,1)=1 THEN GO SUB 9700: RETURN : REM Game over si el zombie llega a la columna 1
+7032 GO SUB 8170: GO SUB 8150: PRINT AT z(g,2),z(g,1)+1;" ";AT z(g,2)+1,z(g,1)+1;" ": BEEP 0.01,5: REM Dibujar zombie andando y borrar rastro
 7033 LET m(z(g,2)+1,z(g,1))=80+(g*2)-1: LET m(z(g,2)+2,z(g,1))=80+(g*2)
-7034 IF z(g,1)=5 THEN GO SUB 8400: LET oy=oy-1: GO SUB 8400
-7035 GO TO 7045
-7040 GO SUB 7100
-7045 GO SUB 7440: IF sp=1 OR dp=1 THEN LET g=nz
-7050 NEXT g: RETURN
+7034 IF z(g,1)=5 THEN GO SUB 8400: LET oy=oy-1: GO SUB 8400: REM Redibujar si el zombie cruza la linea de separacion
+7035 GO TO 7045: REM Continuar con el siguiente zombie
+7040 GO SUB 7100: REM Procesar colision con objeto
+7045 GO SUB 7440: IF sp=1 OR dp=1 THEN RETURN : REM Salir si se presiona espacio o D
+7050 LET g=g+1: IF g>nz THEN RETURN
+7055 GO TO 7010: REM Procesar el siguiente zombie
 7100 REM Zombie encuentra objeto
 7110 LET ob=m(z(g,2)+1,z(g,1)-1): IF NOT ob OR ob>80 THEN LET ob=m(z(g,2)+2,z(g,1)-1): IF NOT ob OR ob>80 THEN RETURN
 7120 LET col=7: LET matado=0: IF ob<=20 THEN LET t=INT ((ob+1)/2): LET c(t,3)=c(t,3)-1: LET col=0: GO TO 7150
@@ -143,14 +151,14 @@
 7220 IF tiz>=4 THEN LET tiz=0: GO SUB 5000: RETURN : REM cada 4 ticks sale un zombie
 7240 LET tir=tir+1: LET tiz=tiz+1
 7320 IF PEEK 23560=32 OR sp THEN POKE 23560,0: IF cm=0 THEN LET cm=1: LET cc=0: LET sp=0: GO SUB 7330: REM Si estamos pulsando espacio o lo habiamos pulsdo antes, entramos a modo construccion
-7325 IF PEEK 23560=68 OR dp THEN POKE 23560,0: LET dp=0: GO SUB 7450: GO SUB 7500: REM Disparar torretas
+7325 IF PEEK 23560=68 OR PEEK 23560=100 OR dp THEN POKE 23560,0: GO SUB 7500: LET dp=0: GO SUB 7450: REM Disparar torretas
 7329 RETURN
 7330 REM Modo de construccion
-7331 PRINT #0;AT 0,0; PAPER 2; INK 7;"CONSTRUCION"; PAPER 7; INK 0;"         Rec:         "; INK 1;AT 0,24;r;"  ";
-7332 PRINT #0;AT 1,0; PAPER 7; INK 0;"CONTROLES:"; INK 1;"QAOP0123"+CHR$ (158); INK 0;" 0"; INK 6; PAPER 0; BRIGHT 1;CHR$ 146; INK 2; PAPER 7; BRIGHT 0;" 1";CHR$ 153; INK 3;" 2";CHR$ 154; INK 4;" 3";CHR$ 155
+7331 PRINT #0;AT 0,0; PAPER 2; INK 7;" CONTROLES "; PAPER 7; INK 1;"QAOP"+CHR$ (158);" +  0"; INK 6; PAPER 0; BRIGHT 1;CHR$ 146; INK 1; PAPER 7; BRIGHT 0;" 1"; INK 2;CHR$ 153; INK 1;" 2"; INK 3;CHR$ 154; INK 1;" 3"; INK 4;CHR$ 155;" "
+7332 PRINT #0;AT 1,0; PAPER 2; INK 7; FLASH 1;"CONSTRUCION"; FLASH 0; PAPER 7; INK 0;" Rec:                "; INK 1;AT 1,16;r;"  ";AT 1,21;rcl;AT 1,23;h(1);AT 1,26;h(2);AT 1,29;h(3)
 7333 GO SUB 8000
 7334 POKE 23560,0
-7335 BORDER INT (RND*6): LET cc=cc+1: IF cc=100 THEN GO SUB 8050: LET cm=0: LET cc=0: BORDER 1: RETURN
+7335 BORDER INT (RND*6): LET cc=cc+1: IF cc=500 THEN GO SUB 8050: LET cm=0: LET cc=0: BORDER 1: RETURN
 7350 LET ox=cx: LET oy=cy
 7351 IF IN 32766=190 THEN POKE 23560,0: IF cc>5 THEN GO SUB 8050: LET cm=0: LET cc=0: LET sp=0: PRINT AT oy,ox;" ": GO SUB 7450: GO SUB 8400: BORDER 1: RETURN : REM Salida del modo de construccion
 7360 IF IN 64510=190 AND cy>0 THEN LET cy=cy-1
@@ -162,7 +170,7 @@
 7420 GO TO 7334
 7440 REM Comprueba teclas durante fases secundarias del juego
 7442 IF PEEK 23560=32 THEN POKE 23560,0: LET sp=1: GO TO 7450
-7443 IF PEEK 23560=68 THEN POKE 23560,0: IF sp=0 THEN LET dp=1: GO TO 7450
+7443 IF PEEK 23560=68 OR PEEK 23560=100 THEN POKE 23560,0: IF sp=0 THEN LET dp=1: GO TO 7450
 7444 RETURN
 7450 REM Pinta el marcador en modo principal
 7451 PRINT #0;AT 0,0; PAPER 2; INK 7;" CONTROLES "; PAPER 7; INK 1; FLASH sp;CHR$ 158; FLASH 0; INK 0;"Construir - "; INK 1; FLASH dp;"D"; FLASH 0; INK 0;"isparar"
@@ -201,7 +209,7 @@
 7600 REM Zombie g ha chocado con objeto ob
 7610 IF ob<=20 THEN LET m(c(t,2)+1,c(t,1))=0: LET m(c(t,2)+2,c(t,1))=0: LET ox=c(t,1): LET oy=c(t,2): GO SUB 8400: LET oy=oy+1: GO SUB 8400: LET c(t,3)=0: LET nc=nc-1: GO SUB 9100: REM Eliminar ciudadano, y quitar 1 de vida a zombie
 7620 IF ob>20 AND ob<=40 THEN LET m(l(t,2)+1,l(t,1))=0: LET ox=l(t,1): LET oy=l(t,2): GO SUB 8400: LET l(t,3)=0: GO SUB 9200: REM Eliminar ladrillo
-7630 IF ob<=40 OR ob>80 THEN GO TO 7660: REM Si no es torreta\#014\#000\#000\#000\#000\#000, termina
+7630 IF ob<=40 OR ob>80 THEN GO TO 7660: REM Si no es torreta, termina
 7640 LET m(t(t,2)+1,t(t,1))=0: LET m(t(t,2)+2,t(t,1))=0: LET m(t(t,2)+1,t(t,1)+1)=0: LET m(t(t,2)+2,t(t,1)+1)=0: LET ox=t(t,1): LET oy=t(t,2)
 7650 INK 6: PAPER 2: FLASH 1: PRINT AT t(t,2),t(t,1);CHR$ (161);CHR$ (162);AT t(t,2)+1,t(t,1);CHR$ (163);CHR$ (164): REM Explosion
 7655 FOR x=1 TO 10: BEEP 0.02,INT (RND*20): NEXT X
@@ -212,7 +220,7 @@
 7710 FLASH 1: OVER 1: PAPER 0+5*(t(i,1)<6)
 7720 INK t(i,3)+1: PRINT AT t(i,2),t(i,1);"  ";AT t(i,2)+1,t(i,1);"  "
 7725 PAPER 0+5*(z(j,1)<6)
-7730 INK z(j,3): PRINT AT z(j,2),z(j,1);" ";AT z(j,2)+1,z(j,1);" "
+7730 PRINT AT z(j,2),z(j,1);INK 4;" ";AT z(j,2)+1,z(j,1);INK z(j,3);" "
 7740 BEEP 0.02,50: BEEP 0.02,40
 7750 FLASH 0: PAPER 0+5*(t(i,1)<6)
 7760 INK t(i,3)+1: PRINT AT t(i,2),t(i,1);"  ";AT t(i,2)+1,t(i,1);"  "
@@ -226,7 +234,7 @@
 7786 IF t(i,6)<=0 THEN LET t(i,6)=0
 7790 IF z(j,5)>0 THEN GO TO 7800
 7791 LET m(z(j,2)+1,z(j,1))=0: LET m(z(j,2)+2,z(j,1))=0: REM Vacia mapa
-7792 LET ox=z(j,1): LET oy=z(j,2): GO SUB 8400: LET oy=oy+1: GO SUB 8400: Rem redibuja
+7792 LET ox=z(j,1): LET oy=z(j,2): GO SUB 8400: LET oy=oy+1: GO SUB 8400: REM redibuja
 7793 GO SUB 9400: REM Elimina zombie
 7800 PAPER 0: RETURN
 8000 REM Dibujar cursor en cy,cx
@@ -266,53 +274,80 @@
 8710 PRINT #0;AT 1,0; INK 0; PAPER 7;"                                ";AT 0,0;"                                ";
 8715 GO SUB 7450
 8717 PAPER 0: RETURN
-9000 REM Variables: a-dato leido, b-bucle ciudadanos, c-ciudadanos, z-zombies, l-ladrillos, t-torretas
-9010 REM g-bucle mover zombies, k-tecla pulsada, ox,oy-posicion anterior, m-mapa del juego
-9020 REM te-tipo de torreta, r-recursos, tiz-tiempo (zombies), cx,cy-posicion cursor, o-ocupado
-9030 REM nz-numero de zombies, nl-numero de ladrillos, nt-numero de torretas, nc-numero de ciudadanos, cm-modo construccion, cc-contador de ciclos, z-temporizador
-9035 REM cm=0 modo normal, cm=1 modo contruccion
-9040 REM Mapa (m): 0=vacio, 1-20=ciudadano, 21-40=ladrillo, 41-80=torreta, 81-100=zombie
-9041 REM Para torretas y zombies, el valor de m tambien codifica el color:
-9042 REM Torretas: m = 40 + (nt*4) + (1-4), donde nt es el numero de torreta (0-9) y (1-4) es la parte de la torreta (2x2)
-9043 REM El color de la torreta se almacena en t(nt,3) y puede ser 1, 2 o 3
-9044 REM Zombies: m = 80 + (nz*2) + (0-1), donde nz es el numero de zombie (1-10) y (0-1) es la parte superior/inferior
-9045 REM El color del zombie se almacena en z(nz,3) y puede ser 1, 2 o 3
-9046 REM La animacion del zombie se almacena en z(nz,5), con valores 0, 1 o 2
-9047 REM La vida de los objetos se almacena en: c(b,3) para ciudadanos, l(nl,3) para ladrillos, t(nt,4) para torretas
-9048 REM Ciudadanos: c(b,1)=x, c(b,2)=y, c(b,3)=vida
-9049 REM Torretas: t(nt,1)=x, t(nt,2)=y, t(nt,3)=color, t(nt,4)=vida, t(nt,5)=contador de disparo, t(nt,6)=contador de usos
-9050 REM Ladrillos: l(nl,1)=x, l(nl,2)=y, l(nl,3)=vida
-9051 REM Zombies: z(nz,1)=x, z(nz,2)=y, z(nz,3)=color, z(nz,4)=contador de movimiento, z(nz,5)=vida
-9052 REM Variables adicionales: f-bucle para UDG, i-bucle general, j-bucle general, q-array para dibujo de disparos
-9053 REM w-bucle general, x-bucle general, y-bucle general
-9054 REM Otras variables: maxc-maximo de ciudadanos, maxz-maximo de zombies, tv-vida de torretas, lv-vida de ladrillos
-9055 REM rcl-costo de ladrillos, h-array de costos de torretas, nivel-nivel actual, maxtiempo-tiempo maximo del nivel
-9056 REM tiempo-tiempo transcurrido, sp-flag de espacio presionado, seconds-segundos transcurridos, oldseconds-segundos anteriores
-9057 REM desp-desplazamiento para UDG, matado-flag de objeto destruido, col-color para animacion de colision
-9058 REM lineax,lineay-coordenadas para dibujo de linea de disparo, op-valor de objeto en mapa para redibujar
-9060 RESTORE 9062: FOR F=65368 TO 65535: READ A: POKE F,A: NEXT F: RETURN
-9061 REM UDG estandar (POKE 23675,88: POKE 23676,255) - 144/145 Ciudadano, 146 Ladrillo, 153-155 Torretas, 156 Disparo simple, 157 Disparo grande, 158 Espacio, 159 Cursor, 160 Separador, 161-164 Explosion
-9062 DATA 112,248,248,144,140,136,112,224
-9063 DATA 240,248,184,216,240,96,120,124
-9064 DATA 255,129,165,153,153,165,129,255
-9065 DATA 0,0,0,0,0,0,0,0
-9066 DATA 0,0,0,0,0,0,0,0
-9067 DATA 0,0,0,0,0,0,0,0
-9068 DATA 0,0,0,0,0,0,0,0
-9069 DATA 0,0,0,0,0,0,0,0
-9070 DATA 0,0,0,0,0,0,0,0
-9071 DATA 126,135,135,135,126,248,188,252
-9072 DATA 24,126,153,153,66,60,94,126
-9073 DATA 127,240,252,248,126,248,188,252
-9074 DATA 0,0,0,85,0,0,0,0
-9075 DATA 0,170,0,85,0,170,0,0
-9076 DATA 0,0,0,0,0,0,66,126
-9077 DATA 129,90,36,90,90,36,90,129
-9078 DATA 240,248,248,240,240,248,248,240
-9079 DATA 1,226,90,36,16,16,96,128
-9080 DATA 4,138,178,68,8,8,6,1
-9081 DATA 64,48,8,16,16,39,72,48
-9082 DATA 6,8,8,4,20,42,166,64
+9000 REM Generacion de UDG con barra de progreso
+9001 INK 6:PAPER 0:PRINT AT 12,0;"                                "
+9002 LET total=(65535-65358)+(65295-65032)+1: LET progreso=0: RESTORE 9012
+9003 LET F=65368
+9004 READ A: POKE F,A
+9005 LET progreso=progreso+1: IF progreso-INT (progreso/32)*32=0 THEN PRINT AT 12,INT (progreso/total*32);".";
+9006 LET F=F+1: IF F=65536 THEN LET F=65032
+9007 IF F<>65296 THEN GO TO 9004
+9008 RETURN
+9009 REM UDG estandar (POKE 23675,88: POKE 23676,255)
+9010 REM 144/145 Ciudadano, 146 Ladrillo, 153-155 Torretas, 156 Disparo simple
+9011 REM 157 Disparo grande, 158 Espacio, 159 Cursor, 160 Separador, 161-164 Explosion
+9012 DATA 112,248,248,144,140,136,112,224
+9013 DATA 240,248,184,216,240,96,120,124
+9014 DATA 255,129,165,153,153,165,129,255
+9015 DATA 0,0,0,0,0,0,0,0
+9016 DATA 0,0,0,0,0,0,0,0
+9017 DATA 0,0,0,0,0,0,0,0
+9018 DATA 0,0,0,0,0,0,0,0
+9019 DATA 0,0,0,0,0,0,0,0
+9020 DATA 0,0,0,0,0,0,0,0
+9021 DATA 126,135,135,135,126,248,188,252
+9022 DATA 24,126,153,153,66,60,94,126
+9023 DATA 127,240,252,248,126,248,188,252
+9024 DATA 0,0,0,85,0,0,0,0
+9025 DATA 0,170,0,85,0,170,0,0
+9026 DATA 0,0,0,0,0,0,66,126
+9027 DATA 129,90,36,90,90,36,90,129
+9028 DATA 240,248,248,240,240,248,248,240
+9029 DATA 1,226,90,36,16,16,96,128
+9030 DATA 4,138,178,68,8,8,6,1
+9031 DATA 64,48,8,16,16,39,72,48
+9032 DATA 6,8,8,4,20,42,166,64
+9033 REM UDG en 65032 - Zombies (POKE 23675,8: POKE 23676,254)
+9034 REM Zombie 1 - Quieto: 144/145 - Andar 146-147/148-149 - Morder 150/151 - Color 4/1
+9035 REM Zombie 2 - Quieto: 152/153 - Andar 154-156/155-157 - Morder 158/159 - Color 4/2
+9036 REM Zombie 3 - Quiero: 160/145 - Andar 161-162/148-149 - Morder 163/151 - Color 4/3
+9037 DATA 28,62,46,126,30,12,252,156
+9038 DATA 28,28,28,44,44,44,44,124
+9039 DATA 1,3,2,7,1,0,15,8
+9040 DATA 192,224,224,224,224,192,192,192
+9041 DATA 1,1,3,7,12,44,56,24
+9042 DATA 192,192,192,96,112,56,24,48
+9043 DATA 56,124,92,252,24,184,88,56
+9044 DATA 24,24,56,56,44,102,99,198
+9045 DATA 0,0,0,12,22,30,12,124
+9046 DATA 12,12,12,12,20,18,18,54
+9047 DATA 0,0,0,1,2,3,1,15
+9048 DATA 1,1,1,3,4,4,2,6
+9049 DATA 0,0,0,128,192,192,128,128
+9050 DATA 128,128,128,128,192,96,48,16
+9051 DATA 0,0,0,24,44,188,88,56
+9052 DATA 24,24,24,24,40,76,38,98
+9053 DATA 60,94,126,126,60,60,28,252
+9054 DATA 3,5,7,7,3,7,15,25
+9055 DATA 192,192,192,224,224,240,216,196
+9056 DATA 60,94,126,126,28,62,254,219
+9057 DATA 0,0,0,0,0,0,0,0
+9058 REM UDG en 65200 - Torretas (POKE 23675,176: POKE 23676,254)
+9059 REM Torreta 1 - 144-145/146-147
+9060 REM Torreta 2 - 148-149/150-151
+9061 REM Torreta 3 - 152-153/154-155
+9062 DATA 0,63,64,160,160,176,191,159
+9063 DATA 0,254,7,15,15,15,207,207
+9064 DATA 64,63,47,95,95,95,95,255
+9065 DATA 6,252,192,224,224,224,224,240
+9066 DATA 1,2,62,94,190,191,95,39
+9067 DATA 128,64,124,122,125,253,250,228
+9068 DATA 24,7,11,23,23,23,23,63
+9069 DATA 24,224,240,248,248,248,248,252
+9070 DATA 16,63,56,63,48,63,56,48
+9071 DATA 0,254,5,255,40,248,20,20
+9072 DATA 63,62,127,223,191,191,191,255
+9073 DATA 248,0,192,224,224,224,224,240
 9100 REM Reindexar ciudadanos
 9110 LET i=1
 9120 IF NOT c(i,3) THEN LET c(i,1)=c(nc,1): LET c(i,2)=c(nc,2): LET c(i,3)=c(nc,3): LET nc=nc-1: RETURN
@@ -334,49 +369,6 @@
 9400 REM Matar zombie
 9410 IF j<nz THEN LET z(j,1)=z(nz,1): LET z(j,2)=z(nz,2): LET z(j,3)=z(nz,3): LET z(j,4)=z(nz,4): LET z(j,5)=z(nz,5)
 9420 LET nz=nz-1: RETURN
-9500 RESTORE 9501: FOR F=65032 TO 65199: READ A: POKE F,A: NEXT F: RETURN
-9501 DATA 28,62,46,126,30,12,252,156
-9502 DATA 28,28,28,44,44,44,44,124
-9503 DATA 1,3,2,7,1,0,15,8
-9504 DATA 192,224,224,224,224,192,192,192
-9505 DATA 1,1,3,7,12,44,56,24
-9506 DATA 192,192,192,96,112,56,24,48
-9507 DATA 56,124,92,252,24,184,88,56
-9508 DATA 24,24,56,56,44,102,99,198
-9509 DATA 0,0,0,12,22,30,12,124
-9510 DATA 12,12,12,12,20,18,18,54
-9511 DATA 0,0,0,1,2,3,1,15
-9512 DATA 1,1,1,3,4,4,2,6
-9513 DATA 0,0,0,128,192,192,128,128
-9514 DATA 128,128,128,128,192,96,48,16
-9515 DATA 0,0,0,24,44,188,88,56
-9516 DATA 24,24,24,24,40,76,38,98
-9517 DATA 60,94,126,126,60,60,28,252
-9518 DATA 3,5,7,7,3,7,15,25
-9519 DATA 192,192,192,224,224,240,216,196
-9520 DATA 60,94,126,126,28,62,254,219
-9521 DATA 0,0,0,0,0,0,0,0
-9522 REM UDG en 65032 - Zombies - Uso: POKE 23675,8: POKE 23676,254 == POKE 23675,V-256*INT (V/256): POKE 23676,INT (V/256)
-9523 REM Zombie 1 - Quieto: 144/145 - Andar 146-147/148-149 - Morder 150/151 - Color 4/1
-9524 REM Zombie 2 - Quieto: 152/153 - Andar 154-156/155-157 - Morder 158/159 - Color 4/2
-9525 REM Zombie 3 - Quiero: 160/145 - Andar 161-162/148-149 - Morder 163/151 - Color 4/3
-9600 RESTORE 9601: FOR F=65200 TO 65295: READ A: POKE F,A: NEXT F: RETURN
-9601 DATA 0,63,64,160,160,176,191,159
-9602 DATA 0,254,7,15,15,15,207,207
-9603 DATA 64,63,47,95,95,95,95,255
-9604 DATA 6,252,192,224,224,224,224,240
-9605 DATA 1,2,62,94,190,191,95,39
-9606 DATA 128,64,124,122,125,253,250,228
-9607 DATA 24,7,11,23,23,23,23,63
-9608 DATA 24,224,240,248,248,248,248,252
-9609 DATA 16,63,56,63,48,63,56,48
-9610 DATA 0,254,5,255,40,248,20,20
-9611 DATA 63,62,127,223,191,191,191,255
-9612 DATA 248,0,192,224,224,224,224,240
-9620 REM UDG en 65200 - Torretas - Uso: POKE 23675,176: POKE 23676,254 == POKE 23675,V-256*INT (V/256): POKE 23676,INT (V/256)
-9621 REM Torreta 1 - 144-145/146-147
-9622 REM Torreta 1 - 148-149/150-151
-9623 REM Torreta 3 - 152-153/154-155
 9700 REM Rutina de GAME OVER
 9710 PAPER 0: INK 7: CLS
 9720 PRINT AT 10,10; PAPER 2;" GAME OVER "
@@ -392,8 +384,32 @@
 9840 PRINT AT 12,7;"PASAMOS AL  NIVEL ";nivel
 9850 PRINT AT 21,0; PAPER 7; INK 0; FLASH 1;"        PULSA UNA TECLA         "
 9860 PAUSE 0
-9870 IF INKEY$="" THEN GO TO 9870
+9870 IF INKEY$=" " THEN GO TO 9870
 9880 GO TO 22: REM Volver a la pantalla de informacion del nivel
+9900 REM Variables: a-dato leido, b-bucle ciudadanos, c-ciudadanos, z-zombies, l-ladrillos, t-torretas
+9910 REM g-bucle mover zombies, k-tecla pulsada, ox,oy-posicion anterior, m-mapa del juego
+9920 REM te-tipo de torreta, r-recursos, tiz-tiempo (zombies), cx,cy-posicion cursor, o-ocupado
+9930 REM nz-numero de zombies, nl-numero de ladrillos, nt-numero de torretas, nc-numero de ciudadanos, cm-modo construccion, cc-contador de ciclos, z-temporizador
+9935 REM cm=0 modo normal, cm=1 modo contruccion
+9940 REM Mapa (m): 0=vacio, 1-20=ciudadano, 21-40=ladrillo, 41-80=torreta, 81-100=zombie
+9941 REM Para torretas y zombies, el valor de m tambien codifica el color:
+9942 REM Torretas: m = 40 + (nt*4) + (1-4), donde nt es el numero de torreta (0-9) y (1-4) es la parte de la torreta (2x2)
+9943 REM El color de la torreta se almacena en t(nt,3) y puede ser 1, 2 o 3
+9944 REM Zombies: m = 80 + (nz*2) + (0-1), donde nz es el numero de zombie (1-10) y (0-1) es la parte superior/inferior
+9945 REM El color del zombie se almacena en z(nz,3) y puede ser 1, 2 o 3
+9946 REM La animacion del zombie se almacena en z(nz,5), con valores 0, 1 o 2
+9947 REM La vida de los objetos se almacena en: c(b,3) para ciudadanos, l(nl,3) para ladrillos, t(nt,4) para torretas
+9948 REM Ciudadanos: c(b,1)=x, c(b,2)=y, c(b,3)=vida
+9949 REM Torretas: t(nt,1)=x, t(nt,2)=y, t(nt,3)=color, t(nt,4)=vida, t(nt,5)=contador de disparo, t(nt,6)=contador de usos
+9950 REM Ladrillos: l(nl,1)=x, l(nl,2)=y, l(nl,3)=vida
+9951 REM Zombies: z(nz,1)=x, z(nz,2)=y, z(nz,3)=color, z(nz,4)=contador de movimiento, z(nz,5)=vida
+9952 REM Variables adicionales: f-bucle para UDG, i-bucle general, j-bucle general, q-array para dibujo de disparos
+9953 REM w-bucle general, x-bucle general, y-bucle general
+9954 REM Otras variables: maxc-maximo de ciudadanos, maxz-maximo de zombies, tv-vida de torretas, lv-vida de ladrillos
+9955 REM rcl-costo de ladrillos, h-array de costos de torretas, nivel-nivel actual, maxtiempo-tiempo maximo del nivel
+9956 REM tiempo-tiempo transcurrido, sp-flag de espacio presionado, seconds-segundos transcurridos, oldseconds-segundos anteriores
+9957 REM desp-desplazamiento para UDG, matado-flag de objeto destruido, col-color para animacion de colision
+9958 REM lineax,lineay-coordenadas para dibujo de linea de disparo, op-valor de objeto en mapa para redibujar
 9994 REM .....................................................
 9995 REM El programa utiliza BASIC de ZX Spectrum, con lo cual no puede utilizar las ordenes ELSE, END IF, o el operador MOD
 9996 REM Se debe optimizar al maximo el uso de CPU, reduciendo los ciclos de reloj
