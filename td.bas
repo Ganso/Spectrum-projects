@@ -142,17 +142,17 @@
 7210 IF tir>=2 THEN LET r=r+(1*r<100): REM cada 2 ticks suben los recursos, hasta 100
 7220 IF tiz>=4 THEN LET tiz=0: GO SUB 5000: RETURN : REM cada 4 ticks sale un zombie
 7240 LET tir=tir+1: LET tiz=tiz+1
-7320 IF IN 32766=190 OR sp THEN IF cm=0 THEN LET cm=1: LET cc=0: LET sp=0: GO SUB 7330: REM Si estamos pulsando espacio o lo habiamos pulsdo antes, entramos a modo construccion
-7325 IF IN 65022=187 OR dp THEN LET dp=0: GO SUB 7450: GO SUB 7500: REM Disparar torretas
+7320 IF PEEK 23560=32 OR sp THEN POKE 23560,0: IF cm=0 THEN LET cm=1: LET cc=0: LET sp=0: GO SUB 7330: REM Si estamos pulsando espacio o lo habiamos pulsdo antes, entramos a modo construccion
+7325 IF PEEK 23560=68 OR dp THEN POKE 23560,0: LET dp=0: GO SUB 7450: GO SUB 7500: REM Disparar torretas
 7329 RETURN
 7330 REM Modo de construccion
 7331 PRINT #0;AT 0,0; PAPER 2; INK 7;"CONSTRUCION"; PAPER 7; INK 0;"         Rec:         "; INK 1;AT 0,24;r;"  ";
 7332 PRINT #0;AT 1,0; PAPER 7; INK 0;"CONTROLES:"; INK 1;"QAOP0123"+CHR$ (158); INK 0;" 0"; INK 6; PAPER 0; BRIGHT 1;CHR$ 146; INK 2; PAPER 7; BRIGHT 0;" 1";CHR$ 153; INK 3;" 2";CHR$ 154; INK 4;" 3";CHR$ 155
 7333 GO SUB 8000
-7334 LET k$=INKEY$
+7334 POKE 23560,0
 7335 BORDER INT (RND*6): LET cc=cc+1: IF cc=100 THEN GO SUB 8050: LET cm=0: LET cc=0: BORDER 1: RETURN
 7350 LET ox=cx: LET oy=cy
-7351 IF IN 32766=190 THEN IF cc>5 THEN GO SUB 8050: LET cm=0: LET cc=0: LET sp=0: PRINT AT oy,ox;" ": GO SUB 7450: GO SUB 8400: BORDER 1: RETURN : REM Salida del modo de construccion
+7351 IF IN 32766=190 THEN POKE 23560,0: IF cc>5 THEN GO SUB 8050: LET cm=0: LET cc=0: LET sp=0: PRINT AT oy,ox;" ": GO SUB 7450: GO SUB 8400: BORDER 1: RETURN : REM Salida del modo de construccion
 7360 IF IN 64510=190 AND cy>0 THEN LET cy=cy-1
 7370 IF IN 65022=190 AND cy<20 THEN LET cy=cy+1
 7380 IF IN 57342=189 AND cx>1 THEN LET cx=cx-1
@@ -161,8 +161,8 @@
 7410 IF ox<>cx OR oy<>cy THEN GO SUB 8050: GO SUB 8400: GO SUB 8000: LET ox=cx: LET oy=cy: REM Si hemos movido el cursor, redibuja
 7420 GO TO 7334
 7440 REM Comprueba teclas durante fases secundarias del juego
-7442 IF IN 32766=190 THEN LET sp=1: GO TO 7450
-7443 IF IN 65022=187 THEN LET dp=1: GO TO 7450
+7442 IF PEEK 23560=32 THEN POKE 23560,0: LET sp=1: GO TO 7450
+7443 IF PEEK 23560=68 THEN POKE 23560,0: IF sp=0 THEN LET dp=1: GO TO 7450
 7444 RETURN
 7450 REM Pinta el marcador en modo principal
 7451 PRINT #0;AT 0,0; PAPER 2; INK 7;" CONTROLES "; PAPER 7; INK 1; FLASH sp;CHR$ 158; FLASH 0; INK 0;"Construir - "; INK 1; FLASH dp;"D"; FLASH 0; INK 0;"isparar"

@@ -1,13 +1,5 @@
-Check C3625F27
-Auto 8224
-
-# Run-time Variables
-
-Var i: Num = 32766
-
-# End Run-time Variables
-
-   1 PRINT AT 0,0;
+   1 LET tecla=9999
+   5 PRINT AT 0,0;
   10 LET I=65278: GO SUB 1000
   20 LET I=65022: GO SUB 1000
   30 LET I=64510: GO SUB 1000
@@ -16,6 +8,9 @@ Var i: Num = 32766
   60 LET I=57342: GO SUB 1000
   70 LET I=49150: GO SUB 1000
   80 LET I=32766: GO SUB 1000
-  90 GO TO 1
+  90 PRINT
+ 100 IF PEEK 23560<>tecla THEN LET tecla=PEEK 23560: POKE 23560,0
+ 200 PRINT "PEEK 23560=";tecla;"  "
+ 500 GO TO 5
 1000 PRINT I;": ";IN I;" "
 1010 RETURN
