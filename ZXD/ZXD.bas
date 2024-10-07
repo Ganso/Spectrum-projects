@@ -133,7 +133,7 @@
 7001 IF nz=0 THEN RETURN
 7005 LET g=1
 7010 LET z=z(g,3): IF z(g,1)=1 THEN GO TO 7045: REM Saltar si el zombie estar en la columna 1
-7011 IF m(z(g,2)+1,z(g,1)-1)>0 OR m(z(g,2)+2,z(g,1)-1)>0 THEN GO TO 7040: REM Ir a chocar con objeto si hay algo delante
+7011 IF m(z(g,2)+1,z(g,1)-1)+m(z(g,2)+2,z(g,1)-1)>0 THEN GO TO 7040: REM Ir a chocar con objeto si hay algo delante
 7020 LET z(g,4)=z(g,4)+2+(2*(z<>3)): IF z(g,4)<8 AND z<>2 THEN GO TO 7045: REM Saltar si no es momento de moverse
 7030 LET ox=z(g,1): LET oy=z(g,2): LET m(oy+1,ox)=0: LET m(oy+2,ox)=0: GO SUB 50: LET oy=oy+1: GO SUB 50: REM Borrar zombie de la posicion anterior
 7031 LET z(g,1)=z(g,1)-1: LET z(g,4)=0: IF z(g,1)=1 THEN GO SUB 9700: RETURN : REM Game over si el zombie llega a la columna 1
@@ -178,10 +178,10 @@
 7335 BORDER INT (RND*6): LET cc=cc+1: IF cc=500 THEN GO SUB 8050: LET cm=0: LET cc=0: BORDER 1: RETURN
 7350 LET ox=cx: LET oy=cy
 7351 IF IN 32766=190 THEN POKE 23560,0: IF cc>5 THEN GO SUB 8050: LET cm=0: LET cc=0: LET sp=0: PRINT AT oy,ox;" ": GO SUB 7450: GO SUB 50: BORDER 1: RETURN : REM Salida del modo de construccion
-7360 IF IN 64510=190 AND cy>0 THEN LET cy=cy-1
-7370 IF IN 65022=190 AND cy<20 THEN LET cy=cy+1
-7380 IF IN 57342=189 AND cx>1 THEN LET cx=cx-1
-7390 IF IN 57342=190 AND cx<30 THEN LET cx=cx+1
+7360 IF IN 64510=190 AND cy>0 THEN LET cy=cy-1: GO TO 7410
+7370 IF IN 65022=190 AND cy<20 THEN LET cy=cy+1: GO TO 7410
+7380 IF IN 57342=189 AND cx>1 THEN LET cx=cx-1: GO TO 7410
+7390 IF IN 57342=190 AND cx<30 THEN LET cx=cx+1: GO TO 7410
 7400 IF (IN 63486<>191 OR IN 61438<>191) THEN LET k$=INKEY$: IF k$>="0" AND k$<="3" THEN LET te=VAL k$: GO SUB 3000: GO TO 7331
 7410 IF ox<>cx OR oy<>cy THEN GO SUB 8050: GO SUB 50: GO SUB 8000: LET ox=cx: LET oy=cy: REM Si hemos movido el cursor, redibuja
 7420 GO TO 7334
