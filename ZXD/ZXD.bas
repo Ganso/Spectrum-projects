@@ -3,7 +3,8 @@
    3 LET maxc=5: LET maxz=10: LET tv=3: LET lv=3: LET rcl=2: DIM h(3): LET nivel=1: LET maxtiempo=200
    4 LET h(1)=10: LET h(2)=15: LET h(3)=25
   10 BORDER 1: PAPER 0: INK 7: CLS
-  15 PAPER 7: INK 0: PRINT AT 10,7; FLASH 1; INK 6; PAPER 2;" "; FLASH 0; INK 0; PAPER 7;"INICIALIZANDO..."; INK 2; PAPER 6; FLASH 1;" "; FLASH 0
+  12 LOAD "ZXD" CODE : PRINT AT 21,0; PAPER 7; INK 0; FLASH 1;"        PULSA UNA TECLA         ": PAUSE 0: CLS
+  15 PRINT AT 4,8;"     "; BRIGHT 1; INK 2;"Z"; BRIGHT 0; INK 4;"OMBIE     ";AT 5,8;"  "; BRIGHT 1; INK 2;"X"; BRIGHT 0; INK 4;"TERMINATION  ";AT 6,8;"    "; BRIGHT 1; INK 2;"D"; BRIGHT 0; INK 4;"EFENSE     ": PAPER 7: INK 0: PRINT AT 10,7; FLASH 1; INK 6; PAPER 2;" "; FLASH 0; INK 0; PAPER 7;"Inicializando..."; INK 2; PAPER 6; FLASH 1;" "; FLASH 0
   20 GO SUB 9000: REM Generar UDG con barra de progreso
   22 GO SUB 1100: REM Intro del nivel
   23 LET tiempo=maxtiempo: LET nz=0: LET nt=0: LET nl=0: LET nc=0: LET r=20: REM Reiniciar contadores principales
@@ -18,14 +19,14 @@
   57 IF op>80 THEN LET g=INT ((op-81)/2)+1: GO SUB 100: RETURN
   58 LET v=INT ((op-41)/4)+1: IF t(v,4)>0 THEN GO SUB 3330
   59 RETURN
-100 REM Dibujar zombie numero g
-105 POKE 23675,8: POKE 23676,254
-110 IF z(g,1)<6 THEN PAPER 5: GO TO 120
-115 PAPER 0
-120 INK 4: PRINT AT z(g,2),z(g,1);CHR$ (144+(8*(z(g,3)=2))+(16*(z(g,3)=3)))
-125 INK z(g,3): PRINT AT z(g,2)+1,z(g,1);CHR$ (145+(8*(z(g,3)=2)))
-130 POKE 23675,88: POKE 23676,255
-150 RETURN
+ 100 REM Dibujar zombie numero g
+ 105 POKE 23675,8: POKE 23676,254
+ 110 IF z(g,1)<6 THEN PAPER 5: GO TO 120
+ 115 PAPER 0
+ 120 INK 4: PRINT AT z(g,2),z(g,1);CHR$ (144+(8*(z(g,3)=2))+(16*(z(g,3)=3)))
+ 125 INK z(g,3): PRINT AT z(g,2)+1,z(g,1);CHR$ (145+(8*(z(g,3)=2)))
+ 130 POKE 23675,88: POKE 23676,255
+ 150 RETURN
 1000 REM Inicializar pantalla
 1005 CLS : INK 5
 1010 FOR y=0 TO 21
@@ -226,7 +227,7 @@
 7600 REM Zombie g ha chocado con objeto ob
 7610 IF ob<=20 THEN LET m(c(t,2)+1,c(t,1))=0: LET m(c(t,2)+2,c(t,1))=0: LET ox=c(t,1): LET oy=c(t,2): GO SUB 50: LET oy=oy+1: GO SUB 50: LET c(t,3)=0: LET nc=nc-1: GO SUB 9100: REM Eliminar ciudadano, y quitar 1 de vida a zombie
 7620 IF ob>20 AND ob<=40 THEN LET m(l(t,2)+1,l(t,1))=0: LET ox=l(t,1): LET oy=l(t,2): GO SUB 50: LET l(t,3)=0: GO SUB 9200: REM Eliminar ladrillo
-7630 IF ob<=40 OR ob>80 THEN GO TO 7660: REM Si no es torreta, termina
+7630 IF ob<=40 OR ob>80 THEN GO TO 7660: REM Si no es torreta\#014\#000\#000\#000\#000\#000, termina
 7640 LET m(t(t,2)+1,t(t,1))=0: LET m(t(t,2)+2,t(t,1))=0: LET m(t(t,2)+1,t(t,1)+1)=0: LET m(t(t,2)+2,t(t,1)+1)=0: LET ox=t(t,1): LET oy=t(t,2)
 7650 INK 6: PAPER 2: FLASH 1: PRINT AT t(t,2),t(t,1);CHR$ (161);CHR$ (162);AT t(t,2)+1,t(t,1);CHR$ (163);CHR$ (164): REM Explosion
 7655 FOR x=1 TO 10: BEEP 0.02,INT (RND*20): NEXT X
@@ -237,7 +238,7 @@
 7710 FLASH 1: OVER 1: PAPER 0+5*(t(i,1)<6)
 7720 INK t(i,3)+1: PRINT AT t(i,2),t(i,1);"  ";AT t(i,2)+1,t(i,1);"  "
 7725 PAPER 0+5*(z(j,1)<6)
-7730 PRINT AT z(j,2),z(j,1);INK 4;" ";AT z(j,2)+1,z(j,1);INK z(j,3);" "
+7730 PRINT AT z(j,2),z(j,1); INK 4;" ";AT z(j,2)+1,z(j,1); INK z(j,3);" "
 7740 BEEP 0.02,50: BEEP 0.02,40
 7750 FLASH 0: PAPER 0+5*(t(i,1)<6)
 7760 INK t(i,3)+1: PRINT AT t(i,2),t(i,1);"  ";AT t(i,2)+1,t(i,1);"  "
@@ -274,7 +275,7 @@
 8715 GO SUB 7450
 8717 PAPER 0: RETURN
 9000 REM Generacion de UDG con barra de progreso
-9001 INK 6:PAPER 0:PRINT AT 12,0;"                                "
+9001 INK 6: PAPER 0: PRINT AT 12,0;"                                "
 9002 LET total=(65535-65358)+(65295-65032)+1: LET progreso=0: RESTORE 9012
 9003 LET F=65368
 9004 READ A: POKE F,A

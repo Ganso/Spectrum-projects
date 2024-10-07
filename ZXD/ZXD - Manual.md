@@ -52,7 +52,7 @@ Tu misión es proteger la ciudad y sus habitantes durante el tiempo establecido 
 - Construye torretas detrás de los ladrillos para mayor protección.
 - Las torretas harán 3 disparos antes de explotar: Intenta aprovechar cada disparo al máximo.
 - Usa torretas tipo 1 para todo tipo de zombies.
-- Usa torretas tipo 2 para grupos de zombies.
+- Usa torretas tipo 2 para grupos de zombies que no estén alineados.
 - Usa torretas tipo 3 para zombies resistentes.
 - Aguanta hasta que los zombies estén cerca para planificar tu estrategia.
 - Los ciudadanos quitarán vida a los zombies antes de morir. Si a un zombie le queda un punto de daño puedes evitar usar una torreta.
