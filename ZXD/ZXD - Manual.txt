@@ -1,12 +1,8 @@
 # Zombie Xtinction Defense - Manual de instrucciones
 
-## Historia
-
 En un mundo devastado por un apocalipsis zombie, te encuentras defendiendo la última ciudad humana. Eres la última esperanza de la humanidad contra las hordas de no-muertos que amenazan con extinguir la vida tal como la conocemos.
 
-## Objetivo
-
-Tu misión es proteger la ciudad y sus habitantes durante el tiempo establecido para cada nivel. Debes impedir que los zombies lleguen al lado izquierdo de la pantalla, donde se encuentra la entrada a la ciudad.
+Tu misión es proteger la ciudad y sus habitantes durante el tiempo establecido para cada nivel. Debes impedir que los zombies lleguen al lado izquierdo de la pantalla, donde se encuentra la entrada al último reducto de vida humana.
 
 ## Controles
 
@@ -20,54 +16,62 @@ Tu misión es proteger la ciudad y sus habitantes durante el tiempo establecido 
 - **0**: Construir ladrillo
 - **1**, **2**, **3**: Construir torretas de diferentes tipos
 
-## Mecánicas Principales
+## Enemigos
 
-### Recursos
-- Obtienes recursos automáticamente con el tiempo.
-- Usa los recursos para construir defensas.
+### Zombie azul
 
-### Defensas
+El enemigo estándar que aparece desde el principio.
+Se mueve a velocidad normal,y aguanta 3 golpes antes de caer.
+Espera a que se acerque a la izquierda antes de colocar tus defensas para planificar mejor tu estrategia.
 
-1. **Ladrillos** (Tecla 0):
-   - Barrera básica para frenar a los zombies.
-   - Bajo costo pero poca resistencia.
+### Zombie rojo
 
-2. **Torretas**:
-   - Tipo 1 (Roja, tecla 1): Disparo simple. Cubre dos líneas en vertical. Cuestan 10 recursos.
-   - Tipo 2 (Morada, tecla 2): Disparo en área, alcance medio. Cubre 2 casillas en cualquier dirección. Cuestan 15 recursos.
-   - Tipo 3 (Verde, Tecla 3): Disparo potente (mata de un tiro a cualquier zombie). Cubre dos líneas en vertical. Cuestan 25 recursos.
+Aparece a partir de la segunda fase
+Se mueve más rápido, pero morirá al primer golpe.
+Si va hacia un ciudadano puedes dejar que le mate él.
 
-3. **Ciudadanos**:
-   - La última línea de defensa de la ciudad: Retrasan a los zombies, y antes de morir atacarán a los zombies, matando a los rojos y dañando al resto.
+### Zombie morado
 
-### Tipos de Zombies
+Es el más peligroso de todos.
+Lento, pero muy resistente, al aguantar 4 golpes.
+La única torreta que le podrá derribar de una vez es la verde.
+Tienes tiempo para ir a por él, pero no dejes que se escape.
 
-1. **Zombie Lento** (Pantalón azul):
-   - Velocidad baja, resistencia media (2 puntos de daño)
+## Defensas
 
-2. **Zombie Rápido** (Pantalón rojo):
-   - Velocidad alta, poca resistencia (1 punto de daño)
+Obtienes recursos automáticamente con el tiempo, que podrás utilizar para construir estas defensas.
 
-3. **Zombie Tanque** (Pantalón morado):
-   - Velocidad muy baja, alta resistencia (4 puntos de daño)
+### Ladrillos (tecla 0)
+Es la barrera más básica para frenar a los zombies.
+Tiene bajo costo pero poca resistencia.
+No les hará daño, pero te dará tiempo a conseguir más recursos.
+Inicialmente se coloca un grupo de ladrillos cerca de la izquierda.
 
-## Estrategia
+### Torreta roja (tecla 1)
 
-- Coloca ladrillos para ralentizar a los zombies.
-- Construye torretas detrás de los ladrillos para mayor protección.
-- Las torretas harán 3 disparos antes de explotar: Intenta aprovechar cada disparo al máximo.
-- Usa torretas tipo 1 para todo tipo de zombies.
-- Usa torretas tipo 2 para grupos de zombies que no estén alineados.
-- Usa torretas tipo 3 para zombies resistentes.
-- Aguanta hasta que los zombies estén cerca para planificar tu estrategia.
-- Los ciudadanos quitarán vida a los zombies antes de morir. Si a un zombie le queda un punto de daño puedes evitar usar una torreta.
+Hace hasta tres disparos simples antes de explotar por sobrecalentamiento.
+Cubre dos líneas en vertical, así que piensa bien dónde la colocas para atacar a varios zombies a la vez.
+Cuesta 10 recursos inicialmente.
 
-## Progresión
+### Torreta morada (tecla 2)
 
-- El juego se divide en niveles.
-- Cada nivel aumenta en dificultad:
-  - Más zombies
-  - Menos recursos disponibles
-  - Mayor tiempo de supervivencia requerido
+Esta poderosa antena lanzará hasta tres rayos para dañar a los zombies de casillas cercanas.
+Utilízala para atacar a grupos de zombies que no estén alineados.
+Cuesta 15 recursos inicialmente.
 
-¡Buena suerte, defensor! La supervivencia de la humanidad está en tus manos.
+### Torreta verde (tecla 3)
+
+Es capa de disparar 3 potentes rayos láser que acabarán con cualquier enemigo de un solo golpe.
+Son tu mejor recurso contra los zombies morados.
+Cuestan 25 recursos hasta que empiecen a subir los costes en el nivel 4, así que utilízalas sabiamente para aprovechar al máximo cada disparo.
+
+### Ciudadanos
+
+Un grupo de valientes ciudadanos se ha ofrecido a ser la última línea de defensa contra las hordas de no muertos.
+Cuando un zombie alcance a uno de ellos, harán lo posible por ralentizarlos mientras consigues recursos para una defensa.
+Antes de morir le harán un punto de daño a los zombies. Utiliza sabiamente ese último aliento, si has sido tan hábil como para contar cuánto daño le has hecho a ese enemigo.
+No los puedes generar con recursos: en cada nivel aparece un número de ellos, pero a medida que vayas avanzando cada vez quedarán menos para ayudarte.
+
+
+¡Ánimo, valiente general!
+Los últimos de nuestra especie cuentan contigo para sobrevivir
