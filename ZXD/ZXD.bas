@@ -1,9 +1,9 @@
    1 CLEAR 65031: DIM m(23,32): DIM c(10,3): DIM z(10,5): DIM l(20,3): DIM t(10,6): LET r=20: LET cx=7: LET cy=10: LET tiempo=0
-   2 LET te=0: LET k$="": LET ox=0: LET oy=0: LET o=0: LET nz=0: LET nl=0: LET nt=0: LET nc=0: LET tir=0: LET tiz=0: LET cm=0: LET cc=0: LET w=0: LET x=0: LET y=0: LET sp=0: LET dp=0: LET seconds=0: LET oldseconds=0: DIM q(31)
+   2 LET te=0: LET k$="": LET ox=0: LET oy=0: LET o=0: LET nz=0: LET nl=0: LET nt=0: LET nc=0: LET tir=0: LET tiz=0: LET cm=0: LET cc=0: LET w=0: LET x=0: LET y=0: LET sp=0: LET dp=0: LET seconds=0: LET oldseconds=0: DIM q(31): LET puntos=0
    3 LET maxc=5: LET maxz=10: LET tv=3: LET lv=3: LET rcl=2: DIM h(3): LET nivel=1: LET maxtiempo=200: LET h(1)=10: LET h(2)=15: LET h(3)=25
-   4 REM VERSION 0.19rc1
+   4 REM VERSION 0.20rc1
   10 BORDER 1: PAPER 0: INK 7: CLS
-  11 LOAD "ZXD" CODE
+  11 LOAD "ZXDFONT" CODE: LOAD "ZXDSCRN" CODE
   12 PRINT AT 21,0; PAPER 7; INK 0; FLASH 1;"        PULSA UNA TECLA         ": PAUSE 0: CLS
   15 PRINT AT 4,13; BRIGHT 1; INK 2;"Z"; BRIGHT 0; INK 4;"OMBIE";AT 5,11; BRIGHT 1; INK 2;"X"; BRIGHT 0; INK 4;"TINCTION";AT 6,12; BRIGHT 1; INK 2;"D"; BRIGHT 0; INK 4;"EFENSE.": PAPER 7: INK 0: PRINT AT 10,7; FLASH 1; INK 6; PAPER 2;" "; FLASH 0; INK 0; PAPER 7;"Inicializando..."; INK 2; PAPER 6; FLASH 1;" "; FLASH 0
   20 GO SUB 9000: REM Generar UDG con barra de progreso
@@ -164,7 +164,7 @@
 7170 RETURN
 7200 REM Actualizar puntuacion, recursos y tiempo
 7201 LET seconds=INT ((65536*PEEK 23674+256*PEEK 23673+PEEK 23672)/50)
-7202 IF seconds<>oldseconds THEN LET oldseconds=seconds: LET tiempo=tiempo-1: GO SUB 7453
+7202 IF seconds<>oldseconds THEN LET oldseconds=seconds: LET tiempo=tiempo-1: LET puntos=puntos+1: GO SUB 7453
 7205 GO SUB 7440
 7210 IF tir>=2 THEN LET r=r+(1*r<100): REM cada 2 ticks suben los recursos, hasta 100
 7220 IF tiz>=4 THEN LET tiz=0: GO SUB 5000: RETURN : REM cada 4 ticks sale un zombie
@@ -174,7 +174,7 @@
 7329 RETURN
 7330 REM Modo de construccion
 7331 PRINT #0;AT 0,0; PAPER 2; INK 7;" CONTROLES "; PAPER 7; INK 1;"QAOP"+CHR$ (158);" +  0"; INK 6; PAPER 0; BRIGHT 1;CHR$ 146; INK 1; PAPER 7; BRIGHT 0;" 1"; INK 2;CHR$ 153; INK 1;" 2"; INK 3;CHR$ 154; INK 1;" 3"; INK 4;CHR$ 155;" "
-7332 PRINT #0;AT 1,0; PAPER 2; INK 7; FLASH 1;"CONSTRUCION"; FLASH 0; PAPER 7; INK 0;" Rec:                "; INK 1;AT 1,16;r;"  ";AT 1,21;rcl;AT 1,23;h(1);AT 1,26;h(2);AT 1,29;h(3)
+7332 PRINT #0;AT 1,0; PAPER 2; INK 7; FLASH 1;"CONSTRUCCION"; FLASH 0; PAPER 6; INK 0;"Rec:                "; INK 1;AT 1,16;r;"  ";AT 1,21;rcl;AT 1,23;h(1);AT 1,26;h(2);AT 1,29;h(3)
 7333 GO SUB 8000
 7334 POKE 23560,0
 7335 BORDER INT (RND*6): LET cc=cc+1: IF cc=500 THEN GO SUB 8050: LET cm=0: LET cc=0: BORDER 1: RETURN
@@ -193,8 +193,8 @@
 7444 RETURN
 7450 REM Pinta el marcador en modo principal
 7451 PRINT #0;AT 0,0; PAPER 2; INK 7;" CONTROLES "; PAPER 7; INK 1; FLASH sp;CHR$ 158; FLASH 0; INK 0;"Construir - "; INK 1; FLASH dp;"D"; FLASH 0; INK 0;"isparar"
-7452 PRINT #0; INK 0; PAPER 7;AT 1,0;"Recursos:         Tiempo:       ": PAPER 0:
-7453 PRINT #0; INK 1; PAPER 7;AT 1,9;r;"  ";AT 1,25;tiempo;" "
+7452 PRINT #0; INK 0; PAPER 6;AT 1,0;"Recursos:    Tiempo:     P:     ": PAPER 0:
+7453 PRINT #0; INK 1; PAPER 6;AT 1,9;r;"  ";AT 1,20;tiempo;" ";AT 1,27;puntos
 7455 RETURN
 7500 REM Torretas disparan
 7505 LET disparos=0
@@ -254,7 +254,7 @@
 7790 IF z(j,5)>0 THEN GO TO 7800
 7791 LET m(z(j,2)+1,z(j,1))=0: LET m(z(j,2)+2,z(j,1))=0: REM Vacia mapa
 7792 LET ox=z(j,1): LET oy=z(j,2): GO SUB 50: LET oy=oy+1: GO SUB 50: REM redibuja
-7793 GO SUB 9400: REM Elimina zombie
+7793 LET puntos=puntos+(10*z(j,3)): GO SUB 9400: GO SUB 7450: REM Elimina zombie y suma puntos
 7800 PAPER 0: RETURN
 8000 REM Dibujar cursor en cy,cx
 8020 PAPER 0: INK 7
@@ -374,15 +374,18 @@
 9710 PAPER 0: INK 7: CLS
 9720 PRINT AT 10,10; PAPER 2;" GAME OVER "
 9730 PRINT AT 12,7;"Nivel alcanzado: ";nivel
-9740 PRINT AT 14,1;"Pulsa una tecla para continuar"
+9735 PRINT AT 13,7;"Puntuacion final: ";puntos
+9740 PRINT AT 15,1;"Pulsa una tecla para continuar"
 9750 PAUSE 0
+9755 LET puntos=0
 9760 LET nivel=1: GO TO 22
 9770 RETURN
 9800 REM Rutina de ENHORABUENA y pasar al siguiente nivel
 9810 PAPER 0: INK 7: CLS
 9820 PRINT AT 10,9; PAPER 1;"  ENHORABUENA  "
-9830 LET nivel=nivel+1
+9830 LET nivel=nivel+1: LET puntos=puntos+100+r*2
 9840 PRINT AT 12,7;"PASAMOS AL  NIVEL ";nivel
+9845 PRINT AT 14,5;"Puntos acumulados: ";puntos
 9850 PRINT AT 21,0; PAPER 7; INK 0; FLASH 1;"        PULSA UNA TECLA         "
 9860 PAUSE 0
 9870 IF INKEY$=" " THEN GO TO 9870
