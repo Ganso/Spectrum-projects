@@ -1,9 +1,9 @@
-   1 CLEAR 65031: DIM m(23,32): DIM c(10,3): DIM z(10,5): DIM l(20,3): DIM t(10,6): LET r=20: LET cx=7: LET cy=10: LET tiempo=0
+   1 CLEAR 64000: DIM m(23,32): DIM c(10,3): DIM z(10,5): DIM l(20,3): DIM t(10,6): LET r=20: LET cx=7: LET cy=10: LET tiempo=0
    2 LET te=0: LET k$="": LET ox=0: LET oy=0: LET o=0: LET nz=0: LET nl=0: LET nt=0: LET nc=0: LET tir=0: LET tiz=0: LET cm=0: LET cc=0: LET w=0: LET x=0: LET y=0: LET sp=0: LET dp=0: LET seconds=0: LET oldseconds=0: DIM q(31): LET puntos=0
    3 LET maxc=5: LET maxz=10: LET tv=3: LET lv=3: LET rcl=2: DIM h(3): LET nivel=1: LET maxtiempo=200: LET h(1)=10: LET h(2)=15: LET h(3)=25
    4 REM VERSION 0.20rc1
   10 BORDER 1: PAPER 0: INK 7: CLS
-  11 LOAD "ZXDFONT" CODE 15616: LOAD "ZXDSCRN" CODE 16384
+  11 LOAD "ZXDFONT" CODE 64000: LOAD "ZXDSCRN" CODE 16384: POKE 23606,0: POKE 23607,INT 249: REM Carga el Font en 64000 y apunta a esa direccion
   12 PRINT AT 21,0; PAPER 7; INK 0; FLASH 1;"        PULSA UNA TECLA         ": PAUSE 0: CLS
   15 PRINT AT 4,13; BRIGHT 1; INK 2;"Z"; BRIGHT 0; INK 4;"OMBIE";AT 5,11; BRIGHT 1; INK 2;"X"; BRIGHT 0; INK 4;"TINCTION";AT 6,12; BRIGHT 1; INK 2;"D"; BRIGHT 0; INK 4;"EFENSE.": PAPER 7: INK 0: PRINT AT 10,7; FLASH 1; INK 6; PAPER 2;" "; FLASH 0; INK 0; PAPER 7;"Inicializando..."; INK 2; PAPER 6; FLASH 1;" "; FLASH 0
   20 GO SUB 9000: REM Generar UDG con barra de progreso
@@ -228,7 +228,7 @@
 7600 REM Zombie g ha chocado con objeto ob
 7610 IF ob<=20 THEN LET m(c(t,2)+1,c(t,1))=0: LET m(c(t,2)+2,c(t,1))=0: LET ox=c(t,1): LET oy=c(t,2): GO SUB 50: LET oy=oy+1: GO SUB 50: LET c(t,3)=0: LET nc=nc-1: GO SUB 9100: REM Eliminar ciudadano, y quitar 1 de vida a zombie
 7620 IF ob>20 AND ob<=40 THEN LET m(l(t,2)+1,l(t,1))=0: LET ox=l(t,1): LET oy=l(t,2): GO SUB 50: LET l(t,3)=0: GO SUB 9200: REM Eliminar ladrillo
-7630 IF ob<=40 OR ob>80 THEN GO TO 7660: REM Si no es torreta\#014\#000\#000\#000\#000\#000, termina
+7630 IF ob<=40 OR ob>80 THEN GO TO 7660: REM Si no es torreta, termina
 7640 LET m(t(t,2)+1,t(t,1))=0: LET m(t(t,2)+2,t(t,1))=0: LET m(t(t,2)+1,t(t,1)+1)=0: LET m(t(t,2)+2,t(t,1)+1)=0: LET ox=t(t,1): LET oy=t(t,2)
 7650 INK 6: PAPER 2: FLASH 1: PRINT AT t(t,2),t(t,1);CHR$ (161);CHR$ (162);AT t(t,2)+1,t(t,1);CHR$ (163);CHR$ (164): REM Explosion
 7655 FOR x=1 TO 10: BEEP 0.02,INT (RND*20): NEXT X
