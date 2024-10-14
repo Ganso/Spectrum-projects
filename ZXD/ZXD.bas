@@ -1,7 +1,7 @@
    1 CLEAR 64000: DIM m(23,32): DIM c(10,3): DIM z(10,5): DIM l(20,3): DIM t(10,6): LET r=20: LET cx=7: LET cy=10: LET tiempo=0
    2 LET te=0: LET k$="": LET ox=0: LET oy=0: LET o=0: LET nz=0: LET nl=0: LET nt=0: LET nc=0: LET tir=0: LET tiz=0: LET cm=0: LET cc=0: LET w=0: LET x=0: LET y=0: LET sp=0: LET dp=0: LET seconds=0: LET oldseconds=0: DIM q(31): LET puntos=0
    3 LET maxc=5: LET maxz=10: LET tv=3: LET lv=3: LET rcl=2: DIM h(3): LET nivel=1: LET maxtiempo=200: LET h(1)=10: LET h(2)=15: LET h(3)=25
-   4 REM VERSION 0.20rc1
+   4 REM VERSION 0.22rc3
   10 BORDER 1: PAPER 0: INK 7: CLS
   11 LOAD "ZXDFONT" CODE 64000: LOAD "ZXDSCRN" CODE 16384: POKE 23606,0: POKE 23607,INT 249: REM Carga el Font en 64000 y apunta a esa direccion
   12 PRINT AT 21,0; PAPER 7; INK 0; FLASH 1;"        PULSA UNA TECLA         ": PAUSE 0: CLS
@@ -180,10 +180,10 @@
 7335 BORDER INT (RND*6): LET cc=cc+1: IF cc=500 THEN GO SUB 8050: LET cm=0: LET cc=0: BORDER 1: RETURN
 7350 LET ox=cx: LET oy=cy
 7351 IF IN 32766=190 THEN POKE 23560,0: IF cc>5 THEN GO SUB 8050: LET cm=0: LET cc=0: LET sp=0: PRINT AT oy,ox;" ": GO SUB 7450: GO SUB 50: BORDER 1: RETURN : REM Salida del modo de construccion
-7360 IF IN 64510=190 AND cy>0 THEN LET cy=cy-1: GO TO 7410
-7370 IF IN 65022=190 AND cy<20 THEN LET cy=cy+1: GO TO 7410
-7380 IF IN 57342=189 AND cx>1 THEN LET cx=cx-1: GO TO 7410
-7390 IF IN 57342=190 AND cx<30 THEN LET cx=cx+1: GO TO 7410
+7360 IF IN 64510=190 AND cy>0 THEN LET cy=cy-1
+7370 IF IN 65022=190 AND cy<20 THEN LET cy=cy+1
+7380 IF IN 57342=189 AND cx>1 THEN LET cx=cx-1
+7390 IF IN 57342=190 AND cx<30 THEN LET cx=cx+1
 7400 IF (IN 63486<>191 OR IN 61438<>191) THEN LET k$=INKEY$: IF k$>="0" AND k$<="3" THEN LET te=VAL k$: GO SUB 3000: GO TO 7331
 7410 IF ox<>cx OR oy<>cy THEN GO SUB 8050: GO SUB 50: GO SUB 8000: LET ox=cx: LET oy=cy: REM Si hemos movido el cursor, redibuja
 7420 GO TO 7334
