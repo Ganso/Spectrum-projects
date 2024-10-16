@@ -122,7 +122,7 @@
 5010 IF nz>=maxz THEN RETURN
 5011 LET nz=nz+1
 5015 LET z(nz,3)=1+(nivel>1)*(RND>0.5)+(nivel>2)*(RND<0.25): REM Nv1:1(siempre), Nv2:1-2(al 50%), Nv3+:1(37.5%)2(50%)3(12.5%)
-5020 LET z(nz,1)=31: LET z(nz,4)=0: LET z(nz,5)=1+(1*(z(nz,3)=1))+(2*(z(nz,3)=3)): REM Vida zombies: 2 para T1, 1 para T2, 4 para T3
+5020 LET z(nz,1)=31: LET z(nz,4)=0: LET z(nz,5)=1+(1*(z(nz,3)=1))+(3*(z(nz,3)=3)): REM Vida zombies: 2 para T1, 1 para T2, 4 para T3
 5030 LET z(nz,2)=INT (RND*19)+1
 5031 IF m(z(nz,2)+1,z(nz,1))>0 OR m(z(nz,2)+2,z(nz,1))>0 THEN GO TO 5030
 5040 LET g=nz: GO SUB 100: LET m(z(nz,2)+1,z(nz,1))=80+(nz*2)-1: LET m(z(nz,2)+2,z(nz,1))=80+(nz*2)
