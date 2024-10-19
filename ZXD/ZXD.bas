@@ -195,7 +195,6 @@
 7554 LET lineax=z(j,1): LET lineay=t(i,2): IF z(j,2)=t(i,2)+1 THEN LET lineay=t(i,2)+1
 7555 INK 6: FOR w=tx TO lineax-1
 7556 IF  SCREEN$ (lineay,w)=" " THEN PAPER 0+5*(w<6): PRINT AT lineay,w;CHR$ (156+(t(i,3)=3)): BEEP 0.02,15: PRINT AT lineay,w;" ": GO TO 7558: REM pinta disparo
-7557 IF m(lineay,w)>80 THEN LET j=INT ((m(lineay,w)-80+1)/2): LET w=lineax-1: GO TO 7558: REM hay otro zombie antes, ataca a ese: REM ***************************
 7558 NEXT w: PAPER 0
 7559 LET disparos=disparos+1: GO SUB 7700: REM Quita vida al zombie
 7563 GO TO 7540: REM Vuelve a mirar todos los zombies
@@ -210,7 +209,7 @@
 7600 REM Zombie g ha chocado con objeto ob
 7610 IF ob<=20 THEN LET m(c(t,2)+1,c(t,1))=0: LET m(c(t,2)+2,c(t,1))=0: LET ox=c(t,1): LET oy=c(t,2): GO SUB 50: LET oy=oy+1: GO SUB 50: LET c(t,3)=0: LET nc=nc-1: GO SUB 9100: REM Eliminar ciudadano, y quitar 1 de vida a zombie
 7620 IF ob>20 AND ob<=40 THEN LET m(l(t,2)+1,l(t,1))=0: LET ox=l(t,1): LET oy=l(t,2): GO SUB 50: LET l(t,3)=0: GO SUB 9200: REM Eliminar ladrillo
-7630 IF ob<=40 OR ob>80 THEN GO TO 7660: REM Si no es torreta\#014\#000\#000\#000\#000\#000, termina
+7630 IF ob<=40 OR ob>80 THEN GO TO 7660: REM Si no es torreta, termina
 7640 LET m(t(t,2)+1,t(t,1))=0: LET m(t(t,2)+2,t(t,1))=0: LET m(t(t,2)+1,t(t,1)+1)=0: LET m(t(t,2)+2,t(t,1)+1)=0: LET ox=t(t,1): LET oy=t(t,2)
 7650 INK 6: PAPER 2: FLASH 1: PRINT AT t(t,2),t(t,1);CHR$ (161);CHR$ (162);AT t(t,2)+1,t(t,1);CHR$ (163);CHR$ (164): REM Explosion
 7655 FOR x=1 TO 10: BEEP 0.02,INT (RND*20): NEXT X
@@ -239,7 +238,7 @@
 7800 PAPER 0: RETURN
 8020 PAPER 0: INK 7: REM Dibujar cursor en cy,cx
 8030 FLASH 1: PRINT AT cy,cx;CHR$ (159): FLASH 0: RETURN
-8060 PRINT AT oy,ox;" ": RETURN : REM Borrar cursor
+8060 PAPER 0+5*(ox<6): PRINT AT oy,ox;" ": RETURN : REM Borrar cursor
 8175 POKE 23675,8: POKE 23676,254: REM Dibujar zombie numero g andando
 8180 IF ox<6 THEN PAPER 5: GO TO 8182
 8181 PAPER 0: INK 4
@@ -350,9 +349,9 @@
 9420 LET nz=nz-1: RETURN
 9700 REM Rutina de GAME OVER
 9710 PAPER 0: INK 7: CLS
-9720 PRINT AT 10,10; PAPER 2;" GAME OVER "
-9730 PRINT AT 12,7;"Nivel alcanzado: "; INK 1; BRIGHT 1;nivel
-9735 PRINT AT 13,5;"Puntuacion final: "; INK 1; BRIGHT 1;puntos
+9720 PRINT AT 10,10; PAPER 2;FLASH 1;" GAME OVER "
+9730 PRINT AT 12,7;"Nivel alcanzado: "; INK 2; BRIGHT 1;nivel
+9735 PRINT AT 13,5;"Puntuacion final: "; INK 2; BRIGHT 1;puntos
 9740 PRINT AT 15,0; PAPER 7; INK 0; FLASH 1;"        PULSA UNA TECLA         "
 9750 PAUSE 0
 9755 LET puntos=0
@@ -360,10 +359,10 @@
 9770 RETURN
 9800 REM Rutina de ENHORABUENA y pasar al siguiente nivel
 9810 PAPER 0: INK 7: CLS
-9820 PRINT AT 10,9; PAPER 1;"  ENHORABUENA  "
+9820 PRINT AT 10,9; PAPER 1;FLASH 1;"  ENHORABUENA  "
 9830 LET nivel=nivel+1: LET puntos=puntos+100+r*2
-9840 PRINT AT 12,7;"PASAMOS AL  NIVEL "; INK 1; BRIGHT 1;nivel
-9845 PRINT AT 14,5;"Puntos acumulados: "; INK 1; BRIGHT 1;puntos
+9840 PRINT AT 12,7;"PASAMOS AL  NIVEL "; INK 2; BRIGHT 1;nivel
+9845 PRINT AT 14,5;"Puntos acumulados: "; INK 2; BRIGHT 1;puntos
 9850 PRINT AT 21,0; PAPER 7; INK 0; FLASH 1;"        PULSA UNA TECLA         "
 9860 PAUSE 0
 9870 IF INKEY$=" " THEN GO TO 9870
