@@ -1,7 +1,7 @@
    1 CLEAR 64000: DIM m(23,32): DIM c(10,3): DIM z(10,5): DIM l(20,3): DIM t(10,6): LET r=20: LET cx=7: LET cy=10: LET tiempo=0
-   2 LET te=0: LET k$="": LET ox=0: LET oy=0: LET o=0: LET nz=0: LET nl=0: LET nt=0: LET nc=0: LET tir=0: LET tiz=0: LET cm=0: LET cc=0: LET w=0: LET x=0: LET y=0: LET sp=0: LET dp=0: LET seconds=0: LET oldseconds=0: DIM q(31): LET puntos=0
+   2 LET te=0: LET k$="": LET ox=0: LET oy=0: LET o=0: LET nz=0: LET nl=0: LET nt=0: LET nc=0: LET tir=0: LET tiz=0: LET cm=0: LET cc=0: LET w=0: LET x=0: LET y=0: LET sp=0: LET dp=0: LET seconds=0: LET oldseconds=0: LET puntos=0
    3 LET maxc=5: LET maxz=10: LET tv=3: LET lv=3: LET rcl=2: DIM h(3): LET nivel=1: LET maxtiempo=200: LET h(1)=10: LET h(2)=15: LET h(3)=25
-   4 REM VERSION 0.23rc4
+   4 REM VERSION 0.24rc5
   10 BORDER 1: PAPER 0: INK 7: CLS
   11 LOAD "ZXDFONT" CODE 64000: LOAD "ZXDSCRN" CODE 16384: POKE 23606,0: POKE 23607,INT 249: REM Carga el Font en 64000 y apunta a esa direccion
   12 PRINT AT 21,0; PAPER 7; INK 0; FLASH 1;"        PULSA UNA TECLA         ": PAUSE 0: CLS
@@ -22,8 +22,8 @@
  105 POKE 23675,8: POKE 23676,254: REM Dibujar zombie numero g
  110 IF z(g,1)<6 THEN PAPER 5: GO TO 120
  115 PAPER 0
- 120 INK 4: PRINT AT z(g,2),z(g,1);CHR$ (144+(8*(z(g,3)=2))+(16*(z(g,3)=3)))
- 125 INK z(g,3): PRINT AT z(g,2)+1,z(g,1);CHR$ (145+(8*(z(g,3)=2)))
+ 120 INK 4: LET z=z(g,3): PRINT AT z(g,2),z(g,1);CHR$ (144+(8*(z=2))+(16*(z=3)))
+ 125 INK z: PRINT AT z(g,2)+1,z(g,1);CHR$ (145+(8*(z=2)))
  130 POKE 23675,88: POKE 23676,255
  150 RETURN
 1005 CLS : INK 5: REM Inicializar pantalla
@@ -32,7 +32,7 @@
 1060 NEXT y
 1070 RETURN
 1110 INK 7: PAPER 0: CLS: REM Mostrar informacion del nivel
-1111 DIM m(23,32): LET maxtiempo=50*nivel
+1111 DIM m(23,32): LET maxtiempo=50+25*(nivel-1)
 1112 LET maxc=10-nivel: IF maxc<=0 THEN LET maxc=1
 1113 IF nivel>3 THEN LET h(1)=11+nivel: LET h(2)=16+nivel: LET h(3)=25+nivel*2: LET rcl=nivel
 1114 IF h(1)>99 THEN LET h(1)=99
@@ -105,7 +105,7 @@
 3225 RETURN
 3310 LET m(cy+1,cx)=40+(nt*4)+1: LET m(cy+2,cx)=40+(nt*4)+2: LET m(cy+1,cx+1)=40+(nt*4)+3: LET m(cy+2,cx+1)=40+(nt*4)+4: REM Colocar torreta de tipo "te" en cx, cy
 3320 LET r=r-h(te): LET nt=nt+1: LET v=nt: LET t(nt,1)=cx: LET t(nt,2)=cy: LET t(nt,3)=te: LET t(nt,4)=tv: LET t(nt,5)=0: LET t(nt,6)=3+(1*(te=2)): REM Inicializa torreta con vida tv (+1 si es torreta tipo 2) y 3 usos (4 si es de tipo 2)
-3330 POKE 23675,176: POKE 23676,254: REM Subsubrutina de pintar torrea
+3330 POKE 23675,176: POKE 23676,254: REM Subsubrutina de pintar torreta
 3331 LET desp=(t(v,3)-1)*4
 3332 INK t(v,3)+1: PAPER 0+(5*(t(v,1)<6)): PRINT AT t(v,2),t(v,1);CHR$ (144+desp);CHR$ (145+desp);AT t(v,2)+1,t(v,1);CHR$ (146+desp);CHR$ (147+desp)
 3333 POKE 23675,88: POKE 23676,255
@@ -123,15 +123,15 @@
 6040 GO TO 6000
 7001 IF nz=0 THEN RETURN: REM Mover zombies
 7005 LET g=1
-7010 LET z=z(g,3): IF z(g,1)=1 THEN GO TO 7045: REM Saltar si el zombie estar en la columna 1
-7011 IF m(z(g,2)+1,z(g,1)-1)+m(z(g,2)+2,z(g,1)-1)>0 THEN GO TO 7040: REM Ir a chocar con objeto si hay algo delante
+7010 LET ox=z(g,1): LET oy=z(g,2): LET z=z(g,3): IF z(g,1)=1 THEN GO TO 7045: REM Saltar si el zombie estar en la columna 1
+7011 IF m(oy+1,ox-1)+m(oy+2,ox-1)>0 THEN GO TO 7040: REM Ir a chocar con objeto si hay algo delante
 7020 LET z(g,4)=z(g,4)+2+(2*(z<>3)): IF z(g,4)<8 AND z<>2 THEN GO TO 7045: REM Saltar si no es momento de moverse
-7030 LET ox=z(g,1): LET oy=z(g,2): LET m(oy+1,ox)=0: LET m(oy+2,ox)=0: GO SUB 50: LET oy=oy+1: GO SUB 50: REM Borrar zombie de la posicion anterior
-7031 LET z(g,1)=z(g,1)-1: LET z(g,4)=0: IF z(g,1)=1 THEN GO SUB 9700: RETURN : REM Game over si el zombie llega a la columna 1
-7032 GO SUB 8170: GO SUB 100: PRINT AT z(g,2),z(g,1)+1;" ";AT z(g,2)+1,z(g,1)+1;" ": BEEP 0.01,5: REM Dibujar zombie andando y borrar rastro
-7033 LET m(z(g,2)+1,z(g,1))=80+(g*2)-1: LET m(z(g,2)+2,z(g,1))=80+(g*2)
-7034 IF z(g,1)=5 THEN GO SUB 50: LET oy=oy-1: GO SUB 50: REM Redibujar si el zombie cruza la linea de separacion
-7035 GO TO 7045: REM Continuar con el siguiente zombie
+7030 LET m(oy+1,ox)=0: LET m(oy+2,ox)=0: GO SUB 50: LET oy=oy+1: GO SUB 50: LET oy=oy-1: REM Borrar zombie de la posicion anterior
+7031 LET ox=ox-1: LET z(g,1)=ox: LET z(g,4)=0: IF ox=1 THEN GO SUB 9700: RETURN : REM Game over si el zombie llega a la columna 1
+7032 GO SUB 8170: GO SUB 100: IF ox=5 THEN PRINT PAPER 0; INK 5; AT oy,ox+1;CHR$(160);AT oy+1,ox+1;CHR$(160): GO TO 7035
+7033 IF ox<5 THEN PAPER 5
+7034 PRINT AT oy,ox+1;" ";AT oy+1,ox+1;" "
+7035 BEEP 0.01,5: LET m(oy+1,ox)=80+(g*2)-1: LET m(oy+2,ox)=80+(g*2): GO TO 7045: REM Actualizar mapa y ontinuar con el siguiente zombie
 7040 GO SUB 7100: REM Procesar colision con objeto
 7045 GO SUB 7440: IF sp=1 OR dp=1 THEN RETURN : REM Salir si se presiona espacio o D
 7050 LET g=g+1: IF g>nz THEN RETURN
@@ -159,11 +159,11 @@
 7320 IF PEEK 23560=32 OR sp THEN POKE 23560,0: IF cm=0 THEN LET cm=1: LET cc=0: LET sp=0: GO SUB 7330: REM Si estamos pulsando espacio o lo habiamos pulsdo antes, entramos a modo construccion
 7325 IF PEEK 23560=68 OR PEEK 23560=100 OR dp THEN POKE 23560,0: GO SUB 7500: LET dp=0: GO SUB 7450: REM Disparar torretas
 7329 RETURN
-7331 PRINT #0;AT 0,0; PAPER 2; INK 7;" CONTROLES "; PAPER 7; INK 1;"QAOP"+CHR$ (158);" +  0"; INK 6; PAPER 0; BRIGHT 1;CHR$ 146; INK 1; PAPER 7; BRIGHT 0;" 1"; INK 2;CHR$ 153; INK 1;" 2"; INK 3;CHR$ 154; INK 1;" 3"; INK 4;CHR$ 155;" ": REM Modo de construccion
+7331 BORDER 2: PRINT #0;AT 0,0; PAPER 2; INK 7;" CONTROLES "; PAPER 7; INK 1;"QAOP"+CHR$ (158);" +  0"; INK 6; PAPER 0; BRIGHT 1;CHR$ 146; INK 1; PAPER 7; BRIGHT 0;" 1"; INK 2;CHR$ 153; INK 1;" 2"; INK 3;CHR$ 154; INK 1;" 3"; INK 4;CHR$ 155;" ": REM Modo de construccion
 7332 PRINT #0;AT 1,0; PAPER 2; INK 7; FLASH 1;"CONSTRUCCION"; FLASH 0; PAPER 6; INK 0;"Rec:                "; INK 1;AT 1,16;r;"  ";AT 1,21;rcl;AT 1,23;h(1);AT 1,26;h(2);AT 1,29;h(3)
 7333 GO SUB 8000
 7334 POKE 23560,0
-7335 BORDER INT (RND*6): LET cc=cc+1: IF cc=500 THEN GO SUB 8050: LET cm=0: LET cc=0: BORDER 1: RETURN
+7335 LET cc=cc+1: IF cc=500 THEN GO SUB 8050: LET cm=0: LET cc=0: BORDER 1: RETURN
 7350 LET ox=cx: LET oy=cy
 7351 IF IN 32766=190 THEN POKE 23560,0: IF cc>5 THEN GO SUB 8050: LET cm=0: LET cc=0: LET sp=0: PRINT AT oy,ox;" ": GO SUB 7450: GO SUB 50: BORDER 1: RETURN : REM Salida del modo de construccion
 7360 IF IN 64510=190 AND cy>0 THEN LET cy=cy-1
@@ -194,12 +194,9 @@
 7553 IF dx<=0 OR ABS (dy)>1 THEN GO TO 7580: REM Torreta tipo 1 o 3, solo dispara a la derecha y +/-1 en y
 7554 LET lineax=z(j,1): LET lineay=t(i,2): IF z(j,2)=t(i,2)+1 THEN LET lineay=t(i,2)+1
 7555 FOR w=tx TO lineax
-7556 LET q(w)=0: IF  SCREEN$ (lineay,w)=" " THEN PRINT INK 6; PAPER 0+5*(w<6);AT lineay,w;CHR$ (156+1*(t(i,3)=3)): LET q(w)=1: REM pinta disparo
+7556 IF  SCREEN$ (lineay,w)=" " THEN PRINT INK 6; PAPER 0+5*(w<6);AT lineay,w;CHR$ (156+1*(t(i,3)=3)): BEEP 0.02,50:PRINT AT lineay,w;" ":REM pinta disparo
 7557 NEXT w
 7558 LET disparos=disparos+1: GO SUB 7700: REM Quita vida al zombie
-7560 FOR w=tx TO lineax
-7561 IF q(w)=1 THEN PRINT INK 6; PAPER 0+5*(w<6);AT lineay,w;" ": REM despinta disparo
-7562 NEXT w
 7563 GO TO 7540: REM Vuelve a mirar todos los zombies
 7570 IF ABS (dx)>3 OR ABS (dy)>3 THEN GO TO 7580: REM Fuera de rango
 7572 LET disparos=disparos+1: GO SUB 7700: GO TO 7540: REM Quita vida al zombie y vuelve a empezar a buscar zombies desde cero
@@ -235,7 +232,7 @@
 7785 LET t(i,6)=t(i,6)-1
 7786 IF t(i,6)<=0 THEN LET t(i,6)=0
 7790 IF z(j,5)>0 THEN GO TO 7800
-7791 LET m(z(j,2)+1,z(j,1))=0: LET m(z(j,2)+2,z(j,1))=0: REM Vacia mapa
+7791 BEEP 0.02,10: BEEP 0.02,20:BEEP 0.02,10: BEEP 0.02,20:BEEP 0.02,10: BEEP 0.02,20:BEEP 0.02,10: BEEP 0.02,20:BEEP 0.02,10: BEEP 0.02,20:LET m(z(j,2)+1,z(j,1))=0: LET m(z(j,2)+2,z(j,1))=0: REM Vacia mapa
 7792 LET ox=z(j,1): LET oy=z(j,2): GO SUB 50: LET oy=oy+1: GO SUB 50: REM redibuja
 7793 LET puntos=puntos+(10*z(j,3)): GO SUB 9400: GO SUB 7450: REM Elimina zombie y suma puntos
 7800 PAPER 0: RETURN
@@ -243,11 +240,11 @@
 8030 FLASH 1: PRINT AT cy,cx;CHR$ (159): FLASH 0: RETURN
 8060 PRINT AT oy,ox;" ": RETURN: REM Borrar cursor
 8175 POKE 23675,8: POKE 23676,254: REM Dibujar zombie numero g andando
-8180 IF z(g,1)<6 THEN PAPER 5: GO TO 8182
+8180 IF ox<6 THEN PAPER 5: GO TO 8182
 8181 PAPER 0: INK 4
-8182 IF z(g,3)=1 THEN PRINT AT z(g,2),z(g,1);CHR$ 146;CHR$ 147; INK 1;AT z(g,2)+1,z(g,1);CHR$ 148;CHR$ 149
-8183 IF z(g,3)=2 THEN PRINT AT z(g,2),z(g,1);CHR$ 154;CHR$ 156; INK 2;AT z(g,2)+1,z(g,1);CHR$ 155;CHR$ 157
-8184 IF z(g,3)=3 THEN PRINT AT z(g,2),z(g,1);CHR$ 161;CHR$ 162; INK 3;AT z(g,2)+1,z(g,1);CHR$ 148;CHR$ 149
+8182 IF z(g,3)=1 THEN PRINT AT oy,ox;CHR$ 146;CHR$ 147; INK 1;AT oy+1,ox;CHR$ 148;CHR$ 149
+8183 IF z(g,3)=2 THEN PRINT AT oy,ox;CHR$ 154;CHR$ 156; INK 2;AT oy+1,ox;CHR$ 155;CHR$ 157
+8184 IF z(g,3)=3 THEN PRINT AT oy,ox;CHR$ 161;CHR$ 162; INK 3;AT oy+1,ox;CHR$ 148;CHR$ 149
 8185 BEEP 0.01,10
 8187 POKE 23675,88: POKE 23676,255
 8188 RETURN
