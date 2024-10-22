@@ -1,7 +1,6 @@
    1 CLEAR 64000: DIM m(23,32): DIM c(10,3): DIM z(10,5): DIM l(20,3): DIM t(10,6): LET r=20: LET cx=7: LET cy=10: LET tiempo=0
    2 LET te=0: LET k$="": LET ox=0: LET oy=0: LET o=0: LET nz=0: LET nl=0: LET nt=0: LET nc=0: LET tir=0: LET tiz=0: LET cm=0: LET cc=0: LET w=0: LET x=0: LET y=0: LET sp=0: LET dp=0: LET seconds=0: LET oldseconds=0: LET puntos=0
    3 LET maxc=5: LET maxz=10: LET tv=3: LET lv=3: LET rcl=2: DIM h(3): LET nivel=1: LET maxtiempo=200: LET h(1)=10: LET h(2)=15: LET h(3)=25
-   4 REM VERSION 0.24rc5
   10 BORDER 1: PAPER 0: INK 7: CLS
   11 LOAD "ZXDFONT" CODE 64000: LOAD "ZXDSCRN" CODE 16384: POKE 23606,0: POKE 23607,INT 249: REM Carga el Font en 64000 y apunta a esa direccion
   12 PRINT AT 21,0; PAPER 7; INK 0; FLASH 1;"        PULSA UNA TECLA         ": PAUSE 0: CLS
@@ -12,7 +11,7 @@
   24 POKE 23560,0
   25 RANDOMIZE 0: GO SUB 1000: GO SUB 2000: GO SUB 2050: GO SUB 8700: GO TO 6000
   52 LET op=m(oy+1,ox): IF ox<6 THEN PAPER 5: GO TO 54: REM Redibujar objeto en oy, ox
-  53 PAPER 0: IF ox=6 THEN INK 5: PRINT AT oy,ox;CHR$ 160: RETURN
+  53 PAPER 0: IF NOT op AND ox=6 THEN INK 5: PRINT AT oy,ox;CHR$ 160: RETURN
   54 IF NOT op THEN PRINT AT oy,ox;" ": RETURN
   55 IF op<=20 THEN LET ci=INT ((op+1)/2): IF c(ci,3)>0 THEN INK 0: PRINT AT oy,ox;CHR$ (144+1*(c(ci,2)<>oy)): RETURN
   56 IF op<=40 THEN LET li=op-20: IF l(li,3)>0 THEN INK 6: BRIGHT 1: PRINT AT oy,ox;CHR$ 146: BRIGHT 0: RETURN
@@ -361,7 +360,7 @@
 9810 PAPER 0: INK 7: CLS
 9820 PRINT AT 10,9; PAPER 1;FLASH 1;"  ENHORABUENA  "
 9830 LET nivel=nivel+1: LET puntos=puntos+100+r*2
-9840 PRINT AT 12,7;"PASAMOS AL  NIVEL "; INK 2; BRIGHT 1;nivel
+9840 PRINT AT 12,7;"AVANZAS AL NIVEL: "; INK 2; BRIGHT 1;nivel
 9845 PRINT AT 14,5;"Puntos acumulados: "; INK 2; BRIGHT 1;puntos
 9850 PRINT AT 21,0; PAPER 7; INK 0; FLASH 1;"        PULSA UNA TECLA         "
 9860 PAUSE 0
