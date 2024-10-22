@@ -4,7 +4,7 @@
   10 BORDER 1: PAPER 0: INK 7: CLS
   11 LOAD "ZXDFONT" CODE 64000: LOAD "ZXDSCRN" CODE 16384: POKE 23606,0: POKE 23607,INT 249: REM Carga el Font en 64000 y apunta a esa direccion
   12 PRINT AT 21,0; PAPER 7; INK 0; FLASH 1;"        PULSA UNA TECLA         ": PAUSE 0: CLS
-  15 PRINT AT 4,13; BRIGHT 1; INK 2;"Z"; BRIGHT 0; INK 4;"OMBIE";AT 5,11; BRIGHT 1; INK 2;"X"; BRIGHT 0; INK 4;"TINCTION";AT 6,12; BRIGHT 1; INK 2;"D"; BRIGHT 0; INK 4;"EFENSE.": PAPER 7: INK 0: PRINT AT 10,7; FLASH 1; INK 6; PAPER 2;" "; FLASH 0; INK 0; PAPER 7;"Inicializando..."; INK 2; PAPER 6; FLASH 1;" "; FLASH 0
+  15 PRINT AT 4,13; BRIGHT 1; INK 2;"Z"; BRIGHT 0; INK 4;"OMBIE";AT 5,11; BRIGHT 1; INK 2;"X"; BRIGHT 0; INK 4;"TINCTION";AT 6,12; BRIGHT 1; INK 2;"D"; BRIGHT 0; INK 4;"EFENSE.": PAPER 7: INK 0: PRINT AT 10,7; FLASH 1; INK 6; PAPER 2;" "; FLASH 0; INK 0; PAPER 7;"Inicializando..."; INK 2; PAPER 6; FLASH 1;" "; FLASH 0; INK 4; PAPER 0;AT 15,11; INK 2; BRIGHT 1;"J"; INK 4; BRIGHT 0;"avi"; INK 2; BRIGHT 1;"P"; INK 4; BRIGHT 0;"rieto";AT 16,10; INK 4;"("; INK 2;"G"; INK 4;"eese"; INK 2;"B"; INK 4;"umps)";AT 17,14; INK 6;"2024"
   20 GO SUB 9000: REM Generar UDG con barra de progreso
   22 GO SUB 1100: REM Intro del nivel
   23 LET tiempo=maxtiempo: LET nz=0: LET nt=0: LET nl=0: LET nc=0: LET r=20: REM Reiniciar contadores principales
@@ -140,7 +140,7 @@
 7130 IF ob<=40 THEN LET t=ob-20: LET l(t,3)=l(t,3)-1: LET col=4: GO TO 7150
 7140 IF ob<=80 THEN LET t=INT ((ob-41)/4)+1: LET t(t,4)=t(t,4)-1: LET col=t(t,3)+1
 7150 POKE 23675,8: POKE 23676,254: PAPER 0+(5*(z(g,1)<6)): FLASH 1
-7151 PRINT AT z(g,2),z(g,1); INK 4;CHR$ (150+(8*(z=2))+(13*(z=3))); INK z;AT z(g,2)+1,z(g,1);CHR$ (151+(8*(z=2)))
+7151 PRINT AT z(g,2),z(g,1); INK 4;CHR$ (150+(8*(z=2))); INK z;AT z(g,2)+1,z(g,1);CHR$ (151+(8*(z=2)))
 7155 FOR w=1 TO 10: BORDER z: BEEP 0.01,50: BORDER col: BEEP 0.01,60: NEXT w: BORDER 1
 7156 FLASH 0: GO SUB 100
 7157 IF ob<=20 THEN IF c(t,3)<=0 THEN LET matado=1: LET c(t,3)=0: LET z(g,5)=z(g,5)-1: REM Mata ciudadano, pero zombie pierde 1 vida
@@ -208,9 +208,9 @@
 7600 REM Zombie g ha chocado con objeto ob
 7610 IF ob<=20 THEN LET m(c(t,2)+1,c(t,1))=0: LET m(c(t,2)+2,c(t,1))=0: LET ox=c(t,1): LET oy=c(t,2): GO SUB 50: LET oy=oy+1: GO SUB 50: LET c(t,3)=0: LET nc=nc-1: GO SUB 9100: REM Eliminar ciudadano, y quitar 1 de vida a zombie
 7620 IF ob>20 AND ob<=40 THEN LET m(l(t,2)+1,l(t,1))=0: LET ox=l(t,1): LET oy=l(t,2): GO SUB 50: LET l(t,3)=0: GO SUB 9200: REM Eliminar ladrillo
-7630 IF ob<=40 OR ob>80 THEN GO TO 7660: REM Si no es torreta, termina
+7630 IF ob<=40 OR ob>80 THEN GO TO 7660: REM Si no es torreta\#014\#000\#000\#000\#000\#000, termina
 7640 LET m(t(t,2)+1,t(t,1))=0: LET m(t(t,2)+2,t(t,1))=0: LET m(t(t,2)+1,t(t,1)+1)=0: LET m(t(t,2)+2,t(t,1)+1)=0: LET ox=t(t,1): LET oy=t(t,2)
-7650 INK 6: PAPER 2: FLASH 1: PRINT AT t(t,2),t(t,1);CHR$ (161);CHR$ (162);AT t(t,2)+1,t(t,1);CHR$ (163);CHR$ (164): REM Explosion
+7650 INK 6: PAPER 2: FLASH 1: PRINT AT t(t,2),t(t,1);CHR$ (147);CHR$ (148);AT t(t,2)+1,t(t,1);CHR$ (149);CHR$ (150): REM Explosion
 7655 FOR x=1 TO 10: BEEP 0.02,INT (RND*20): NEXT X
 7658 INK 7: PAPER 0+(5*(t(t,1)<6)): FLASH 0: PRINT AT t(t,2),t(t,1);"  ";AT t(t,2)+1,t(t,1);"  ": LET t(t,4)=0: GO SUB 9300
 7660 BEEP 0.05,0: RETURN
@@ -261,15 +261,15 @@
 9007 IF F<>65296 THEN GO TO 9004
 9008 RETURN
 9009 REM UDG estandar (POKE 23675,88: POKE 23676,255)
-9010 REM 144/145 Ciudadano, 146 Ladrillo, 153-155 Torretas, 156 Disparo simple
-9011 REM 157 Disparo grande, 158 Espacio, 159 Cursor, 160 Separador, 161-164 Explosion
+9010 REM 144/145 Ciudadano, 146 Ladrillo, 147-150 Explosion, 153-155 Torretas,
+9011 REM 156 Disparo simple, 157 Disparo grande, 158 Espacio, 159 Cursor, 160 Separador
 9012 DATA 112,248,248,144,140,136,112,224
 9013 DATA 240,248,184,216,240,96,120,124
 9014 DATA 255,129,165,153,153,165,129,255
-9015 DATA 0,0,0,0,0,0,0,0
-9016 DATA 0,0,0,0,0,0,0,0
-9017 DATA 0,0,0,0,0,0,0,0
-9018 DATA 0,0,0,0,0,0,0,0
+9015 DATA 1,226,90,36,16,16,96,128
+9016 DATA 4,138,178,68,8,8,6,1
+9017 DATA 64,48,8,16,16,39,72,48
+9018 DATA 6,8,8,4,20,42,166,64
 9019 DATA 0,0,0,0,0,0,0,0
 9020 DATA 0,0,0,0,0,0,0,0
 9021 DATA 126,135,135,135,126,248,188,252
@@ -287,7 +287,7 @@
 9033 REM UDG en 65032 - Zombies (POKE 23675,8: POKE 23676,254)
 9034 REM Zombie 1 - Quieto: 144/145 - Andar 146-147/148-149 - Morder 150/151 - Color 4/1
 9035 REM Zombie 2 - Quieto: 152/153 - Andar 154-156/155-157 - Morder 158/159 - Color 4/2
-9036 REM Zombie 3 - Quiero: 160/145 - Andar 161-162/148-149 - Morder 163/151 - Color 4/3
+9036 REM Zombie 3 - Quiero: 160/145 - Andar 161-162/148-149 - Morder 150/151 - Color 4/3
 9037 DATA 28,62,46,126,30,12,252,156
 9038 DATA 28,28,28,44,44,44,44,124
 9039 DATA 1,3,2,7,1,0,15,8
@@ -307,7 +307,7 @@
 9053 DATA 60,94,126,126,60,60,28,252
 9054 DATA 3,5,7,7,3,7,15,25
 9055 DATA 192,192,192,224,224,240,216,196
-9056 DATA 60,94,126,126,28,62,254,219
+9056 DATA 0,0,0,0,0,0,0,0
 9057 DATA 0,0,0,0,0,0,0,0
 9058 REM UDG en 65200 - Torretas (POKE 23675,176: POKE 23676,254)
 9059 REM Torreta 1 - 144-145/146-147
@@ -326,12 +326,14 @@
 9072 DATA 63,62,127,223,191,191,191,255
 9073 DATA 248,0,192,224,224,224,224,240
 9100 REM Reindexar ciudadanos
+9105 IF nc<=1 THEN RETURN
 9110 LET i=1
 9120 IF NOT c(i,3) THEN LET c(i,1)=c(nc,1): LET c(i,2)=c(nc,2): LET c(i,3)=c(nc,3): LET nc=nc-1: RETURN
 9130 LET i=i+1
 9140 IF i<=nc THEN GO TO 9120
 9150 RETURN
 9200 REM Reindexar ladrillos
+9205 IF nl<=1 THEN RETURN
 9210 LET i=1
 9220 IF NOT l(i,3) THEN LET l(i,1)=l(nl,1): LET l(i,2)=l(nl,2): LET l(i,3)=l(nl,3): LET nl=nl-1: RETURN
 9230 LET i=i+1
@@ -348,7 +350,7 @@
 9420 LET nz=nz-1: RETURN
 9700 REM Rutina de GAME OVER
 9710 PAPER 0: INK 7: CLS
-9720 PRINT AT 10,10; PAPER 2;FLASH 1;" GAME OVER "
+9720 PRINT AT 10,10; PAPER 2; FLASH 1;" GAME OVER "
 9730 PRINT AT 12,7;"Nivel alcanzado: "; INK 2; BRIGHT 1;nivel
 9735 PRINT AT 13,5;"Puntuacion final: "; INK 2; BRIGHT 1;puntos
 9740 PRINT AT 15,0; PAPER 7; INK 0; FLASH 1;"        PULSA UNA TECLA         "
@@ -358,8 +360,8 @@
 9770 RETURN
 9800 REM Rutina de ENHORABUENA y pasar al siguiente nivel
 9810 PAPER 0: INK 7: CLS
-9820 PRINT AT 10,9; PAPER 1;FLASH 1;"  ENHORABUENA  "
-9830 LET nivel=nivel+1: LET puntos=puntos+100+r*2
+9820 PRINT AT 10,9; PAPER 1; FLASH 1;"  ENHORABUENA  "
+9830 LET nivel=nivel+1: LET puntos=puntos+100+r*2+nc*5
 9840 PRINT AT 12,7;"AVANZAS AL NIVEL: "; INK 2; BRIGHT 1;nivel
 9845 PRINT AT 14,5;"Puntos acumulados: "; INK 2; BRIGHT 1;puntos
 9850 PRINT AT 21,0; PAPER 7; INK 0; FLASH 1;"        PULSA UNA TECLA         "
@@ -390,9 +392,5 @@
 9956 REM tiempo-tiempo transcurrido, sp-flag de espacio presionado, seconds-segundos transcurridos, oldseconds-segundos anteriores
 9957 REM desp-desplazamiento para UDG, matado-flag de objeto destruido, col-color para animacion de colision
 9958 REM lineax,lineay-coordenadas para dibujo de linea de disparo, op-valor de objeto en mapa para redibujar
-9994 REM .....................................................
-9995 REM El programa utiliza BASIC de ZX Spectrum, con lo cual no puede utilizar las ordenes ELSE, END IF, o el operador MOD
-9996 REM Se debe optimizar al maximo el uso de CPU, reduciendo los ciclos de reloj
-9997 REM El uso de memoria no es problema, asi que se pueden crear variables auxiliares si asi se optimiza el codigo
-9998 REM Es preferible tener menos lineas aunque sean muy largas. Igualmente, es mejor que los REM esten siempre acompanando a otra linea, no solos
-9999 REM No se pueden crear lineas mas alla de la 9999. Siempre que pida cambios, solo se devuelven los bloques de lineas que han cambiado
+9959 REM ...Y mas cosas que seguro me estoy dejando :)
+9999 REM Javi Prieto 2024. Gracias a Migue McLeod por su sorprendente memoria y sabios consejos
