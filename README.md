@@ -1,1 +1,1 @@
-Carpeta personal para proyectos de Spectrum en curso
+Proyectos para ZX Spectrum
