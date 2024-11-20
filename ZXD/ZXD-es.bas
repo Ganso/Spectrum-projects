@@ -72,6 +72,7 @@
 1169 POKE 23675,88: POKE 23676,255
 1170 PRINT AT 20,0; PAPER 7; INK 0;"     TIEMPO A AGUANTAR: "; INK 1;maxtiempo;"s   ";AT 20,28;"    "
 1180 PRINT AT 21,0; PAPER 7; INK 0; FLASH 1;"        PULSA UNA TECLA         "
+1181 GO TO 8800
 1215 PAUSE 0
 1220 IF INKEY$=" " THEN GO TO 1220
 1299 RETURN
@@ -251,6 +252,15 @@
 8710 PRINT #0;AT 1,0; INK 0; PAPER 7;"                                ";AT 0,0;"                                ";
 8715 GO SUB 7450
 8717 PAPER 0: RETURN
+8800 REM Menu de seleccion de nivel y difucultad
+8801 PRINT AT 6,4; PAPER 7; "                         "; AT 14,4; "                         "
+8804 FOR i = 7 TO 13
+8805 PRINT AT i, 4; PAPER 7; " ";PAPER 0; "                       "; PAPER 7; " "
+8810 NEXT i
+8815 PRINT AT 8, 8; PAPER 0; INK 4; BRIGHT 1; "MENU SECRETO"
+8820 PRINT AT 10, 7; "SELECCIONAR NIVEL: ";nivel
+8825 PRINT AT 12, 8; "DIFICULTAD: FACIL"
+8830 GO TO 8830
 9000 REM Generacion de UDG con barra de progreso
 9001 INK 6: PAPER 0: PRINT AT 12,0;"                                "
 9002 LET total=(65535-65358)+(65295-65032)+1: LET progreso=0: RESTORE 9012
