@@ -1,4 +1,4 @@
-   1 CLEAR 64000: DIM m(23,32): DIM c(10,3): DIM z(10,5): DIM l(20,3): DIM t(10,6): LET r=20: LET cx=7: LET cy=10: LET tiempo=0
+   1 CLEAR 64000: DIM m(23,32): DIM c(10,3): DIM z(10,5): DIM l(20,3): DIM t(10,6): LET r=20: LET cx=7: LET cy=10: LET tiempo=0:LET dificultad=0
    2 LET te=0: LET k$="": LET ox=0: LET oy=0: LET o=0: LET nz=0: LET nl=0: LET nt=0: LET nc=0: LET tir=0: LET tiz=0: LET cm=0: LET cc=0: LET w=0: LET x=0: LET y=0: LET sp=0: LET dp=0: LET seconds=0: LET oldseconds=0: LET puntos=0
    3 LET maxc=5: LET maxz=10: LET tv=3: LET lv=3: LET rcl=2: DIM h(3): LET nivel=1: LET maxtiempo=200: LET h(1)=10: LET h(2)=15: LET h(3)=25
   10 BORDER 1: PAPER 0: INK 7: CLS
@@ -62,7 +62,8 @@
 1143 PRINT AT 13,0; INK 4;CHR$ (152);CHR$ (153);AT 14,0;CHR$ (154);CHR$ (155):
 1149 POKE 23675,88: POKE 23676,255
 1150 PRINT AT 17,0; INK 3; BRIGHT 1;"ZOMBIES:"
-1152 PRINT AT 18,0;"  Lento      Rapido    Muy lento"
+1152 IF dificultad=0 THEN PRINT AT 18,0;"  Lento      Rapido    Muy lento"
+1153 IF dificultad=1 THEN PRINT AT 18,0;"  ";PAPER 4;INK 0;FLASH 1;"Rapido";PAPER 0;INK 7;FLASH 0;"     Rapido    ";PAPER 4;INK 0;FLASH 1;"Rapido";PAPER 0;INK 7;FLASH 0;"   "
 1154 PRINT AT 19,0;"  Normal     Debil     Tanque   "
 1160 POKE 23675,8: POKE 23676,254
 1161 PRINT AT 18,0; INK 4;CHR$ (144);AT 18,11;CHR$ (152);AT 18,21;CHR$ (160)
@@ -72,9 +73,10 @@
 1169 POKE 23675,88: POKE 23676,255
 1170 PRINT AT 20,0; PAPER 7; INK 0;"     TIEMPO A AGUANTAR: "; INK 1;maxtiempo;"s   ";AT 20,28;"    "
 1180 PRINT AT 21,0; PAPER 7; INK 0; FLASH 1;"        PULSA UNA TECLA         "
-1181 GO TO 8800
-1215 PAUSE 0
-1220 IF INKEY$=" " THEN GO TO 1220
+1200 LET k$=INKEY$
+1215 IF k$="s" OR k$="S" THEN GO TO 8800
+1220 IF k$="" THEN GO TO 1200
+1230 IF INKEY$=" " THEN GO TO 1230: REM Espera a que se suelte la tecla de espacio
 1299 RETURN
 2001 FOR b=1 TO maxc: REM Colocar ciudadanos inicialmente
 2002 LET c(b,1)=INT (RND*5)+1: LET c(b,2)=INT (RND*19)+1: LET c(b,3)=5
@@ -123,9 +125,9 @@
 6040 GO TO 6000
 7001 IF nz=0 THEN RETURN : REM Mover zombies
 7005 LET g=1
-7010 LET ox=z(g,1): LET oy=z(g,2): LET z=z(g,3): IF z(g,1)=1 THEN GO TO 7045: REM Saltar si el zombie estar en la columna 1
+7010 LET ox=z(g,1): LET oy=z(g,2): LET z=z(g,3): IF z(g,1)=1 THEN GO TO 7045: REM Saltar si el zombie esta en la columna 1
 7011 IF m(oy+1,ox-1)+m(oy+2,ox-1)>0 THEN GO TO 7040: REM Ir a chocar con objeto si hay algo delante
-7020 LET z(g,4)=z(g,4)+2+(2*(z<>3)): IF z(g,4)<8 AND z<>2 THEN GO TO 7045: REM Saltar si no es momento de moverse
+7020 LET z(g,4)=z(g,4)+2+(2*(z<>3)): IF dificultad=0 AND z(g,4)<8 AND z<>2 THEN GO TO 7045: REM Saltar si no es momento de moverse
 7030 LET m(oy+1,ox)=0: LET m(oy+2,ox)=0: GO SUB 50: LET oy=oy+1: GO SUB 50: LET oy=oy-1: REM Borrar zombie de la posicion anterior
 7031 LET ox=ox-1: LET z(g,1)=ox: LET z(g,4)=0: IF ox=1 THEN GO SUB 9700: RETURN : REM Game over si el zombie llega a la columna 1
 7032 GO SUB 8170: GO SUB 100: IF ox=5 THEN PRINT PAPER 0; INK 5;AT oy,ox+1;CHR$ (160);AT oy+1,ox+1;CHR$ (160): GO TO 7035
@@ -252,15 +254,26 @@
 8710 PRINT #0;AT 1,0; INK 0; PAPER 7;"                                ";AT 0,0;"                                ";
 8715 GO SUB 7450
 8717 PAPER 0: RETURN
-8800 REM Menu de seleccion de nivel y difucultad
-8801 PRINT AT 6,4; PAPER 7; "                         "; AT 14,4; "                         "
+8800 REM Menu de seleccion de nivel y dificultad
+8801 LET j=0:PRINT AT 6,4; PAPER 2; "                         "; AT 14,4; "                         "
 8804 FOR i = 7 TO 13
-8805 PRINT AT i, 4; PAPER 7; " ";PAPER 0; "                       "; PAPER 7; " "
+8805 PRINT AT i, 4; PAPER 2; " ";PAPER 0; "                       "; PAPER 2; " "
 8810 NEXT i
-8815 PRINT AT 8, 8; PAPER 0; INK 4; BRIGHT 1; "MENU SECRETO"
-8820 PRINT AT 10, 7; "SELECCIONAR NIVEL: ";nivel
-8825 PRINT AT 12, 8; "DIFICULTAD: FACIL"
-8830 GO TO 8830
+8815 PRINT AT 8, 11; PAPER 0; INK 4; BRIGHT 1; "MENU SECRETO"
+8820 PRINT AT 10, 6; "SELECCIONAR  NIVEL: ";FLASH (j=0);nivel
+8825 PRINT AT 12, 7; "DIFICULTAD: ";INK 2;
+8826 IF dificultad=0 THEN PRINT FLASH (j=1);" FACIL "
+8827 IF dificultad=1 THEN PRINT FLASH (j=1);"DIFICIL"
+8828 LET k$=INKEY$
+8829 IF k$="" THEN GO TO 8828
+8830 IF k$="q" OR k$="Q" OR k$="a" OR k$="A" THEN LET j=1-j
+8831 IF j=1 THEN GO TO 8835
+8832 IF k$="o" OR k$="O" THEN IF nivel>1 THEN LET nivel=nivel-1
+8833 IF k$="p" OR k$="P" THEN IF nivel<9 THEN LET nivel=nivel+1
+8834 GO TO 8840
+8835 IF k$="o" OR k$="O" OR k$="p" OR k$="P" THEN LET dificultad=1-dificultad
+8840 IF k$=" " THEN GO TO 1100
+8850 GO TO 8820
 9000 REM Generacion de UDG con barra de progreso
 9001 INK 6: PAPER 0: PRINT AT 12,0;"                                "
 9002 LET total=(65535-65358)+(65295-65032)+1: LET progreso=0: RESTORE 9012
@@ -366,7 +379,7 @@
 9740 PRINT AT 15,0; PAPER 7; INK 0; FLASH 1;"        PULSA UNA TECLA         "
 9750 PAUSE 0
 9755 LET puntos=0
-9760 LET nivel=1: GO TO 22
+9760 LET nivel=1: LET dificultad=0: GO TO 22
 9770 RETURN
 9800 REM Rutina de ENHORABUENA y pasar al siguiente nivel
 9810 PAPER 0: INK 7: CLS
