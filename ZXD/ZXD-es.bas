@@ -211,7 +211,7 @@
 7600 REM Zombie g ha chocado con objeto ob
 7610 IF ob<=20 THEN LET m(c(t,2)+1,c(t,1))=0: LET m(c(t,2)+2,c(t,1))=0: LET ox=c(t,1): LET oy=c(t,2): GO SUB 50: LET oy=oy+1: GO SUB 50: LET c(t,3)=0: LET nc=nc-1: GO SUB 9100: REM Eliminar ciudadano, y quitar 1 de vida a zombie
 7620 IF ob>20 AND ob<=40 THEN LET m(l(t,2)+1,l(t,1))=0: LET ox=l(t,1): LET oy=l(t,2): GO SUB 50: LET l(t,3)=0: GO SUB 9200: REM Eliminar ladrillo
-7630 IF ob<=40 OR ob>80 THEN GO TO 7660: REM Si no es torreta\#014\#000\#000\#000\#000\#000, termina
+7630 IF ob<=40 OR ob>80 THEN GO TO 7660: REM Si no es torreta, termina
 7640 LET m(t(t,2)+1,t(t,1))=0: LET m(t(t,2)+2,t(t,1))=0: LET m(t(t,2)+1,t(t,1)+1)=0: LET m(t(t,2)+2,t(t,1)+1)=0: LET ox=t(t,1): LET oy=t(t,2)
 7650 INK 6: PAPER 2: FLASH 1: PRINT AT t(t,2),t(t,1);CHR$ (147);CHR$ (148);AT t(t,2)+1,t(t,1);CHR$ (149);CHR$ (150): REM Explosion
 7655 FOR x=1 TO 10: BEEP 0.02,INT (RND*20): NEXT X
@@ -385,6 +385,7 @@
 9810 PAPER 0: INK 7: CLS
 9820 PRINT AT 10,9; PAPER 1; FLASH 1;"  ENHORABUENA  "
 9830 LET nivel=nivel+1: LET puntos=puntos+100+r*2+nc*5
+9832 PRINT AT 1,0;INK 1;BRIGHT 1;" TOP SECRET:";BRIGHT 0;" Pulsa ";BRIGHT 1;"S";BRIGHT 0;" en el menu ";AT 2,0;" para saltar a  cualquier nivel "
 9840 PRINT AT 12,7;"AVANZAS AL NIVEL: "; INK 2; BRIGHT 1;nivel
 9845 PRINT AT 14,5;"Puntos acumulados: "; INK 2; BRIGHT 1;puntos
 9850 PRINT AT 21,0; PAPER 7; INK 0; FLASH 1;"        PULSA UNA TECLA         "
