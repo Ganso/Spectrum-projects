@@ -4,6 +4,7 @@
   10 BORDER 1: PAPER 0: INK 7: CLS
   11 LOAD "ZXDFONT" CODE 64000: LOAD "ZXDSCRN" CODE 16384: POKE 23606,0: POKE 23607,INT 249: REM Carga el Font en 64000 y apunta a esa direccion
   12 PRINT AT 21,0; PAPER 7; INK 0; FLASH 1;"          PRESS ANY KEY         ": PAUSE 0: CLS
+  13 PRINT AT 21,28;PAPER 0;INK 7;"v1.1"
   15 PRINT AT 4,13; BRIGHT 1; INK 2;"Z"; BRIGHT 0; INK 4;"OMBIE";AT 5,11; BRIGHT 1; INK 2;"X"; BRIGHT 0; INK 4;"TINCTION";AT 6,12; BRIGHT 1; INK 2;"D"; BRIGHT 0; INK 4;"EFENSE.": PAPER 7: INK 0: PRINT AT 10,7; FLASH 1; INK 6; PAPER 2;" "; FLASH 0; INK 0; PAPER 7;"Initializing..."; INK 2; PAPER 6; FLASH 1;" "; FLASH 0; INK 4; PAPER 0;AT 15,11; INK 2; BRIGHT 1;"J"; INK 4; BRIGHT 0;"avi"; INK 2; BRIGHT 1;"P"; INK 4; BRIGHT 0;"rieto";AT 16,10; INK 4;"("; INK 2;"G"; INK 4;"eese"; INK 2;"B"; INK 4;"umps)";AT 17,14; INK 6;"2024"
   20 GO SUB 9000: REM Generar UDG con barra de progreso
   22 GO SUB 1100: REM Intro del nivel
@@ -384,7 +385,7 @@
 9800 REM Rutina de ENHORABUENA y pasar al siguiente nivel
 9810 PAPER 0: INK 7: CLS
 9820 PRINT AT 10,9; PAPER 1; FLASH 1;"CONGRATULATIONS"
-9830 LET nivel=nivel+1: LET puntos=puntos+100+r*2+nc*5
+9830 LET nivel=nivel+1: LET puntos=puntos+100+r*2+nc*5+dificultad*500
 9832 PRINT AT 1,0;INK 1;BRIGHT 1;" TOPSECRET:";BRIGHT 0;" Press ";BRIGHT 1;"S";BRIGHT 0;" at the menu ";AT 2,0;"      to jump to any level      "
 9840 PRINT AT 10,5;"Proceeding to level: "; INK 2; BRIGHT 1;nivel
 9845 PRINT AT 11,9;"Total score: "; INK 2; BRIGHT 1;puntos
